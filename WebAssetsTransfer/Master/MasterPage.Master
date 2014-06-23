@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="jqgridTree.UI.SiteMaster" CodeBehind="MasterPage.master.cs" %>
+
+<%--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">--%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+   <%--<link href="../Styles/layout.css" rel="stylesheet" type="text/css" />--%>
+    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/Styles/layout.css") %>" type="text/css" />
+   
+   <%-- <link href="../Styles/style.css"  rel="stylesheet" type="text/css"/> --%> 
+    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/Styles/style.css") %>" type="text/css" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+<form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true">
+    </asp:ScriptManager>
+    <div id="container">
+        <div id="boton_container" style="float:right;">v.1.0.05142014
+            <asp:ImageButton ID="img_btn_salir" runat="server" 
+                ImageUrl="~/Images/logout.png" PostBackUrl="~/wbfrm_login.aspx" 
+                ToolTip="Salir del Sistema" />
+        </div>
+        <div id="header_container">
+            <div class="logo_company">Boston Scientific</div>
+           
+            <div class="page_title">
+                
+                <h1>
+                <asp:Label ID="lb_page_title" runat="server" Text="<%$ Resources:pages_names_es, lb_page_title%>"></asp:Label>
+                </h1>
+            </div> 
+               
+        </div>
+        <div id="content"> 
+            
+                <div id="message_content">                    
+                    <p class="message"><span class="asterisco">* </span><asp:Label ID="lb_aviso" runat="server" Text="<%$ Resources:pages_names_es, lb_aviso%>"></asp:Label><span class="asterisco">* </span></p>                                                    
+                </div>     
+             <div class="logo_fontsistemas">Font Sistemas</div>  
+                <div id="main_content">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">        
+                    </asp:ContentPlaceHolder>
+                </div>
+            
+        </div>
+        <div class="clear"></div>
+        <div id="footer">
+             <div id="footer_content">  
+                 <span class="importante"><asp:Label ID="lb_titulo_declaracion_jurada" runat="server" Text="<%$ Resources:pages_names_es, lb_titulo_declaracion_jurada%>"></asp:Label>  </span>
+                 <br />
+                 <p class="footer"><asp:Label ID="lb_declaracion_jurada" runat="server" Text="<%$ Resources:pages_names_es, lb_declaracion_jurada%>"></asp:Label></p>
+             </div>  
+        </div>
+    </div>  
+</form> 
+</body>
+</html>

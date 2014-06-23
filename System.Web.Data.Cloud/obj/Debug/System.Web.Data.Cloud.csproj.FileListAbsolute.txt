@@ -1,0 +1,10 @@
+D:\FP\SLChurchControl\System.Web.Data.Cloud\bin\Debug\System.Web.Data.Cloud.dll
+D:\FP\SLChurchControl\System.Web.Data.Cloud\bin\Debug\System.Web.Data.Cloud.pdb
+D:\FP\SLChurchControl\System.Web.Data.Cloud\obj\Debug\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+D:\FP\SLChurchControl\System.Web.Data.Cloud\obj\Debug\System.Web.Data.Cloud.dll
+D:\FP\SLChurchControl\System.Web.Data.Cloud\obj\Debug\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\bin\Debug\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\bin\Debug\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\obj\Debug\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\obj\Debug\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\obj\Debug\System.Web.Data.Cloud.pdb

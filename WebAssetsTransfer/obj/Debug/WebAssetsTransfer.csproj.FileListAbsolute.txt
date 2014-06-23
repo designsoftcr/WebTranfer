@@ -1,0 +1,71 @@
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\ResolveAssemblyReference.cache
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.csprojResolveAssemblyReference.cache
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\RdlCompile.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\RdlCompile.compiled
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\Microsoft.ReportViewer.WebForms.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\de\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\es\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\fr\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\it\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\ja\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\ko\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\pt\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\ru\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\zh-CHS\Microsoft.ReportViewer.WebForms.resources.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\bin\zh-CHT\Microsoft.ReportViewer.WebForms.resources.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\WebAssetsTransfer.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\Microsoft.ReportViewer.WebForms.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\BLL.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\Entidades.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\bin\DAL.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.csprojResolveAssemblyReference.cache
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\RdlCompile.cache
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\RdlCompile.compiled
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\WebAssetsTransfer\obj\Debug\WebAssetsTransfer.pdb

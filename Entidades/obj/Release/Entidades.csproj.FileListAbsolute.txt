@@ -1,0 +1,14 @@
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\bin\Release\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\bin\Release\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Release\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Release\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\bin\Release\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\bin\Release\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Release\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Release\Entidades.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\bin\Release\Entidades.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\bin\Release\Entidades.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\obj\Release\Entidades.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\obj\Release\Entidades.pdb

@@ -1,0 +1,19 @@
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\Proyecto 1 - Sistema para carga de datos\LAST\DMS\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\PocketAssets_2013_20_Real\SPocketAssets\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\PocketAssets_2013_20_Real\SPocketAssets\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\PocketAssets_2013_20_Real\SPocketAssets\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+D:\Projects\PocketAssets\PocketAssets_2013_20_Real\SPocketAssets\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\PocketAssets_2013_20_Real\SPocketAssets\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\PocketAssets_2014_20_Real\SPocketAssets\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\PocketAssets_2014_20_Real\SPocketAssets\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\PocketAssets_2014_20_Real\SPocketAssets\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+D:\Projects\PocketAssets\PocketAssets_2014_20_Real\SPocketAssets\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\PocketAssets_2014_20_Real\SPocketAssets\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb

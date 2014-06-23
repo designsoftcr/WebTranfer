@@ -1,0 +1,5 @@
+D:\Projects\OfficeSupplies\Sykes.Web.Data\bin\Release\Sykes.Web.Data.dll
+D:\Projects\OfficeSupplies\Sykes.Web.Data\bin\Release\Sykes.Web.Data.pdb
+D:\Projects\OfficeSupplies\Sykes.Web.Data\obj\Release\Sykes.Web.Data.dll
+D:\Projects\OfficeSupplies\Sykes.Web.Data\obj\Release\Sykes.Web.Data.pdb
+D:\Projects\OfficeSupplies\Sykes.Web.Data\obj\Release\Sykes.Web.Data.csprojResolveAssemblyReference.cache

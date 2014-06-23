@@ -1,0 +1,122 @@
+﻿* 
+{
+  margin: 0;
+  padding: 0;
+}
+body 
+{
+    font-size: .80em;
+    font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    color: #696969;
+    height:100%;
+    width:100%;
+    position:absolute;    
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+/*************Container*****************/
+#container
+{
+    width:1000px;
+    margin: 0 auto 0 auto;
+    
+}
+/**************Header**************/
+#header_container
+{
+     width:100%;
+     height:63px;
+     background:url(../Images/bg_header.png) no-repeat;
+     border-bottom:1px solid #FFF;
+}
+
+
+/**************Main Content***************/
+#content
+{
+    width:100%;
+    
+}
+#message_content
+{
+    height:25px;
+    
+    width:100%;
+    background-color:#1F497D;
+    color:#FFF;
+    height:45px;
+}
+#main_content
+{
+}
+.clear
+{
+    clear: both;
+   
+}
+/**************Footer****************/
+#footer
+{
+    width:100%;
+    height:30px;
+    padding:10px 0px;
+}
+/**************filtros***************/
+#filtros
+{ 
+    width:870px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+/*-
+#container_popup
+{
+    display:table;
+    border:dashed 1px gray;
+}
+
+	.containercell
+	{
+		padding:10px;
+	}
+	
+
+------Custom Style------------
+
+#popupcontainer
+{
+    display:table;
+    border:dashed 1px gray;
+}
+
+	.popupcontainercell
+	{
+		padding:5px;
+		border-spacing:5px;
+	}
+	
+	.popupcontainertitle
+	{
+	    background-color:Gray;
+	    color:White;
+	     
+	}
+	
+#ordereditcontainer
+{
+    display:table;
+    width:100%;
+}
+
+    .ordereditcell
+	{
+		width:150px;
+		font-weight: bold;
+	}
+
+*/
+
+

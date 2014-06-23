@@ -1,0 +1,15 @@
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\Entidades\bin\Debug\Entidades.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\Entidades\bin\Debug\Entidades.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Debug\ResolveAssemblyReference.cache
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Debug\Entidades.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\bin\Debug\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\bin\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Debug\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\Entidades\obj\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\bin\Debug\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\bin\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Debug\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache

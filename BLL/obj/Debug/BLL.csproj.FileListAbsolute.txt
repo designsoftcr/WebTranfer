@@ -1,0 +1,45 @@
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\BLL.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\BLL.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\DAL.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\Entidades.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\DAL.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\Entidades.pdb
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\obj\Debug\ResolveAssemblyReference.cache
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\obj\Debug\BLL.dll
+D:\PROGRAMI\C#\WebAssetsTransfer\WebAssetsTransfer\BLL\obj\Debug\BLL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\BLL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\BLL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\DAL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\DAL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\bin\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\obj\Debug\BLL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\WebAssetsTransfer\BLL\obj\Debug\BLL.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\bin\Debug\BLL.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\bin\Debug\BLL.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\bin\Debug\DAL.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\bin\Debug\Entidades.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\bin\Debug\DAL.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\bin\Debug\Entidades.pdb
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\obj\Debug\BLL.dll
+C:\Users\GLIGOR\Dropbox\WebAssetsTransfer_v.1.0.04032014 _CODE\WebAssetsTransfer\BLL\obj\Debug\BLL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\bin\Debug\BLL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\bin\Debug\BLL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\bin\Debug\DAL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\bin\Debug\Entidades.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\bin\Debug\DAL.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\bin\Debug\Entidades.pdb
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\obj\Debug\BLL.dll
+D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\BLL\obj\Debug\BLL.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\BLL.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\BLL.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\DAL.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\Entidades.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\DAL.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\Entidades.pdb
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Debug\BLL.dll
+D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Debug\BLL.pdb
