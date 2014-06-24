@@ -159,58 +159,64 @@ namespace Modulo_Boston.Pages
             if (!string.IsNullOrEmpty(this.txt_cod_centro_costo.Text))
             {
                 //GPE 4/3/2014 get mail for calibracion
-                if(ddl_tipo_movimiento.SelectedValue == "3")
-                    this.txt_responsable.Text = new cls_traslado().nombre_responsable_calibracion(this.txt_cod_centro_costo.Text);
-                else
-                    this.txt_responsable.Text = new cls_traslado().nombre_responsable(this.txt_cod_centro_costo.Text);
-            }
-            if (!string.IsNullOrEmpty(this.txt_codigo_centro_costo_destino.Text))
-            {
-                //GPE 4/8/2014 WAT-04052014 Point 6
-                //this.txt_cargo_responsable_costo_destino.Text = new cls_traslado().nombre_responsable(this.txt_codigo_centro_costo_destino.Text);
-                this.txt_cargo_responsable_costo_destino.Text = new cls_traslado().nombre_responsable(this.txt_codigo_centro_costo_destino.Text, true);
-            }
-            if (this.Session["CODIGO_COMPANIA"] == null)
-            {
-                base.Response.Redirect("../wbfrm_login.aspx");
-            }
-
-            centro_costo_status(false);
-
-            //add by GPE 12.02.2013 new stuff # 10
-            if (this.Session["USUARIO"] == null)
-            {
-                base.Response.Redirect("../wbfrm_login.aspx");
-            }
-            else
-            {
-                DataTable dt = new cls_traslado().cargar_solicitante(this.Session["USUARIO"].ToString());
-
-                if(dt != null)
+                // update By Felix 
+                if (ddl_tipo_movimiento.SelectedValue == "3")
                 {
-                    if(dt.Rows.Count > 0)
-                    {
-                        this.txt_cod_solicitante.Text = dt.Rows[0]["COD_EMPLEADO"].ToString();
-                        this.Session["NOMBRE_EMPLEADO"] = this.txt_nombre_solicitante.Text
-                            = dt.Rows[0]["NOM_EMPLEADO"].ToString();
+                    this.txt_responsable.Text = "Aprueba Departamento de Calibraciones";
+                    // this.txt_responsable.Text = new cls_traslado().nombre_responsable_calibracion(this.txt_cod_centro_costo.Text);
+                }
+                else
+                {
+                    this.txt_responsable.Text = new cls_traslado().nombre_responsable(this.txt_cod_centro_costo.Text);
+                }
+                if (!string.IsNullOrEmpty(this.txt_codigo_centro_costo_destino.Text))
+                {
+                    //GPE 4/8/2014 WAT-04052014 Point 6
+                    //this.txt_cargo_responsable_costo_destino.Text = new cls_traslado().nombre_responsable(this.txt_codigo_centro_costo_destino.Text);
+                    this.txt_cargo_responsable_costo_destino.Text = new cls_traslado().nombre_responsable(this.txt_codigo_centro_costo_destino.Text, true);
+                }
+                if (this.Session["CODIGO_COMPANIA"] == null)
+                {
+                    base.Response.Redirect("../wbfrm_login.aspx");
+                }
 
-                        id_solicitante_status(false);
+                centro_costo_status(false);
+
+                //add by GPE 12.02.2013 new stuff # 10
+                if (this.Session["USUARIO"] == null)
+                {
+                    base.Response.Redirect("../wbfrm_login.aspx");
+                }
+                else
+                {
+                    DataTable dt = new cls_traslado().cargar_solicitante(this.Session["USUARIO"].ToString());
+
+                    if (dt != null)
+                    {
+                        if (dt.Rows.Count > 0)
+                        {
+                            this.txt_cod_solicitante.Text = dt.Rows[0]["COD_EMPLEADO"].ToString();
+                            this.Session["NOMBRE_EMPLEADO"] = this.txt_nombre_solicitante.Text
+                                = dt.Rows[0]["NOM_EMPLEADO"].ToString();
+
+                            id_solicitante_status(false);
+                        }
                     }
                 }
-            }
 
-            TextBox tb = GetPostBackControlId(base.Page);
-            if (tb != null)
-            {
-                if(!string.IsNullOrEmpty(tb.Text))
-                    try
-                    {
-                        consultar_activo(Convert.ToInt32(tb.AccessKey));
-                    }
-                    catch (Exception ex)
-                    {
-                        this.crear_mensajes("error", ex.ToString());
-                    }
+                TextBox tb = GetPostBackControlId(base.Page);
+                if (tb != null)
+                {
+                    if (!string.IsNullOrEmpty(tb.Text))
+                        try
+                        {
+                            consultar_activo(Convert.ToInt32(tb.AccessKey));
+                        }
+                        catch (Exception ex)
+                        {
+                            this.crear_mensajes("error", ex.ToString());
+                        }
+                }
             }
         }
         private void cargar_valores_defecto()
@@ -1201,13 +1207,19 @@ namespace Modulo_Boston.Pages
                                     {
                                         this.Session["NOMBRE_CENTRO_COSTO"] = dtce.Rows[0]["CENTRO_COSTO"].ToString();
                                         //GPE 4/3/2014 get mail for calibracion
+                                        // Update By Felix
                                         if (ddl_tipo_movimiento.SelectedValue == "3")
+                                        {
+                                            this.txt_responsable.Text = "Aprueba Departamento de Calibraciones";
                                             this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable_calibracion(dt.Rows[0][7].ToString().Trim());
+                                        }
                                         else
-                                        this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable(dt.Rows[0][7].ToString().Trim());
-
+                                        {
+                                            this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable(dt.Rows[0][7].ToString().Trim());
+                                            this.txt_responsable.Text = this.Session["RESPONSABLE"].ToString();
+                                        }
                                         this.txt_des_centro_costo.Text = this.Session["NOMBRE_CENTRO_COSTO"].ToString();
-                                        this.txt_responsable.Text = this.Session["RESPONSABLE"].ToString();
+                                        
                                         this.txt_cod_centro_costo.Text = dt.Rows[0][7].ToString().Trim();
 
                                         if (this.ddl_tipo_movimiento.SelectedValue == "5" || this.ddl_tipo_movimiento.SelectedValue == "7")
@@ -2354,6 +2366,9 @@ namespace Modulo_Boston.Pages
             this.txt_cod_centro_costo.Text =
                 this.txt_des_centro_costo.Text =
                     this.txt_responsable.Text = string.Empty;
+            //update Felix
+            this.txt_cod_solicitante.Text = string.Empty;
+            this.txt_nombre_solicitante.Text = string.Empty;
 
             //this.btn_buscar_centro_costo.Visible = status;
         }

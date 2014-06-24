@@ -17,3 +17,8 @@ D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\bin\Release\Sys
 D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
 D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+d:\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+d:\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+d:\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+d:\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+d:\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb

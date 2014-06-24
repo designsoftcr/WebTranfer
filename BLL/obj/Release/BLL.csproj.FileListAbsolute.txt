@@ -29,3 +29,16 @@ D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Release\System.Web.Data.Cloud
 D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Release\BLL.csprojResolveAssemblyReference.cache
 D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Release\BLL.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Release\BLL.pdb
+d:\Repos\WebTranfer\BLL\bin\Release\BLL.dll
+d:\Repos\WebTranfer\BLL\bin\Release\BLL.pdb
+d:\Repos\WebTranfer\BLL\bin\Release\CapaLog.dll
+d:\Repos\WebTranfer\BLL\bin\Release\DAL.dll
+d:\Repos\WebTranfer\BLL\bin\Release\Entidades.dll
+d:\Repos\WebTranfer\BLL\bin\Release\System.Web.Data.Cloud.dll
+d:\Repos\WebTranfer\BLL\bin\Release\CapaLog.pdb
+d:\Repos\WebTranfer\BLL\bin\Release\DAL.pdb
+d:\Repos\WebTranfer\BLL\bin\Release\Entidades.pdb
+d:\Repos\WebTranfer\BLL\bin\Release\System.Web.Data.Cloud.pdb
+d:\Repos\WebTranfer\BLL\obj\Release\BLL.csprojResolveAssemblyReference.cache
+d:\Repos\WebTranfer\BLL\obj\Release\BLL.dll
+d:\Repos\WebTranfer\BLL\obj\Release\BLL.pdb

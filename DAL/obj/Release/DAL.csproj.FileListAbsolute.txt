@@ -16,3 +16,9 @@ D:\Projects\PocketAssets\WebAssetsTransfer\DAL\bin\Release\DAL.pdb
 D:\Projects\PocketAssets\WebAssetsTransfer\DAL\obj\Release\DAL.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\DAL\obj\Release\DAL.pdb
 D:\Projects\PocketAssets\WebAssetsTransfer\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+d:\Repos\WebTranfer\DAL\bin\Release\DAL.dll.config
+d:\Repos\WebTranfer\DAL\bin\Release\DAL.dll
+d:\Repos\WebTranfer\DAL\bin\Release\DAL.pdb
+d:\Repos\WebTranfer\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+d:\Repos\WebTranfer\DAL\obj\Release\DAL.dll
+d:\Repos\WebTranfer\DAL\obj\Release\DAL.pdb

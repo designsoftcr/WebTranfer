@@ -12,3 +12,8 @@ D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\bin\Release\Entidades.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\bin\Release\Entidades.pdb
 D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\obj\Release\Entidades.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\Entidades\obj\Release\Entidades.pdb
+d:\Repos\WebTranfer\Entidades\bin\Release\Entidades.dll
+d:\Repos\WebTranfer\Entidades\bin\Release\Entidades.pdb
+d:\Repos\WebTranfer\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
+d:\Repos\WebTranfer\Entidades\obj\Release\Entidades.dll
+d:\Repos\WebTranfer\Entidades\obj\Release\Entidades.pdb

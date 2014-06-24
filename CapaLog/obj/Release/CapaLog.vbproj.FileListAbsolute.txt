@@ -67,3 +67,9 @@ D:\Projects\PocketAssets\WebAssetsTransfer\CapaLog\obj\Release\CapaLog.Resources
 D:\Projects\PocketAssets\WebAssetsTransfer\CapaLog\obj\Release\CapaLog.vbproj.GenerateResource.Cache
 D:\Projects\PocketAssets\WebAssetsTransfer\CapaLog\obj\Release\CapaLog.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\CapaLog\obj\Release\CapaLog.pdb
+d:\Repos\WebTranfer\CapaLog\bin\Release\CapaLog.dll
+d:\Repos\WebTranfer\CapaLog\bin\Release\CapaLog.pdb
+d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.Resources.resources
+d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.vbproj.GenerateResource.Cache
+d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.dll
+d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.pdb
