@@ -134,6 +134,29 @@ namespace WebAssetsTransfer.Pages
             
             this.cargar_grid(tipo_busqueda, this.Session["FILTRO"].ToString());
         }
+
+        private void cargar_grid(string tipo_busqueda, int codigo, string descripcion)
+        {
+            try
+            {
+                if (tipo_busqueda == "grupos_de_acceso")
+                {
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+                    cls_popup groupos = new cls_popup();
+                    System.Data.DataTable dt = groupos.cargar_grupos_de_acceso(codigo, descripcion);
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.crear_mensajes("error", ex.ToString());
+            }
+        }
+
         private void cargar_grid(string tipo_busqueda, string filtro)
         {
             try
@@ -289,7 +312,12 @@ namespace WebAssetsTransfer.Pages
         }
         protected void btn_realizar_filtrado_Click(object sender, System.EventArgs e)
         {
+            int lcodigo = 0;
             this.Session["FILTRO"] = this.txt_filtro_descripcion.Text;
+            if (!string.IsNullOrEmpty(this.txt_filtro_codigo.Text))
+                lcodigo = int.Parse(txt_filtro_codigo.Text);
+
+            //this.cargar_grid(this.Session["TIPO_BUSQUEDA"].ToString(),lcodigo, this.Session["FILTRO"].ToString());
             this.cargar_grid(this.Session["TIPO_BUSQUEDA"].ToString(), this.Session["FILTRO"].ToString());
         }
         protected void btn_limpiar_Click(object sender, System.EventArgs e)

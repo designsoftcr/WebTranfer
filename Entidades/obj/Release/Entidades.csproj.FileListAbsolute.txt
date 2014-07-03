@@ -17,3 +17,7 @@ d:\Repos\WebTranfer\Entidades\bin\Release\Entidades.pdb
 d:\Repos\WebTranfer\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
 d:\Repos\WebTranfer\Entidades\obj\Release\Entidades.dll
 d:\Repos\WebTranfer\Entidades\obj\Release\Entidades.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\bin\Release\Entidades.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\bin\Release\Entidades.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Release\Entidades.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Release\Entidades.pdb

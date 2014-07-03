@@ -73,3 +73,9 @@ d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.Resources.resources
 d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.vbproj.GenerateResource.Cache
 d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.dll
 d:\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\bin\Release\CapaLog.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\bin\Release\CapaLog.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.Resources.resources
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.vbproj.GenerateResource.Cache
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Release\CapaLog.pdb

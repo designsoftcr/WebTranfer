@@ -790,19 +790,36 @@ namespace BLL
         }
 
         //add by GPE 12.02.2013 new stuff # 10
-        public DataTable cargar_solicitante(string usuario)
+        public DataTable cargar_solicitante(int id_movimiento)//string usuario)
         {
          
             
              var emple = 
                 from c in this.db.AFM_CATAL_EMPLE
-                where c.USUARIO_SESION == usuario
+                join d in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on c.COD_EMPLEADO equals d.ID_EMPLEADO
+                where d.ID_MOVIMIENTO == id_movimiento//c.USUARIO_SESION == usuario
                 select new
                 {
                     COD_EMPLEADO = c.COD_EMPLEADO,
                     NOM_EMPLEADO = c.NOM_EMPLEADO
                 };
              
+            return emple.AsDataTable();
+        }
+
+        public DataTable cargar_solicitante(string usuario)
+        {
+
+
+            var emple =
+               from c in this.db.AFM_CATAL_EMPLE
+               where c.USUARIO_SESION == usuario
+               select new
+               {
+                   COD_EMPLEADO = c.COD_EMPLEADO,
+                   NOM_EMPLEADO = c.NOM_EMPLEADO
+               };
+
             return emple.AsDataTable();
         }
         //GPE 12/07/2013 WAT_Document new stuff # 14

@@ -57,7 +57,7 @@ namespace WebAssetsTransfer
                 {
                     //LDAP authentication or SQL authentication
                     bool authenticate;
-
+                    
                     if (cls_configuracion.Authentication)
                         authenticate = new cls_sql_autentication().sql_autentificar(this.txt_usuario.Text, this.txt_contrasena.Text);
                     else

@@ -136,6 +136,43 @@ namespace BLL
             return grupos_de_acceso.AsDataTable();
         }
 
+        public DataTable cargar_grupos_de_acceso(int iCodigo, string descripcion)
+        {
+            if (iCodigo > 0)
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    where c.ID_GRUPO == iCodigo
+                    select new
+                    {
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = c.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        EMAIL_GRUPO = c.EMAIL_GRUPO,
+                        ESTADO = c.ESTADO,
+                        COD_CIA_PRO = c.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            else
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    where descripcion == "todo" || c.DESCRIPCION.Contains(descripcion)
+                    select new
+                    {
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = c.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        EMAIL_GRUPO = c.EMAIL_GRUPO,
+                        ESTADO = c.ESTADO,
+                        COD_CIA_PRO = c.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            
+        }
+
         //add by GPE 16.09.2013
         public DataTable cargar_usuarios_por_grupo_de_acceso(string descripcion)
         {

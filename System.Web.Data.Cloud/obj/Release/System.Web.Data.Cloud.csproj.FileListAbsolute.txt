@@ -22,3 +22,7 @@ d:\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
 d:\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
 d:\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
 d:\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb

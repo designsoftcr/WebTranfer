@@ -62,13 +62,13 @@ namespace WebAssetsTransfer.Functions
             }
         }
         //GPE 12.09.2013 add
-        public static string NavigateURL
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["NavigateURL"];
-            }
-        }
+        //public static string NavigateURL
+        //{
+        //    get
+        //    {
+        //        return ConfigurationManager.AppSettings["NavigateURL"];
+        //    }
+        //}
 
         public static string ExportExcelPath
         {

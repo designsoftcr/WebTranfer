@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using WebAssetsTransfer.Functions;
+using WebAssetsTransfer.Helper;
 
 namespace Modulo_Boston.Pages
 {
@@ -189,7 +190,16 @@ namespace Modulo_Boston.Pages
                 }
                 else
                 {
-                    DataTable dt = new cls_traslado().cargar_solicitante(this.Session["USUARIO"].ToString());
+                    DataTable dt = null;
+                    if (this.Session["ID_MOVIMIENTO"] != null)
+                    {
+                        dt = new cls_traslado().cargar_solicitante((int)this.Session["ID_MOVIMIENTO"]);//this.Session["USUARIO"].ToString());
+                    }
+                    else
+                    {
+                        dt = new cls_traslado().cargar_solicitante(this.Session["USUARIO"].ToString());
+                    }
+
 
                     if (dt != null)
                     {
@@ -632,6 +642,9 @@ namespace Modulo_Boston.Pages
                 {
                     cls_traslado centro_costo = new cls_traslado();
                     string strMovementType = Session["SES_Movimenent_Type"].ToString().Trim();
+                    if (Session["SES_COD_CIA_PRO"] == null) {
+                        Session["SES_COD_CIA_PRO"] = string.Empty;
+                    }
                     string strCOD_CIA_PRO = Session["SES_COD_CIA_PRO"].ToString().Trim();
                     DataTable dt = new DataTable();
                     if ((strMovementType == "5" || strMovementType == "7") && !string.IsNullOrEmpty(strCOD_CIA_PRO))
@@ -643,7 +656,7 @@ namespace Modulo_Boston.Pages
                         //metodo original
                         dt = centro_costo.cargar_centro_costo(this.txt_codigo_centro_costo_destino.Text.Trim());
                     }
-                    if (dt.Rows.Count > 0)
+                    if (dt != null && dt.Rows.Count > 0)
                     {
                         this.Session["NOMBRE_CENTRO_COSTO_DESTINO"] = dt.Rows[0]["CENTRO_COSTO"].ToString();
                         this.txt_nombre_centro_costo_destino.Text = dt.Rows[0]["CENTRO_COSTO"].ToString();
@@ -1915,7 +1928,7 @@ namespace Modulo_Boston.Pages
                 {
                     contenido = contenido.Replace("[URL_DESCRIPCION]", "Ingreso para Aprobación ó Cancelación");
                     //GPE 12.09.2013 change string navigate_url = "http://cylmult12//WebAssetsTransfer/wbfrm_login.aspx/?codigo_compania=" + this.Session["CODIGO_COMPANIA"].ToString() + "&id_movimiento=" + id_movimiento.ToString();
-                    string navigate_url = cls_configuracion.NavigateURL + "//WebAssetsTransfer/wbfrm_login.aspx/?codigo_compania=" + this.Session["CODIGO_COMPANIA"].ToString() + "&id_movimiento=" + id_movimiento.ToString();
+                    string navigate_url = string.Format("{0}/wbfrm_login.aspx/?codigo_compania={1}&id_movimiento={2}", HttpTools.HttpUrlPath, this.Session["CODIGO_COMPANIA"].ToString(), id_movimiento.ToString());
                     contenido = contenido.Replace("[URL]", navigate_url);
                 }
                 result = contenido;
@@ -1979,7 +1992,7 @@ namespace Modulo_Boston.Pages
                 {
                     contenido = contenido.Replace("[URL_DESCRIPCION]", "Ingreso para Aprobación ó Cancelación");
                     //GPE 12.09.2013 change string navigate_url = "http://cylmult12//WebAssetsTransfer/wbfrm_login.aspx/?codigo_compania=" + this.Session["CODIGO_COMPANIA"].ToString() + "&id_movimiento=" + id_movimiento.ToString();
-                    string navigate_url = cls_configuracion.NavigateURL + "//WebAssetsTransfer/wbfrm_login.aspx/?codigo_compania=" + this.Session["CODIGO_COMPANIA"].ToString() + "&id_movimiento=" + id_movimiento.ToString();
+                    string navigate_url = string.Format("{0}/wbfrm_login.aspx/?codigo_compania={1}&id_movimiento={2}", HttpTools.HttpUrlPath, this.Session["CODIGO_COMPANIA"].ToString(), id_movimiento.ToString());
                     contenido = contenido.Replace("[URL]", navigate_url);
                 }
                 string items_table = "<table style=\"width: 800px;border: 1px solid #000;border-collapse: collapse;\"><tr>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Placa</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Activo SAP</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción del Activo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Marca</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Modelo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Serie</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Valor Libros</span></td>\r\n                    </tr>";

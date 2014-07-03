@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using WebAssetsTransfer.Functions;
+using WebAssetsTransfer.Helper;
 namespace WebAssetsTransfer.Pages
 {
     //GPE added partial
@@ -276,7 +277,7 @@ namespace WebAssetsTransfer.Pages
         public void print_report(int id_bitacora)
         {
             string contenido = System.IO.File.ReadAllText(base.Server.MapPath("~/Templates/Report.htm"));
-            string result = new cls_bitacora().Print_Report(id_bitacora, contenido, this.Session["CODIGO_COMPANIA"].ToString(), cls_configuracion.NavigateURL);
+            string result = new cls_bitacora().Print_Report(id_bitacora, contenido, this.Session["CODIGO_COMPANIA"].ToString(), HttpTools.HttpUrlPath);
 
             result = result.Replace("\r\n", "");
 

@@ -55,31 +55,43 @@
                 <td class="td_encabezado_filtro">
                     <asp:Label ID="lb_filtrado_codigo" runat="server" Text="Código"></asp:Label>
                 </td>
-                <td class="td_encabezado_filtro_col2">
+                <td colspan="2">
                     <asp:TextBox ID="txt_filtro_codigo" runat="server" 
-                        CssClass="txt_regular"></asp:TextBox>
+                        CssClass="txt_ancho"></asp:TextBox>
                 </td>
+            </tr>
+            <tr>
                 <td class="td_encabezado_filtro_col3">
                     <asp:Label ID="lb_filtrado_descripcion" runat="server" Text="Descripción"></asp:Label>
                 </td>
-                <td>
+                <td colspan="2">
                     <asp:TextBox ID="txt_filtro_descripcion" runat="server" CssClass="txt_ancho"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;</td>
-                <td colspan="3">
-                    <asp:Button ID="btn_realizar_filtrado" runat="server" CssClass="button_generic" 
-                        onclick="btn_realizar_filtrado_Click" Text="Buscar" />
-                    <asp:Button ID="btn_limpiar" runat="server" CssClass="button_generic" 
-                        onclick="btn_limpiar_Click" Text="Limpiar Filtro" />
-                    <asp:Button ID="Aceptar" runat="server" CssClass="button_generic" 
-                        onclick="btn_aceptar_Click" Text="Aceptar" />
-                    <input id="btn_cancelar" type="button" value="Cancelar" 
-                        onclick="javascript:parent.jQuery.fancybox.close();" 
-                        class="button_generic"/>
-                </td>
+                <table>
+                    <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Button ID="btn_realizar_filtrado" runat="server" CssClass="button_generic" 
+                            onclick="btn_realizar_filtrado_Click" Text="Buscar" />
+                    </td>
+                    <td>
+                        <asp:Button ID="btn_limpiar" runat="server" CssClass="button_generic" 
+                            onclick="btn_limpiar_Click" Text="Limpiar Filtro" />
+                    </td>
+                    <td>
+                        <asp:Button ID="Aceptar" runat="server" CssClass="button_generic" 
+                            onclick="btn_aceptar_Click" Text="Aceptar" />
+                    </td>
+                    <td>
+                        <input id="btn_cancelar" type="button" value="Cancelar" 
+                            onclick="javascript:parent.jQuery.fancybox.close();" 
+                            class="button_generic"/>
+                    </td>
+                    </tr>
+                </table>
             </tr>
         </table>
         <br /><br /><br />
