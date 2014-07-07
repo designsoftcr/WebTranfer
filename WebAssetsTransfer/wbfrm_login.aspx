@@ -31,7 +31,7 @@
                             <asp:TextBox ID="txt_usuario" runat="server" MaxLength="80"></asp:TextBox>
                             <h3><asp:Label ID="lbl_etiqueta_contrasena" runat="server" Text="<%$ Resources:pages_names_es, lbl_etiqueta_contrasena%>"></asp:Label></h3>
                             <asp:TextBox ID="txt_contrasena" runat="server" MaxLength="80" TextMode="Password"></asp:TextBox>
-                            <div style="margin-top:-12px;"><input type="checkbox" checked="checked" runat="server" class="check" id="chbRememberMe" /><label for="remember1">&nbsp;Recordar Conexión</label></div>
+                            <div style="margin-top:-12px;"><!--<input type="checkbox" runat="server" class="check" id="chbRememberMe" /><label for="remember1">&nbsp;Recordar Conexión</label>--></div>
                         </div>           
                     </div> 
                     <div class="btn_login">

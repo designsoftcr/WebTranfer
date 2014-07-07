@@ -128,11 +128,16 @@ namespace Modulo_Boston.Pages
                     this.gv_activos.Enabled = false;
                     this.Session["CODIGO_COMPANIA"] = base.Request.QueryString["codigo_compania"];
                     this.Session["ID_MOVIMIENTO"] = System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]);
+
+                    //Aquí se debe validar a ver si es el usuario con permisos de aprobacion del paso actual y no por si el usuario ya 
+                    //hizo el paso o no
                     if (this.estado_link(System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]), System.Convert.ToString(this.Session["USUARIO"])))
                     {
                         this.estado_controles(this.Page, false);
                         this.estado_botones(false, true);
                         this.cargar_controles(base.Request.QueryString["codigo_compania"].ToString(), System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]));
+                        /*Se añadió la carga del solicitante aquí*/
+                        cargarSolicitante();
                     }
                     else
                     {
@@ -142,9 +147,15 @@ namespace Modulo_Boston.Pages
                 }
                 else
                 {
+                    this.Session["ID_MOVIMIENTO"] = null;
+                    //this.Session["CODIGO_COMPANIA"] = null;
                     this.txt_fecha.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
                     this.Session["CODIGO"] = null;
                     this.estado_controles(this.Page, true);
+
+                    /*Se añadió aqui la carga*/
+                    cargarSolicitante();
+
                 }
                 if (new cls_traslado().grupo_usuario(2, this.Session["CODIGO_COMPANIA"].ToString(), this.Session["USUARIO"].ToString()))
                 {
@@ -190,28 +201,7 @@ namespace Modulo_Boston.Pages
                 }
                 else
                 {
-                    DataTable dt = null;
-                    if (this.Session["ID_MOVIMIENTO"] != null)
-                    {
-                        dt = new cls_traslado().cargar_solicitante((int)this.Session["ID_MOVIMIENTO"]);//this.Session["USUARIO"].ToString());
-                    }
-                    else
-                    {
-                        dt = new cls_traslado().cargar_solicitante(this.Session["USUARIO"].ToString());
-                    }
-
-
-                    if (dt != null)
-                    {
-                        if (dt.Rows.Count > 0)
-                        {
-                            this.txt_cod_solicitante.Text = dt.Rows[0]["COD_EMPLEADO"].ToString();
-                            this.Session["NOMBRE_EMPLEADO"] = this.txt_nombre_solicitante.Text
-                                = dt.Rows[0]["NOM_EMPLEADO"].ToString();
-
-                            id_solicitante_status(false);
-                        }
-                    }
+                    /*Aqui iba el codigo de carga del usuario*/
                 }
 
                 TextBox tb = GetPostBackControlId(base.Page);
@@ -229,6 +219,33 @@ namespace Modulo_Boston.Pages
                 }
             }
         }
+
+        private void cargarSolicitante() 
+        {
+            DataTable dt = null;
+            if (this.Session["ID_MOVIMIENTO"] != null && this.Session["CODIGO_COMPANIA"] != null)
+            {
+                dt = new cls_traslado().cargar_solicitante((int)this.Session["ID_MOVIMIENTO"]);//this.Session["USUARIO"].ToString());
+            }
+            else
+            {
+            dt = new cls_traslado().cargar_solicitante(this.Session["USUARIO"].ToString());
+            }
+
+
+            if (dt != null)
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    this.txt_cod_solicitante.Text = dt.Rows[0]["COD_EMPLEADO"].ToString();
+                    this.Session["NOMBRE_EMPLEADO"] = this.txt_nombre_solicitante.Text
+                        = dt.Rows[0]["NOM_EMPLEADO"].ToString();
+
+                    id_solicitante_status(false);
+                }
+            }
+        }
+
         private void cargar_valores_defecto()
         {
             this.Session["TIPO_MOVIMIENTO"] = this.ddl_tipo_movimiento.SelectedValue;
@@ -536,6 +553,7 @@ namespace Modulo_Boston.Pages
                 case 7:
                     this.seccion_area_destino.Visible = true;
                     this.lb_fieldset_area_destino.Text = "Información de Área Destino de los Activos Fíjos Externos";
+                    LimpiarControles();
                     break;
             }
         }
@@ -2489,6 +2507,17 @@ namespace Modulo_Boston.Pages
             {
                 this.crear_mensajes("error", ex.ToString());
             }
+        }
+
+        private void LimpiarControles()
+        {
+            this.ddl_localizacion_destino.Items.Clear();
+            this.ddl_seccion_destino.Items.Clear();
+            this.ddl_planta_destino.Items.Clear();
+            ListItem first = new ListItem("Seleccione la Localización", "0");
+            this.ddl_localizacion_destino.Items.Add(first);
+            this.txt_codigo_centro_costo_destino.Text = "";
+            this.txt_nombre_centro_costo_destino.Text = "";
         }
         
     }

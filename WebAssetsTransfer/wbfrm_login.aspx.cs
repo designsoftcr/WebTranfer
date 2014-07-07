@@ -22,7 +22,7 @@ namespace WebAssetsTransfer
             if (!IsPostBack) 
             {
                 Session.Clear();
-                getCookies();
+                //getCookies();
             }
         }
         private bool validar()
@@ -65,14 +65,14 @@ namespace WebAssetsTransfer
                              
                     if (authenticate)
                     {
-                        if (this.chbRememberMe.Checked == true)
+                        /*if (this.chbRememberMe.Checked == true)
                         {
                             SetCookies(this.txt_usuario.Text, this.txt_contrasena.Text);
                         }
                         else
                         {
                             RemoveCookies();
-                        }
+                        }*/
                         this.Session["USUARIO"] = this.txt_usuario.Text;
                         if (!string.IsNullOrEmpty(base.Request.QueryString["codigo_compania"]) && !string.IsNullOrEmpty(base.Request.QueryString["id_movimiento"]))
                         {
