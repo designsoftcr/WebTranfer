@@ -19,6 +19,10 @@ namespace WebAssetsTransfer.Pages
         protected DropDownList DDL_ESTADO;
         protected Button btn_consulta_filtrada;
         protected GridView gv_movimiento_maestro;
+
+        protected Button btn_cargar_centro_costo;
+        protected Button btn_cargar_solicitante;
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
             if (this.Session["CODIGO_COMPANIA"] == null)
@@ -305,5 +309,64 @@ namespace WebAssetsTransfer.Pages
             }
             btn_consulta_filtrada_Click(sender, e);
         }
+
+        protected void btn_cargar_centro_costo_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                //this.Session["RESPONSABLE"] = string.Empty;
+                if (!string.IsNullOrEmpty(this.txt_cod_centro_costo.Text.Trim()))
+                {
+                    cls_traslado centro_costo = new cls_traslado();
+                    DataTable dt = new DataTable();
+                    dt = centro_costo.cargar_centro_costo(this.txt_cod_centro_costo.Text.Trim());
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        //this.Session["COD_CENTRO_COSTO_B"] = dt.Rows[0]["COD_CENTRO_COSTO"].ToString();
+                        this.txt_des_centro_costo.Text = dt.Rows[0]["CENTRO_COSTO"].ToString();
+                    }
+                    else
+                    {
+                        //this.Session["COD_CENTRO_COSTO_B"] = "";
+                        this.txt_des_centro_costo.Text = "No se encontraron resultados";
+                    }
+                    /*string script = "$(\"[id*='txt_des_centro_costo']\").val('{0}');";
+                    script = string.Format(script, this.txt_des_centro_costo.Text);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);*/
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.crear_mensajes("error", ex.ToString());
+            }
+        }
+
+        protected void btn_cargar_solicitante_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(this.txt_cod_solicitante.Text.Trim()))
+                {
+                    cls_traslado centro_costo = new cls_traslado();
+                    System.Data.DataTable dt = centro_costo.cargar_empleado(this.txt_cod_solicitante.Text.Trim());
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        this.txt_cod_solicitante.Text = dt.Rows[0]["COD_EMPLEADO"].ToString();
+                        this.txt_nombre_solicitante.Text = dt.Rows[0]["NOMBRE_EMPLEADO"].ToString();
+                    }
+                    else
+                    {
+                        this.txt_nombre_solicitante.Text = "No se encontraron resultados";
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.crear_mensajes("error", ex.ToString());
+            }
+        }
+
     }
 }

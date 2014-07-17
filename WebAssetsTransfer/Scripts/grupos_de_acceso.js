@@ -30,7 +30,8 @@ function filtro(filtro, id_control_codigo, id_control_descripcion, id_responsabl
         //margin: [50, 60, 50, 60], // Increase left/right
         //padding: 5
         //Add BY GPE 3/7/2013 point.3 doc. After my visit
-        width: 1000
+        //width: 1000
+        width:"100%"
     });
 }
 
@@ -50,7 +51,8 @@ function cargar_grupos_de_acceso(codigo, descripcion, cod_compania, email_grupo,
     else {
         $('input:radio[value=desactivado]')[0].checked = true;
     }
-    DisableControls();
+    //DisableControls();
+    EnableControls();
 }
 
 function EnableControls() {
@@ -60,7 +62,7 @@ function EnableControls() {
         radioStatus = true;
         //$("[id*=btn_select_propcompania]").removeAttr('disabled');
         $("[id*=btn_excepto]").show();
-        alert("Ahora puede editar el control electrónico y el estado!!!");
+        //alert("Ahora puede editar el correo electrónico y el estado!!!");
     }
 }
 

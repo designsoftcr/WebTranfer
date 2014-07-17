@@ -1742,123 +1742,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AFM_MAEST_ACTIV">
-      <EntityTypeMapping TypeName="BostonModel.AFM_MAEST_ACTIV">
-        <MappingFragment StoreEntitySet="AFM_MAEST_ACTIV">
-          <ScalarProperty Name="COD_COMPANIA" ColumnName="COD_COMPANIA" />
-          <ScalarProperty Name="NUM_ACTIVO" ColumnName="NUM_ACTIVO" />
-          <ScalarProperty Name="COD_CIA_PRO" ColumnName="COD_CIA_PRO" />
-          <ScalarProperty Name="PLA_ACTIVO" ColumnName="PLA_ACTIVO" />
-          <ScalarProperty Name="DES_ACTIVO" ColumnName="DES_ACTIVO" />
-          <ScalarProperty Name="DES_ACTIVO_ANT" ColumnName="DES_ACTIVO_ANT" />
-          <ScalarProperty Name="PLA_ANTERIOR" ColumnName="PLA_ANTERIOR" />
-          <ScalarProperty Name="PLA_INICIAL" ColumnName="PLA_INICIAL" />
-          <ScalarProperty Name="COD_ACT_AUX" ColumnName="COD_ACT_AUX" />
-          <ScalarProperty Name="DES_UBI_PLACA" ColumnName="DES_UBI_PLACA" />
-          <ScalarProperty Name="COD_TIPO_PLACA" ColumnName="COD_TIPO_PLACA" />
-          <ScalarProperty Name="SER_ACTIVO" ColumnName="SER_ACTIVO" />
-          <ScalarProperty Name="COD_MARCA" ColumnName="COD_MARCA" />
-          <ScalarProperty Name="COD_MODELO" ColumnName="COD_MODELO" />
-          <ScalarProperty Name="COD_TIP_ACT" ColumnName="COD_TIP_ACT" />
-          <ScalarProperty Name="COD_CLA_ACT" ColumnName="COD_CLA_ACT" />
-          <ScalarProperty Name="COD_SUB_CLA" ColumnName="COD_SUB_CLA" />
-          <ScalarProperty Name="COD_ACT_BAS" ColumnName="COD_ACT_BAS" />
-          <ScalarProperty Name="COD_LOC_ACT" ColumnName="COD_LOC_ACT" />
-          <ScalarProperty Name="COD_SEC_LOC" ColumnName="COD_SEC_LOC" />
-          <ScalarProperty Name="COD_UBI_ACT" ColumnName="COD_UBI_ACT" />
-          <ScalarProperty Name="COD_EMPLEADO" ColumnName="COD_EMPLEADO" />
-          <ScalarProperty Name="IND_MOV_ACT" ColumnName="IND_MOV_ACT" />
-          <ScalarProperty Name="COD_CEN_CST" ColumnName="COD_CEN_CST" />
-          <ScalarProperty Name="BIN_TIE_COM" ColumnName="BIN_TIE_COM" />
-          <ScalarProperty Name="FEC_COMPRA" ColumnName="FEC_COMPRA" />
-          <ScalarProperty Name="FYH_ULT_TOMA" ColumnName="FYH_ULT_TOMA" />
-          <ScalarProperty Name="ORD_COMPRA" ColumnName="ORD_COMPRA" />
-          <ScalarProperty Name="NUM_CAPITAL" ColumnName="NUM_CAPITAL" />
-          <ScalarProperty Name="NUM_CONSEC" ColumnName="NUM_CONSEC" />
-          <ScalarProperty Name="FYH_RETIRO" ColumnName="FYH_RETIRO" />
-          <ScalarProperty Name="NUM_DEC_ADU" ColumnName="NUM_DEC_ADU" />
-          <ScalarProperty Name="NUM_DEC_ADU_SAL" ColumnName="NUM_DEC_ADU_SAL" />
-          <ScalarProperty Name="FYH_DEC_ADU_SAL" ColumnName="FYH_DEC_ADU_SAL" />
-          <ScalarProperty Name="IND_ACT_EXC" ColumnName="IND_ACT_EXC" />
-          <ScalarProperty Name="FYH_ACT_EXC" ColumnName="FYH_ACT_EXC" />
-          <ScalarProperty Name="COD_APROPI" ColumnName="COD_APROPI" />
-          <ScalarProperty Name="VAL_COMPRA" ColumnName="VAL_COMPRA" />
-          <ScalarProperty Name="VAL_COMPRA_COL" ColumnName="VAL_COMPRA_COL" />
-          <ScalarProperty Name="VAL_LIBROS" ColumnName="VAL_LIBROS" />
-          <ScalarProperty Name="VAL_LIBROS_COR" ColumnName="VAL_LIBROS_COR" />
-          <ScalarProperty Name="VAL_DEPACU" ColumnName="VAL_DEPACU" />
-          <ScalarProperty Name="VAL_DEPACU_COR" ColumnName="VAL_DEPACU_COR" />
-          <ScalarProperty Name="FYH_CAPITAL" ColumnName="FYH_CAPITAL" />
-          <ScalarProperty Name="FYH_COMPRA" ColumnName="FYH_COMPRA" />
-          <ScalarProperty Name="OBS_ACTIVO" ColumnName="OBS_ACTIVO" />
-          <ScalarProperty Name="NUM_FACTUR" ColumnName="NUM_FACTUR" />
-          <ScalarProperty Name="NUM_LICITA" ColumnName="NUM_LICITA" />
-          <ScalarProperty Name="NUM_AMPLIA" ColumnName="NUM_AMPLIA" />
-          <ScalarProperty Name="COD_CTA_DEPACU" ColumnName="COD_CTA_DEPACU" />
-          <ScalarProperty Name="COD_CTA_GASDEP" ColumnName="COD_CTA_GASDEP" />
-          <ScalarProperty Name="COD_CTA_DEPACU_COR" ColumnName="COD_CTA_DEPACU_COR" />
-          <ScalarProperty Name="COD_CTA_GASDEP_COR" ColumnName="COD_CTA_GASDEP_COR" />
-          <ScalarProperty Name="COD_MET_DEP" ColumnName="COD_MET_DEP" />
-          <ScalarProperty Name="NUM_POLIZA" ColumnName="NUM_POLIZA" />
-          <ScalarProperty Name="NUM_POLIZA_SAL" ColumnName="NUM_POLIZA_SAL" />
-          <ScalarProperty Name="VAL_ADU_DOL" ColumnName="VAL_ADU_DOL" />
-          <ScalarProperty Name="FEC_INI_DEP" ColumnName="FEC_INI_DEP" />
-          <ScalarProperty Name="FEC_INI_DEP_COR" ColumnName="FEC_INI_DEP_COR" />
-          <ScalarProperty Name="FEC_ULT_DEP" ColumnName="FEC_ULT_DEP" />
-          <ScalarProperty Name="FEC_ULT_DEP_COR" ColumnName="FEC_ULT_DEP_COR" />
-          <ScalarProperty Name="VAL_RESIDUAL" ColumnName="VAL_RESIDUAL" />
-          <ScalarProperty Name="VAL_RESIDUAL_COR" ColumnName="VAL_RESIDUAL_COR" />
-          <ScalarProperty Name="VAL_VID_UTL" ColumnName="VAL_VID_UTL" />
-          <ScalarProperty Name="VAL_VID_UTL_COR" ColumnName="VAL_VID_UTL_COR" />
-          <ScalarProperty Name="NUM_CHEQUE" ColumnName="NUM_CHEQUE" />
-          <ScalarProperty Name="VAL_TIP_CAM" ColumnName="VAL_TIP_CAM" />
-          <ScalarProperty Name="COD_PROVEE" ColumnName="COD_PROVEE" />
-          <ScalarProperty Name="COD_EST_ADU" ColumnName="COD_EST_ADU" />
-          <ScalarProperty Name="COD_TIP_OPE" ColumnName="COD_TIP_OPE" />
-          <ScalarProperty Name="REF_NUM_ACT" ColumnName="REF_NUM_ACT" />
-          <ScalarProperty Name="NUM_ASI_CON" ColumnName="NUM_ASI_CON" />
-          <ScalarProperty Name="IND_DEPREC" ColumnName="IND_DEPREC" />
-          <ScalarProperty Name="FEC_EXP_GAR" ColumnName="FEC_EXP_GAR" />
-          <ScalarProperty Name="COD_ORI_STS" ColumnName="COD_ORI_STS" />
-          <ScalarProperty Name="COD_EST_ORI" ColumnName="COD_EST_ORI" />
-          <ScalarProperty Name="FYH_ESTADO" ColumnName="FYH_ESTADO" />
-          <ScalarProperty Name="CAMPO62" ColumnName="CAMPO62" />
-          <ScalarProperty Name="COD_MON_COM" ColumnName="COD_MON_COM" />
-          <ScalarProperty Name="IND_REG_SER" ColumnName="IND_REG_SER" />
-          <ScalarProperty Name="CAN_ACT_NUE" ColumnName="CAN_ACT_NUE" />
-          <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
-          <ScalarProperty Name="VAL_DEPREC_MEN" ColumnName="VAL_DEPREC_MEN" />
-          <ScalarProperty Name="VAL_DEPREC_MEN_COR" ColumnName="VAL_DEPREC_MEN_COR" />
-          <ScalarProperty Name="VAL_VID_UTL_ACUM" ColumnName="VAL_VID_UTL_ACUM" />
-          <ScalarProperty Name="VAL_VID_UTL_ACUM_COR" ColumnName="VAL_VID_UTL_ACUM_COR" />
-          <ScalarProperty Name="VAL_RES_VID_UTL" ColumnName="VAL_RES_VID_UTL" />
-          <ScalarProperty Name="VAL_RES_VID_UTL_COR" ColumnName="VAL_RES_VID_UTL_COR" />
-          <ScalarProperty Name="VAL_LIB_ACT" ColumnName="VAL_LIB_ACT" />
-          <ScalarProperty Name="VAL_DEPREC" ColumnName="VAL_DEPREC" />
-          <ScalarProperty Name="FYH_FIN_DEPREC" ColumnName="FYH_FIN_DEPREC" />
-          <ScalarProperty Name="NUM_MES_DEPREC" ColumnName="NUM_MES_DEPREC" />
-          <ScalarProperty Name="COD_CTA_DEP_REVAL" ColumnName="COD_CTA_DEP_REVAL" />
-          <ScalarProperty Name="COD_CTA_GASDEP_REVAL" ColumnName="COD_CTA_GASDEP_REVAL" />
-          <ScalarProperty Name="VAL_REVALS" ColumnName="VAL_REVALS" />
-          <ScalarProperty Name="VAL_DEPACU_REVAL" ColumnName="VAL_DEPACU_REVAL" />
-          <ScalarProperty Name="VAL_GASDEPACU_REVAL" ColumnName="VAL_GASDEPACU_REVAL" />
-          <ScalarProperty Name="cod_patrimonio" ColumnName="cod_patrimonio" />
-          <ScalarProperty Name="cod_provincia" ColumnName="cod_provincia" />
-          <ScalarProperty Name="cod_canton" ColumnName="cod_canton" />
-          <ScalarProperty Name="cod_distrito" ColumnName="cod_distrito" />
-          <ScalarProperty Name="anno_presupuesto" ColumnName="anno_presupuesto" />
-          <ScalarProperty Name="cod_acta" ColumnName="cod_acta" />
-          <ScalarProperty Name="cod_folio" ColumnName="cod_folio" />
-          <ScalarProperty Name="cod_prog_presupuestario" ColumnName="cod_prog_presupuestario" />
-          <ScalarProperty Name="cod_subprog_presupuestario" ColumnName="cod_subprog_presupuestario" />
-          <ScalarProperty Name="ind_exportado" ColumnName="ind_exportado" />
-          <ScalarProperty Name="ind_act_grupo" ColumnName="ind_act_grupo" />
-          <ScalarProperty Name="COD_CTA_COSTO" ColumnName="COD_CTA_COSTO" />
-          <ScalarProperty Name="COD_MON_COM_COR" ColumnName="COD_MON_COM_COR" />
-          <ScalarProperty Name="NUM_BLOQUE" ColumnName="NUM_BLOQUE" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="AFM_MAEST_ACTIV_GRUPO">
       <EntityTypeMapping TypeName="BostonModel.AFM_MAEST_ACTIV_GRUPO">
         <MappingFragment StoreEntitySet="AFM_MAEST_ACTIV_GRUPO">
@@ -2998,23 +2881,12 @@
       <EntityTypeMapping TypeName="BostonModel.AFT_MOV_GRUPO_USUARIOS">
         <MappingFragment StoreEntitySet="AFT_MOV_GRUPO_USUARIOS">
           <!-- GPE PROVERI      <ScalarProperty Name="COD_CIA_PRO" ColumnName="COD_CIA_PRO" />  -->
+          <ScalarProperty Name="COD_CIA_PRO" ColumnName="COD_CIA_PRO" />
           <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
           <ScalarProperty Name="ID_GRUPO" ColumnName="ID_GRUPO" />
           <ScalarProperty Name="COD_COMPANIA" ColumnName="COD_COMPANIA" />
           <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
           <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AFT_MOV_GRUPOS_ACCESOS">
-      <EntityTypeMapping TypeName="BostonModel.AFT_MOV_GRUPOS_ACCESOS">
-        <MappingFragment StoreEntitySet="AFT_MOV_GRUPOS_ACCESOS">
-          <ScalarProperty Name="COD_CIA_PRO" ColumnName="COD_CIA_PRO" />
-          <ScalarProperty Name="ID_GRUPO" ColumnName="ID_GRUPO" />
-          <ScalarProperty Name="COD_COMPANIA" ColumnName="COD_COMPANIA" />
-          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
-          <ScalarProperty Name="EMAIL_GRUPO" ColumnName="EMAIL_GRUPO" />
-          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6241,6 +6113,135 @@
           <ScalarProperty Name="COD_EST_ORI" ColumnName="COD_EST_ORI" />
           <ScalarProperty Name="DES_EST_ORI" ColumnName="DES_EST_ORI" />
           <ScalarProperty Name="COD_ORI_STS" ColumnName="COD_ORI_STS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AFT_MOV_GRUPOS_ACCESOS">
+      <EntityTypeMapping TypeName="BostonModel.AFT_MOV_GRUPOS_ACCESOS">
+        <MappingFragment StoreEntitySet="AFT_MOV_GRUPOS_ACCESOS">
+          <ScalarProperty Name="COD_CIA_PRO" ColumnName="COD_CIA_PRO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="EMAIL_GRUPO" ColumnName="EMAIL_GRUPO" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="COD_COMPANIA" ColumnName="COD_COMPANIA" />
+          <ScalarProperty Name="ID_GRUPO" ColumnName="ID_GRUPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AFM_MAEST_ACTIV">
+      <EntityTypeMapping TypeName="BostonModel.AFM_MAEST_ACTIV">
+        <MappingFragment StoreEntitySet="AFM_MAEST_ACTIV">
+          <ScalarProperty Name="NUM_BLOQUE" ColumnName="NUM_BLOQUE" />
+          <ScalarProperty Name="COD_MON_COM_COR" ColumnName="COD_MON_COM_COR" />
+          <ScalarProperty Name="COD_CTA_COSTO" ColumnName="COD_CTA_COSTO" />
+          <ScalarProperty Name="ind_act_grupo" ColumnName="ind_act_grupo" />
+          <ScalarProperty Name="ind_exportado" ColumnName="ind_exportado" />
+          <ScalarProperty Name="cod_subprog_presupuestario" ColumnName="cod_subprog_presupuestario" />
+          <ScalarProperty Name="cod_prog_presupuestario" ColumnName="cod_prog_presupuestario" />
+          <ScalarProperty Name="cod_folio" ColumnName="cod_folio" />
+          <ScalarProperty Name="cod_acta" ColumnName="cod_acta" />
+          <ScalarProperty Name="anno_presupuesto" ColumnName="anno_presupuesto" />
+          <ScalarProperty Name="cod_distrito" ColumnName="cod_distrito" />
+          <ScalarProperty Name="cod_canton" ColumnName="cod_canton" />
+          <ScalarProperty Name="cod_provincia" ColumnName="cod_provincia" />
+          <ScalarProperty Name="cod_patrimonio" ColumnName="cod_patrimonio" />
+          <ScalarProperty Name="VAL_GASDEPACU_REVAL" ColumnName="VAL_GASDEPACU_REVAL" />
+          <ScalarProperty Name="VAL_DEPACU_REVAL" ColumnName="VAL_DEPACU_REVAL" />
+          <ScalarProperty Name="VAL_REVALS" ColumnName="VAL_REVALS" />
+          <ScalarProperty Name="COD_CTA_GASDEP_REVAL" ColumnName="COD_CTA_GASDEP_REVAL" />
+          <ScalarProperty Name="COD_CTA_DEP_REVAL" ColumnName="COD_CTA_DEP_REVAL" />
+          <ScalarProperty Name="NUM_MES_DEPREC" ColumnName="NUM_MES_DEPREC" />
+          <ScalarProperty Name="FYH_FIN_DEPREC" ColumnName="FYH_FIN_DEPREC" />
+          <ScalarProperty Name="VAL_DEPREC" ColumnName="VAL_DEPREC" />
+          <ScalarProperty Name="VAL_LIB_ACT" ColumnName="VAL_LIB_ACT" />
+          <ScalarProperty Name="VAL_RES_VID_UTL_COR" ColumnName="VAL_RES_VID_UTL_COR" />
+          <ScalarProperty Name="VAL_RES_VID_UTL" ColumnName="VAL_RES_VID_UTL" />
+          <ScalarProperty Name="VAL_VID_UTL_ACUM_COR" ColumnName="VAL_VID_UTL_ACUM_COR" />
+          <ScalarProperty Name="VAL_VID_UTL_ACUM" ColumnName="VAL_VID_UTL_ACUM" />
+          <ScalarProperty Name="VAL_DEPREC_MEN_COR" ColumnName="VAL_DEPREC_MEN_COR" />
+          <ScalarProperty Name="VAL_DEPREC_MEN" ColumnName="VAL_DEPREC_MEN" />
+          <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+          <ScalarProperty Name="CAN_ACT_NUE" ColumnName="CAN_ACT_NUE" />
+          <ScalarProperty Name="IND_REG_SER" ColumnName="IND_REG_SER" />
+          <ScalarProperty Name="COD_MON_COM" ColumnName="COD_MON_COM" />
+          <ScalarProperty Name="CAMPO62" ColumnName="CAMPO62" />
+          <ScalarProperty Name="FYH_ESTADO" ColumnName="FYH_ESTADO" />
+          <ScalarProperty Name="COD_EST_ORI" ColumnName="COD_EST_ORI" />
+          <ScalarProperty Name="COD_ORI_STS" ColumnName="COD_ORI_STS" />
+          <ScalarProperty Name="FEC_EXP_GAR" ColumnName="FEC_EXP_GAR" />
+          <ScalarProperty Name="IND_DEPREC" ColumnName="IND_DEPREC" />
+          <ScalarProperty Name="NUM_ASI_CON" ColumnName="NUM_ASI_CON" />
+          <ScalarProperty Name="REF_NUM_ACT" ColumnName="REF_NUM_ACT" />
+          <ScalarProperty Name="COD_TIP_OPE" ColumnName="COD_TIP_OPE" />
+          <ScalarProperty Name="COD_EST_ADU" ColumnName="COD_EST_ADU" />
+          <ScalarProperty Name="COD_PROVEE" ColumnName="COD_PROVEE" />
+          <ScalarProperty Name="VAL_TIP_CAM" ColumnName="VAL_TIP_CAM" />
+          <ScalarProperty Name="NUM_CHEQUE" ColumnName="NUM_CHEQUE" />
+          <ScalarProperty Name="VAL_VID_UTL_COR" ColumnName="VAL_VID_UTL_COR" />
+          <ScalarProperty Name="VAL_VID_UTL" ColumnName="VAL_VID_UTL" />
+          <ScalarProperty Name="VAL_RESIDUAL_COR" ColumnName="VAL_RESIDUAL_COR" />
+          <ScalarProperty Name="VAL_RESIDUAL" ColumnName="VAL_RESIDUAL" />
+          <ScalarProperty Name="FEC_ULT_DEP_COR" ColumnName="FEC_ULT_DEP_COR" />
+          <ScalarProperty Name="FEC_ULT_DEP" ColumnName="FEC_ULT_DEP" />
+          <ScalarProperty Name="FEC_INI_DEP_COR" ColumnName="FEC_INI_DEP_COR" />
+          <ScalarProperty Name="FEC_INI_DEP" ColumnName="FEC_INI_DEP" />
+          <ScalarProperty Name="VAL_ADU_DOL" ColumnName="VAL_ADU_DOL" />
+          <ScalarProperty Name="NUM_POLIZA_SAL" ColumnName="NUM_POLIZA_SAL" />
+          <ScalarProperty Name="NUM_POLIZA" ColumnName="NUM_POLIZA" />
+          <ScalarProperty Name="COD_MET_DEP" ColumnName="COD_MET_DEP" />
+          <ScalarProperty Name="COD_CTA_GASDEP_COR" ColumnName="COD_CTA_GASDEP_COR" />
+          <ScalarProperty Name="COD_CTA_DEPACU_COR" ColumnName="COD_CTA_DEPACU_COR" />
+          <ScalarProperty Name="COD_CTA_GASDEP" ColumnName="COD_CTA_GASDEP" />
+          <ScalarProperty Name="COD_CTA_DEPACU" ColumnName="COD_CTA_DEPACU" />
+          <ScalarProperty Name="NUM_AMPLIA" ColumnName="NUM_AMPLIA" />
+          <ScalarProperty Name="NUM_LICITA" ColumnName="NUM_LICITA" />
+          <ScalarProperty Name="NUM_FACTUR" ColumnName="NUM_FACTUR" />
+          <ScalarProperty Name="OBS_ACTIVO" ColumnName="OBS_ACTIVO" />
+          <ScalarProperty Name="FYH_COMPRA" ColumnName="FYH_COMPRA" />
+          <ScalarProperty Name="FYH_CAPITAL" ColumnName="FYH_CAPITAL" />
+          <ScalarProperty Name="VAL_DEPACU_COR" ColumnName="VAL_DEPACU_COR" />
+          <ScalarProperty Name="VAL_DEPACU" ColumnName="VAL_DEPACU" />
+          <ScalarProperty Name="VAL_LIBROS_COR" ColumnName="VAL_LIBROS_COR" />
+          <ScalarProperty Name="VAL_LIBROS" ColumnName="VAL_LIBROS" />
+          <ScalarProperty Name="VAL_COMPRA_COL" ColumnName="VAL_COMPRA_COL" />
+          <ScalarProperty Name="VAL_COMPRA" ColumnName="VAL_COMPRA" />
+          <ScalarProperty Name="COD_APROPI" ColumnName="COD_APROPI" />
+          <ScalarProperty Name="FYH_ACT_EXC" ColumnName="FYH_ACT_EXC" />
+          <ScalarProperty Name="IND_ACT_EXC" ColumnName="IND_ACT_EXC" />
+          <ScalarProperty Name="FYH_DEC_ADU_SAL" ColumnName="FYH_DEC_ADU_SAL" />
+          <ScalarProperty Name="NUM_DEC_ADU_SAL" ColumnName="NUM_DEC_ADU_SAL" />
+          <ScalarProperty Name="NUM_DEC_ADU" ColumnName="NUM_DEC_ADU" />
+          <ScalarProperty Name="FYH_RETIRO" ColumnName="FYH_RETIRO" />
+          <ScalarProperty Name="NUM_CONSEC" ColumnName="NUM_CONSEC" />
+          <ScalarProperty Name="NUM_CAPITAL" ColumnName="NUM_CAPITAL" />
+          <ScalarProperty Name="ORD_COMPRA" ColumnName="ORD_COMPRA" />
+          <ScalarProperty Name="FYH_ULT_TOMA" ColumnName="FYH_ULT_TOMA" />
+          <ScalarProperty Name="FEC_COMPRA" ColumnName="FEC_COMPRA" />
+          <ScalarProperty Name="BIN_TIE_COM" ColumnName="BIN_TIE_COM" />
+          <ScalarProperty Name="COD_CEN_CST" ColumnName="COD_CEN_CST" />
+          <ScalarProperty Name="IND_MOV_ACT" ColumnName="IND_MOV_ACT" />
+          <ScalarProperty Name="COD_EMPLEADO" ColumnName="COD_EMPLEADO" />
+          <ScalarProperty Name="COD_UBI_ACT" ColumnName="COD_UBI_ACT" />
+          <ScalarProperty Name="COD_SEC_LOC" ColumnName="COD_SEC_LOC" />
+          <ScalarProperty Name="COD_LOC_ACT" ColumnName="COD_LOC_ACT" />
+          <ScalarProperty Name="COD_ACT_BAS" ColumnName="COD_ACT_BAS" />
+          <ScalarProperty Name="COD_SUB_CLA" ColumnName="COD_SUB_CLA" />
+          <ScalarProperty Name="COD_CLA_ACT" ColumnName="COD_CLA_ACT" />
+          <ScalarProperty Name="COD_TIP_ACT" ColumnName="COD_TIP_ACT" />
+          <ScalarProperty Name="COD_MODELO" ColumnName="COD_MODELO" />
+          <ScalarProperty Name="COD_MARCA" ColumnName="COD_MARCA" />
+          <ScalarProperty Name="SER_ACTIVO" ColumnName="SER_ACTIVO" />
+          <ScalarProperty Name="COD_TIPO_PLACA" ColumnName="COD_TIPO_PLACA" />
+          <ScalarProperty Name="DES_UBI_PLACA" ColumnName="DES_UBI_PLACA" />
+          <ScalarProperty Name="COD_ACT_AUX" ColumnName="COD_ACT_AUX" />
+          <ScalarProperty Name="PLA_INICIAL" ColumnName="PLA_INICIAL" />
+          <ScalarProperty Name="PLA_ANTERIOR" ColumnName="PLA_ANTERIOR" />
+          <ScalarProperty Name="DES_ACTIVO_ANT" ColumnName="DES_ACTIVO_ANT" />
+          <ScalarProperty Name="DES_ACTIVO" ColumnName="DES_ACTIVO" />
+          <ScalarProperty Name="PLA_ACTIVO" ColumnName="PLA_ACTIVO" />
+          <ScalarProperty Name="COD_CIA_PRO" ColumnName="COD_CIA_PRO" />
+          <ScalarProperty Name="NUM_ACTIVO" ColumnName="NUM_ACTIVO" />
+          <ScalarProperty Name="COD_COMPANIA" ColumnName="COD_COMPANIA" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

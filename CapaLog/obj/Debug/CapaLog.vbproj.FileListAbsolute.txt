@@ -25,3 +25,9 @@ D:\Sykes_Project\Manuals\PRO_CIT\CapaLog\obj\Debug\CapaLog.Resources.resources
 D:\Sykes_Project\Manuals\PRO_CIT\CapaLog\obj\Debug\CapaLog.vbproj.GenerateResource.Cache
 D:\Sykes_Project\Manuals\PRO_CIT\CapaLog\obj\Debug\CapaLog.dll
 D:\Sykes_Project\Manuals\PRO_CIT\CapaLog\obj\Debug\CapaLog.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\bin\Debug\CapaLog.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\bin\Debug\CapaLog.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Debug\CapaLog.Resources.resources
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Debug\CapaLog.vbproj.GenerateResource.Cache
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Debug\CapaLog.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\CapaLog\obj\Debug\CapaLog.pdb

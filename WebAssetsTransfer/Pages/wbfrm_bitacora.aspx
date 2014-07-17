@@ -14,7 +14,7 @@
       <%--<link rel="stylesheet" href="../Scripts/jquery-ui-themes-1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />--%>
     <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/Scripts/jquery-ui-themes-1.10.3/themes/smoothness/jquery-ui.css") %>" type="text/css" />
     <%--<link rel="stylesheet" href="../fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />--%>
-    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/fancybox/source/jquery.fancybox.css?v=2.1.4") %>"type="text/css" media="screen" />
+    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/fancybox/source/jquery.fancybox.css?v=2.1.4") %>" type="text/css" media="screen" />
  
        <!-- Add jQuery library -->
    <%-- <script type="text/javascript" src="../Scripts/jquery-ui-1.10.3/jquery-1.9.1.js"></script>--%>
@@ -77,7 +77,7 @@
                 <td class="td_encabezado_col1">
                     <asp:Label ID="lb_tipo_movimiento" runat="server" Text="<%$ Resources:pages_names_es, lb_tipo_movimiento%>"></asp:Label>&nbsp;</td>
                 <td class="td_encabezado_txt">
-                    <asp:DropDownList ID="ddl_tipo_movimiento" EnableViewState="true" runat="server"
+                    <asp:DropDownList ID="ddl_tipo_movimiento" onKeyPress="return realizar_busqueda(event)"   EnableViewState="true" runat="server"
                          AppendDataBoundItems="True">
                         <asp:ListItem Value="0">Seleccione un Tipo de Movimiento</asp:ListItem>
                     </asp:DropDownList>
@@ -88,7 +88,7 @@
                     <asp:Label ID="lb_codigo_movimiento" runat="server" Text="Número de Solicitud"></asp:Label>
                 </td>
                 <td class="td_encabezado_filtro_col2">
-                    <asp:TextBox ID="txt_codigo_movimiento" runat="server" 
+                    <asp:TextBox ID="txt_codigo_movimiento" onKeyPress="return realizar_busqueda(event)"  runat="server" 
                         CssClass="txt_detalle"></asp:TextBox>
                 </td>
                 <td class="td_encabezado_filtro_col2">
@@ -106,39 +106,46 @@
                 <td class="td_encabezado_col1">
                     <asp:Label ID="lb_centro_costo" runat="server" Text="<%$ Resources:pages_names_es, lb_centro_costo%>"></asp:Label>&nbsp;</td>
                 <td class="td_encabezado_col2">                    
-                    <asp:TextBox ID="txt_cod_centro_costo" runat="server" CssClass="txt_detalle"></asp:TextBox>
+                    <asp:TextBox ID="txt_cod_centro_costo"  onKeyUp="return centro_costo_key_press(event)" runat="server" CssClass="txt_detalle"></asp:TextBox>
+                    <asp:Button ID="btn_cargar_centro_costo" runat="server" Text="" OnClick="btn_cargar_centro_costo_Click"
+                        CssClass="button_filtrar" style="display:none;" />
                 </td>
                 <td class="td_encabezado_txt">
                     <asp:TextBox ID="txt_des_centro_costo" runat="server" CssClass="txt_detalle"></asp:TextBox>
                     <input id="btn_buscar_centro_costo" runat="server" title="Buscar Información de Centro de Costo" class="button_buscar" onclick="javascript:filtro('centro_costo','txt_cod_centro_costo','txt_des_centro_costo', 'txt_responsable');"
                         type="button" value="" />
                 </td>
+                <!--
                  <td>
                     <asp:Label ID="lb_responsable" runat="server" Text="<%$ Resources:pages_names_es, lb_responsable%>"></asp:Label><span class="campo_obligatotio">*</span>
                 </td>
                 <td colspan="4">
                     <asp:TextBox ID="txt_responsable" runat="server" CssClass="txt_detalle" 
                         ReadOnly="True"></asp:TextBox>
-                </td>
+                </td>-->
             </tr>
             <tr>
                 <td class="td_encabezado_col1">
                     <asp:Label ID="lb_id_solicitante" runat="server" Text="<%$ Resources:pages_names_es, lb_id_solicitante%>"
                         CssClass="ancho"></asp:Label>&nbsp;</td>
                 <td class="td_encabezado_col2">
-                    <asp:TextBox ID="txt_cod_solicitante" runat="server" CssClass="txt_detalle"></asp:TextBox>
+                    <asp:TextBox ID="txt_cod_solicitante" onKeyUp="return solicitante_key_press(event)" runat="server" CssClass="txt_detalle"></asp:TextBox>
+                    <asp:Button ID="btn_cargar_solicitante" runat="server" Text="" OnClick="btn_cargar_solicitante_Click"
+                        CssClass="button_filtrar" style="display:none;" />
                 </td>
                 <td class="td_encabezado_txt">
                     <asp:TextBox ID="txt_nombre_solicitante" runat="server" CssClass="txt_detalle"></asp:TextBox>
                     <input id="btn_buscar_solicitante" title="Buscar Información de Solicitante" runat="server" class="button_buscar" onclick="javascript:filtro('solicitante','txt_cod_solicitante','txt_nombre_solicitante', 'txt_responsable');"
                         type="button" value="" />
                 </td>
+                <!--
                 <td>
                     <asp:Label ID="lb_fecha" runat="server" Text="<%$ Resources:pages_names_es, lb_fecha%>"></asp:Label>
                 </td>
                 <td class="td_encabezado_txt">
                     <asp:TextBox ID="txt_fecha" runat="server" CssClass="textbox_fecha" ></asp:TextBox>
                 </td>
+                -->
             </tr>
         </table>
             <table class="ancho">

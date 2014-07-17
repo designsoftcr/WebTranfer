@@ -16,3 +16,9 @@ D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\DAL\bin\Debug\DAL.pdb
 D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\DAL\obj\Debug\DAL.dll
 D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\DAL\obj\Debug\DAL.pdb
 D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\bin\Debug\DAL.dll.config
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\bin\Debug\DAL.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\bin\Debug\DAL.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\obj\Debug\DAL.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\obj\Debug\DAL.pdb

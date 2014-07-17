@@ -11,6 +11,22 @@ namespace BLL
     public class cls_movimiento_maestro
     {
         private BostonEntities db = new BostonEntities();
+
+        public DataTable cargar_movimientos_maestro(int id_movimiento)
+        {
+            var movimientos =
+                from c in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
+                where c.ID_MOVIMIENTO == id_movimiento && c.ESTADO == "P"
+                select new
+                {
+                    ID_MOVIMIENTO = c.ID_MOVIMIENTO,
+                    PASO_APROBACION = c.ID_PASO_APROBACION_ACTUAL,
+                    TIPO_MOVIMIENTO = c.ID_TIPO_MOVIMIENTO,
+                    CENTRO_COSTO = c.CENTRO_COSTO
+                };
+            return movimientos.AsDataTable();
+        }
+
         public DataTable cargar_movimientos_maestro(string estado)
         {
             int[] tipo_movimiento = new int[]
@@ -106,14 +122,26 @@ namespace BLL
         }
         public bool actualizar_movimiento_maestro(ent_traslado entidad,string strCOD_EST_ORI)
 		{
-			bool result;
-			try
+			bool result = false;
+            try
+            {
+                ExecuteScript objES = new ExecuteScript();
+                objES.executeQuertyAndReturnNothing("sp_UpdateCOD_EST_ORI", new object[] { entidad.id_movimiento, entidad.codigo_compania.Trim(), strCOD_EST_ORI, entidad.acta.Trim() });
+                result = true;
+            }
+            catch (Exception e) 
+            {
+                throw new Exception(e.Message);
+            }
+            return result;
+			/*try
 			{
 				using (TransactionScope transaction = new TransactionScope())
 				{
 					AFT_MOV_MAESTRO_MOVIMIENTOS movimiento_maestro = new AFT_MOV_MAESTRO_MOVIMIENTOS();
 					movimiento_maestro = this.db.AFT_MOV_MAESTRO_MOVIMIENTOS.First((AFT_MOV_MAESTRO_MOVIMIENTOS c) => c.COD_COMPANIA == entidad.codigo_compania && c.ID_MOVIMIENTO == entidad.id_movimiento);
 					movimiento_maestro.ACTA = entidad.acta;
+
 					var movimiento_detalle = 
 						from c in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO
 						where c.COD_COMPANIA == entidad.codigo_compania && c.ID_MOVIMIENTO == entidad.id_movimiento
@@ -121,14 +149,16 @@ namespace BLL
 						{
 							c.NUM_ACTIVO
 						};
+
                     //GPE Commented
 					//foreach (<>f__AnonymousType1<string> item in movimiento_detalle)
+
                     foreach (var item in movimiento_detalle)
 					{
-                        //ExecuteScript objES = new ExecuteScript();
-                        //objES.executeQuertyAndReturnNothing("sp_UpdateCOD_EST_ORI", new object[] { entidad.codigo_compania.Trim(), item.NUM_ACTIVO.Trim(), strCOD_EST_ORI, entidad.acta.Trim() });
+                        // ExecuteScript objES = new ExecuteScript();
+                        // objES.executeQuertyAndReturnNothing("sp_UpdateCOD_EST_ORI", new object[] { entidad.codigo_compania.Trim(), item.NUM_ACTIVO.Trim(), strCOD_EST_ORI, entidad.acta.Trim() });
                         AFM_MAEST_ACTIV maestro_activo = new AFM_MAEST_ACTIV();
-                        maestro_activo = this.db.AFM_MAEST_ACTIV.Single(d => d.COD_COMPANIA == entidad.codigo_compania.Trim() && d.NUM_ACTIVO == item.NUM_ACTIVO.Trim());
+                        maestro_activo = new BostonEntities().AFM_MAEST_ACTIV.Single(d => d.COD_COMPANIA == entidad.codigo_compania.Trim() && d.NUM_ACTIVO == item.NUM_ACTIVO.Trim());
                         maestro_activo.cod_acta = entidad.acta;
                         maestro_activo.IND_ACT_EXC = new bool?(true);
                         switch (movimiento_maestro.ID_TIPO_MOVIMIENTO)
@@ -154,6 +184,7 @@ namespace BLL
                                 break;
                             }
                         }
+                    
                         this.db.SaveChanges();
                     }
                     transaction.Complete();
@@ -166,7 +197,7 @@ namespace BLL
 				return result;
 			}
 			result = true;
-			return result;
+			return result;*/
 		}
 
         //GPE 4/8/2014 WAT-04052014 Point 2

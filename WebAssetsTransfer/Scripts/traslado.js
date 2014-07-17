@@ -47,8 +47,9 @@ function filtro(filtro, id_control_codigo, id_control_descripcion, id_responsabl
         //href:'wbfrm_centro_costo.aspx?filtro=centro_costo&id_control_descripcion=txt_nombre_solicitante&id_control_codigo=txt_cod_solicitante';
         href: 'wbfrm_popup.aspx?tipo_filtro=' + filtro + '&id_control_codigo=' + id_control_codigo + '&id_control_descripcion=' + id_control_descripcion + '&id_responsable=' + id_responsable,
         type: 'iframe',
-        margin: [50, 60, 50, 60], // Increase left/right
-        padding: 5
+        //margin: [50, 60, 50, 60], // Increase left/right
+        //padding: 5
+        width:"100%"
     });
 }
 

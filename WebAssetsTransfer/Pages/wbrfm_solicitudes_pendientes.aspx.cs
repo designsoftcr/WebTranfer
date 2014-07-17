@@ -123,11 +123,147 @@ namespace WebAssetsTransfer.Pages
 
         protected bool estado_link(int id_movimiento, string usuario)
         {
-            cls_bitacora datos = new cls_bitacora();
+            /*cls_bitacora datos = new cls_bitacora();
             System.Data.DataTable dt = datos.cargar_bitacora_por_usuario(id_movimiento, usuario);
-            return dt.Rows.Count <= 0;
+            return dt.Rows.Count <= 0;*/
+            bool resultado = false;
+            int id_grupo = 0;
+            string centro_costo = "nulo";
+            int tipo_movimiento = 0;
+
+            cls_movimiento_maestro movimientos = new cls_movimiento_maestro();
+            DataTable dtMovimientos = movimientos.cargar_movimientos_maestro(id_movimiento);
+
+            if (dtMovimientos.Rows.Count > 0)
+            {
+                tipo_movimiento = (int)dtMovimientos.Rows[0][2];
+                int paso_aprobacion_actual = (int)dtMovimientos.Rows[0][1];
+                centro_costo = (string)dtMovimientos.Rows[0][3];
+                id_grupo = obtenerIdGrupo(tipo_movimiento, paso_aprobacion_actual);
+            }
+
+            if (id_grupo == 0)
+            {
+                //Falta una verificacion de si el usuario en el caso de ser calibración tiene los permisos para ejecutar el paso de movimiento
+                if (tipo_movimiento == 3)
+                {
+                    cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                    DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                    if (dt.Rows.Count > 0)
+                    {
+                        return dt.Rows.Count > 0;
+                    }
+                }
+
+
+                //Verifica si es el dueño del centro de costo
+                cls_traslado centroCosto = new cls_traslado();
+                DataTable dtCentroCosto = centroCosto.obtener_responsable(this.Session["USUARIO"].ToString(), centro_costo);
+                return dtCentroCosto.Rows.Count > 0;
+
+            }
+            else if (id_grupo > 0)
+            {
+                cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                return dt.Rows.Count > 0;
+            }
+
+            return resultado;
         }
-       
+
+        private int obtenerIdGrupo(int tipo_movimiento, int paso_aprobacion_actual)
+        {
+            switch (tipo_movimiento)
+            {
+                case 1:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0; //Le toca al centro de costos aprobar
+                        case 1:
+                            return 1;//Le toca aprobar a Recursos humanos
+                        case 2:
+                            return 2;//Le toca aprobar a finanzas
+                        case 3:
+                            return -1;//Ya se finalizó el ciclo se retorna menos 1 para que se revise la bitacora
+                    }
+                    break;
+                case 2:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Le toca al centro de costos aprobar
+                        case 1:
+                            return 2;//Le toca aprobar a finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 3:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//puede aprobar el centro de costo
+                        case 1:
+                            return 2;//Aprueba finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 4:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costo
+                        case 1:
+                            return 2;//Aprueba finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 5:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costos origen
+                        case 1:
+                            return 0;//Aprueba centro costos destino
+                        case 2:
+                            return 2;//Aprueba finanzas
+                        case 3:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 6:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costos origen
+                        case 1:
+                            return 2;//Aprueba finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 7:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costos origen
+                        case 1:
+                            return 0;//Aprueba centro costos destino
+                        case 2:
+                            return 2;//Aprueba finanzas origen
+                        case 3:
+                            return -1;//Finaliza el ciclo
+                    }
+                    break;
+                default:
+                    return -1;
+            }
+            return -1;
+        }
 
         public void crear_mensajes(string class_mensaje, string texto_mensaje)
         {

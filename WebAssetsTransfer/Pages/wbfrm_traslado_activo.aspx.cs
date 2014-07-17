@@ -122,10 +122,13 @@ namespace Modulo_Boston.Pages
         {
             if (!base.IsPostBack)
             {
+                if (this.Session["USUARIO"] == null)
+                {
+                    base.Response.Redirect("../wbfrm_login.aspx");
+                }
                 this.cargar_valores_defecto();
                 if (!string.IsNullOrEmpty(base.Request.QueryString["codigo_compania"]) && !string.IsNullOrEmpty(base.Request.QueryString["id_movimiento"]))
                 {
-                    this.gv_activos.Enabled = false;
                     this.Session["CODIGO_COMPANIA"] = base.Request.QueryString["codigo_compania"];
                     this.Session["ID_MOVIMIENTO"] = System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]);
 
@@ -133,6 +136,7 @@ namespace Modulo_Boston.Pages
                     //hizo el paso o no
                     if (this.estado_link(System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]), System.Convert.ToString(this.Session["USUARIO"])))
                     {
+                        this.gv_activos.Enabled = false;
                         this.estado_controles(this.Page, false);
                         this.estado_botones(false, true);
                         this.cargar_controles(base.Request.QueryString["codigo_compania"].ToString(), System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]));
@@ -141,8 +145,12 @@ namespace Modulo_Boston.Pages
                     }
                     else
                     {
-                        this.estado_botones(false, false);
+                        //this.estado_botones(false, false);
+                        this.Session["ID_MOVIMIENTO"] = null;
+                        this.estado_botones(true, false);
+                        this.estado_controles(this.Page, true);
                         this.crear_mensajes("info", "Vinculo ya utilizado, revise el Historico");
+                        this.cargarSolicitante();
                     }
                 }
                 else
@@ -259,10 +267,147 @@ namespace Modulo_Boston.Pages
         }
         protected bool estado_link(int id_movimiento, string usuario)
         {
-            cls_bitacora datos = new cls_bitacora();
+            /*cls_bitacora datos = new cls_bitacora();
             System.Data.DataTable dt = datos.cargar_bitacora_por_usuario(id_movimiento, usuario);
-            return dt.Rows.Count <= 0;
+            return dt.Rows.Count <= 0;*/
+            bool resultado = false;
+            int id_grupo = 0;
+            string centro_costo = "nulo";
+            int tipo_movimiento = 0;
+
+            cls_movimiento_maestro movimientos = new cls_movimiento_maestro();
+            DataTable dtMovimientos = movimientos.cargar_movimientos_maestro(id_movimiento);
+
+            if (dtMovimientos.Rows.Count > 0) {
+                tipo_movimiento = (int)dtMovimientos.Rows[0][2];
+                int paso_aprobacion_actual = (int)dtMovimientos.Rows[0][1];
+                centro_costo = (string)dtMovimientos.Rows[0][3];
+                id_grupo = obtenerIdGrupo(tipo_movimiento, paso_aprobacion_actual);
+            }
+
+            if (id_grupo == 0) 
+            {
+                //Falta una verificacion de si el usuario en el caso de ser calibración tiene los permisos para ejecutar el paso de movimiento
+                if (tipo_movimiento == 3) 
+                {
+                    cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                    DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                    if (dt.Rows.Count > 0)
+                    {
+                        return dt.Rows.Count > 0;
+                    }
+                }
+
+
+                //Verifica si es el dueño del centro de costo
+                cls_traslado centroCosto = new cls_traslado();
+                DataTable dtCentroCosto = centroCosto.obtener_responsable(this.Session["USUARIO"].ToString(),centro_costo);
+                return dtCentroCosto.Rows.Count > 0;
+
+            }
+            else if (id_grupo > 0)
+            {
+                cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                return dt.Rows.Count > 0;
+            }
+
+            return resultado;
         }
+
+        private int obtenerIdGrupo(int tipo_movimiento, int paso_aprobacion_actual)
+        {
+            switch (tipo_movimiento) 
+            {
+                case 1: 
+                    switch(paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0; //Le toca al centro de costos aprobar
+                        case 1:
+                            return 1;//Le toca aprobar a Recursos humanos
+                        case 2:
+                            return 2;//Le toca aprobar a finanzas
+                        case 3:
+                            return -1;//Ya se finalizó el ciclo se retorna menos 1 para que se revise la bitacora
+                    }
+                    break;
+                case 2:
+                    switch(paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Le toca al centro de costos aprobar
+                        case 1:
+                            return 2;//Le toca aprobar a finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 3:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//puede aprobar el centro de costo
+                        case 1:
+                            return 2;//Aprueba finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 4:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costo
+                        case 1:
+                            return 2;//Aprueba finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 5:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costos origen
+                        case 1:
+                            return 0;//Aprueba centro costos destino
+                        case 2:
+                            return 2;//Aprueba finanzas
+                        case 3:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 6:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costos origen
+                        case 1:
+                            return 2;//Aprueba finanzas
+                        case 2:
+                            return -1;//Finaliza ciclo
+                    }
+                    break;
+                case 7:
+                    switch (paso_aprobacion_actual)
+                    {
+                        case 0:
+                            return 0;//Aprueba centro de costos origen
+                        case 1:
+                            return 0;//Aprueba centro costos destino
+                        case 2:
+                            return 2;//Aprueba finanzas origen
+                        case 3:
+                            return -1;//Finaliza el ciclo
+                    }
+                    break;
+                default:
+                    return -1;
+            }
+            return -1;
+        }
+
         protected void cargar_controles(string codigo_compania, int id_movimiento)
         {
             try
@@ -690,7 +835,8 @@ namespace Modulo_Boston.Pages
                         this.txt_nombre_centro_costo_destino.Text = "No corresponde a la planta!";
                         this.Session["NOMBRE_CENTRO_COSTO_DESTINO"] = "No encontrado";
                         //GPE 4/8/2014 WAT-04052014 Point 7
-                        this.cargar_combo_localizacion();
+                        this.LimpiarControles();
+                        //this.cargar_combo_localizacion();
                     }
                     string script = "$(\"[id*='txt_nombre_centro_costo_destino']\").val('{0}');$(\"[id*='txt_cargo_responsable_costo_destino']\").val('{1}');";
                     script = string.Format(script, this.Session["NOMBRE_CENTRO_COSTO_DESTINO"].ToString(), this.Session["RESPONSABLE"].ToString());
@@ -1174,127 +1320,134 @@ namespace Modulo_Boston.Pages
                 //GPE 12/07/2013 WAT_Document new stuff # 12
                 if (!string.IsNullOrEmpty(placa) )//&& !string.IsNullOrEmpty(centroCosto))
                 {
-                    System.Data.DataTable dt = new cls_traslado().cargar_activos(placa, centroCosto);
-
-                    if (dt.Rows.Count > 0)
+                    if (new cls_traslado().comprobarDisponibilidadActivo(placa, centroCosto))
                     {
-                        if (tablaActivos == null)
+                        System.Data.DataTable dt = new cls_traslado().cargar_activos(placa, centroCosto);
+
+                        if (dt.Rows.Count > 0)
                         {
-                            this.Session["TABLA_ACTIVO"] = this.ReturnEmptyDataTable();
-                            tablaActivos = (this.Session["TABLA_ACTIVO"] as System.Data.DataTable);
-                        }
-                        System.Data.DataRow fila = tablaActivos.NewRow();
-                        fila["PLA_ACTIVO"] = dt.Rows[0][0].ToString();
-                        fila["REF_NUM_ACT"] = dt.Rows[0][1].ToString();
-                        fila["DES_ACTIVO"] = dt.Rows[0][2].ToString();
-                        fila["DES_MARCA"] = dt.Rows[0][3].ToString();
-                        fila["NOM_MODELO"] = dt.Rows[0][4].ToString();
-                        fila["SER_ACTIVO"] = dt.Rows[0][5].ToString();
-                        fila["VAL_LIBROS"] = dt.Rows[0][6].ToString();
-                        //new line
-                        for (int i = 0; i < tablaActivos.Rows.Count; i++)
-                        {
-                            if (tablaActivos.Rows[i].IsNull(0) && tablaActivos.Rows[i].IsNull(1) && tablaActivos.Rows[i].IsNull(2) && tablaActivos.Rows[i].IsNull(3))
+                            if (tablaActivos == null)
                             {
-                                tablaActivos.Rows[i].Delete();
+                                this.Session["TABLA_ACTIVO"] = this.ReturnEmptyDataTable();
+                                tablaActivos = (this.Session["TABLA_ACTIVO"] as System.Data.DataTable);
                             }
-                        }
-                        if (!this.valida_duplicidad(tablaActivos, fila))
-                        {
-                            tablaActivos.Rows.Add(fila);
-                            if (!string.IsNullOrEmpty(placa))
+                            System.Data.DataRow fila = tablaActivos.NewRow();
+                            fila["PLA_ACTIVO"] = dt.Rows[0][0].ToString();
+                            fila["REF_NUM_ACT"] = dt.Rows[0][1].ToString();
+                            fila["DES_ACTIVO"] = dt.Rows[0][2].ToString();
+                            fila["DES_MARCA"] = dt.Rows[0][3].ToString();
+                            fila["NOM_MODELO"] = dt.Rows[0][4].ToString();
+                            fila["SER_ACTIVO"] = dt.Rows[0][5].ToString();
+                            fila["VAL_LIBROS"] = dt.Rows[0][6].ToString();
+                            //new line
+                            for (int i = 0; i < tablaActivos.Rows.Count; i++)
                             {
-                                if (!tablaActivos.Rows[index].IsNull(0) && !tablaActivos.Rows[index].IsNull(1) && !tablaActivos.Rows[index].IsNull(2))
+                                if (tablaActivos.Rows[i].IsNull(0) && tablaActivos.Rows[i].IsNull(1) && tablaActivos.Rows[i].IsNull(2) && tablaActivos.Rows[i].IsNull(3))
                                 {
-                                    tablaActivos.Rows[index][0] = dt.Rows[0][0].ToString();
-                                    tablaActivos.Rows[index][1] = dt.Rows[0][1].ToString();
-                                    tablaActivos.Rows[index][2] = dt.Rows[0][2].ToString();
-                                    tablaActivos.Rows[index][3] = dt.Rows[0][3].ToString();
-                                    tablaActivos.Rows[index][4] = dt.Rows[0][4].ToString();
-                                    tablaActivos.Rows[index][5] = dt.Rows[0][5].ToString();
-                                    tablaActivos.Rows[index][6] = dt.Rows[0][6].ToString();
+                                    tablaActivos.Rows[i].Delete();
                                 }
                             }
-                            this.Session["TABLA_ACTIVO"] = tablaActivos;
-                            System.Data.DataRow filaNueva = tablaActivos.NewRow();
-                            filaNueva["PLA_ACTIVO"] = null;
-                            filaNueva["REF_NUM_ACT"] = null;
-                            filaNueva["DES_ACTIVO"] = null;
-                            filaNueva["DES_MARCA"] = null;
-                            filaNueva["NOM_MODELO"] = null;
-                            filaNueva["SER_ACTIVO"] = null;
-                            filaNueva["VAL_LIBROS"] = null;
-                            tablaActivos.Rows.Add(filaNueva);
-                            this.gv_activos.DataSource = tablaActivos;
-                            this.gv_activos.DataBind();
-                            //GPE 12/07/2013 WAT_Document new stuff # 12
-                            if (string.IsNullOrEmpty(centroCosto))
+                            if (!this.valida_duplicidad(tablaActivos, fila))
                             {
-                                if (this.validar_centro_costo(dt.Rows[0][7].ToString().Trim()))
+                                tablaActivos.Rows.Add(fila);
+                                if (!string.IsNullOrEmpty(placa))
                                 {
-                                    cls_traslado centro_costo = new cls_traslado();
-                                    System.Data.DataTable dtce = centro_costo.cargar_centro_costo(dt.Rows[0][7].ToString().Trim());
-                                    if (dt.Rows.Count > 0)
+                                    if (!tablaActivos.Rows[index].IsNull(0) && !tablaActivos.Rows[index].IsNull(1) && !tablaActivos.Rows[index].IsNull(2))
                                     {
-                                        this.Session["NOMBRE_CENTRO_COSTO"] = dtce.Rows[0]["CENTRO_COSTO"].ToString();
-                                        //GPE 4/3/2014 get mail for calibracion
-                                        // Update By Felix
-                                        if (ddl_tipo_movimiento.SelectedValue == "3")
+                                        tablaActivos.Rows[index][0] = dt.Rows[0][0].ToString();
+                                        tablaActivos.Rows[index][1] = dt.Rows[0][1].ToString();
+                                        tablaActivos.Rows[index][2] = dt.Rows[0][2].ToString();
+                                        tablaActivos.Rows[index][3] = dt.Rows[0][3].ToString();
+                                        tablaActivos.Rows[index][4] = dt.Rows[0][4].ToString();
+                                        tablaActivos.Rows[index][5] = dt.Rows[0][5].ToString();
+                                        tablaActivos.Rows[index][6] = dt.Rows[0][6].ToString();
+                                    }
+                                }
+                                this.Session["TABLA_ACTIVO"] = tablaActivos;
+                                System.Data.DataRow filaNueva = tablaActivos.NewRow();
+                                filaNueva["PLA_ACTIVO"] = null;
+                                filaNueva["REF_NUM_ACT"] = null;
+                                filaNueva["DES_ACTIVO"] = null;
+                                filaNueva["DES_MARCA"] = null;
+                                filaNueva["NOM_MODELO"] = null;
+                                filaNueva["SER_ACTIVO"] = null;
+                                filaNueva["VAL_LIBROS"] = null;
+                                tablaActivos.Rows.Add(filaNueva);
+                                this.gv_activos.DataSource = tablaActivos;
+                                this.gv_activos.DataBind();
+                                //GPE 12/07/2013 WAT_Document new stuff # 12
+                                if (string.IsNullOrEmpty(centroCosto))
+                                {
+                                    if (this.validar_centro_costo(dt.Rows[0][7].ToString().Trim()))
+                                    {
+                                        cls_traslado centro_costo = new cls_traslado();
+                                        System.Data.DataTable dtce = centro_costo.cargar_centro_costo(dt.Rows[0][7].ToString().Trim());
+                                        if (dt.Rows.Count > 0)
                                         {
-                                            this.txt_responsable.Text = "Aprueba Departamento de Calibraciones";
-                                            this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable_calibracion(dt.Rows[0][7].ToString().Trim());
+                                            this.Session["NOMBRE_CENTRO_COSTO"] = dtce.Rows[0]["CENTRO_COSTO"].ToString();
+                                            //GPE 4/3/2014 get mail for calibracion
+                                            // Update By Felix
+                                            if (ddl_tipo_movimiento.SelectedValue == "3")
+                                            {
+                                                this.txt_responsable.Text = "Aprueba Departamento de Calibraciones";
+                                                this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable_calibracion(dt.Rows[0][7].ToString().Trim());
+                                            }
+                                            else
+                                            {
+                                                this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable(dt.Rows[0][7].ToString().Trim());
+                                                this.txt_responsable.Text = this.Session["RESPONSABLE"].ToString();
+                                            }
+                                            this.txt_des_centro_costo.Text = this.Session["NOMBRE_CENTRO_COSTO"].ToString();
+
+                                            this.txt_cod_centro_costo.Text = dt.Rows[0][7].ToString().Trim();
+
+                                            if (this.ddl_tipo_movimiento.SelectedValue == "5" || this.ddl_tipo_movimiento.SelectedValue == "7")
+                                            {
+                                                DataTable dtCOD_CIA_PRO = new cls_traslado().GetCOD_CIA_PROByCost_Center(this.txt_cod_centro_costo.Text.Trim(), Session["CODIGO_COMPANIA"].ToString());
+                                                if (dtCOD_CIA_PRO != null && dtCOD_CIA_PRO.Rows.Count > 0)
+                                                {
+                                                    Session["SES_COD_CIA_PRO"] = dtCOD_CIA_PRO.Rows[0][0].ToString().Trim();
+                                                    Session["SES_Movimenent_Type"] = this.ddl_tipo_movimiento.SelectedValue;
+                                                }
+                                                else
+                                                {
+                                                    Session["SES_COD_CIA_PRO"] = string.Empty;
+                                                }
+                                                dtCOD_CIA_PRO = null;
+                                            }
                                         }
                                         else
                                         {
-                                            this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable(dt.Rows[0][7].ToString().Trim());
-                                            this.txt_responsable.Text = this.Session["RESPONSABLE"].ToString();
+                                            this.Session["NOMBRE_CENTRO_COSTO"] = "No encontrado";
                                         }
-                                        this.txt_des_centro_costo.Text = this.Session["NOMBRE_CENTRO_COSTO"].ToString();
-                                        
-                                        this.txt_cod_centro_costo.Text = dt.Rows[0][7].ToString().Trim();
-
-                                        if (this.ddl_tipo_movimiento.SelectedValue == "5" || this.ddl_tipo_movimiento.SelectedValue == "7")
-                                        {
-                                            DataTable dtCOD_CIA_PRO = new cls_traslado().GetCOD_CIA_PROByCost_Center(this.txt_cod_centro_costo.Text.Trim(),Session["CODIGO_COMPANIA"].ToString());
-                                            if (dtCOD_CIA_PRO != null && dtCOD_CIA_PRO.Rows.Count > 0)
-                                            {
-                                                Session["SES_COD_CIA_PRO"] = dtCOD_CIA_PRO.Rows[0][0].ToString().Trim();
-                                                Session["SES_Movimenent_Type"] = this.ddl_tipo_movimiento.SelectedValue;
-                                            }
-                                            else {
-                                                Session["SES_COD_CIA_PRO"] = string.Empty;
-                                            }
-                                            dtCOD_CIA_PRO = null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        this.Session["NOMBRE_CENTRO_COSTO"] = "No encontrado";
                                     }
                                 }
+                                //GPE disable centro_costo
+                                //centro_costo_status(false);
                             }
-                            //GPE disable centro_costo
-                            //centro_costo_status(false);
+                            else
+                            {
+                                this.crear_mensajes("validation", "El activo digitado ya existe en la presente solicitud");
+                            }
                         }
                         else
                         {
-                            this.crear_mensajes("validation", "El activo digitado ya existe en la presente solicitud");
+                            //GPE 1/26/2014 Fixing IE Issues print message No corresponde al centro de costo
+                            if (!string.IsNullOrEmpty(tablaActivos.Rows[0][0].ToString()))
+                                this.crear_mensajes("validation", "No corresponde al centro de costo");
+                            else
+                                this.crear_mensajes("validation", "No se encontraron datos");
                         }
                     }
-                    else
-                    {
-                        //GPE 1/26/2014 Fixing IE Issues print message No corresponde al centro de costo
-                        if (!string.IsNullOrEmpty(tablaActivos.Rows[0][0].ToString()))
-                            this.crear_mensajes("validation", "No corresponde al centro de costo");
-                        else
-                            this.crear_mensajes("validation", "No se encontraron datos");
+                    else {
+                        this.crear_mensajes("validation", "El activo no sé puede utilizar porque su estado no lo permite o esta actualmente en un movimiento");
                     }
                 }
                 else
                 {
                     //GPE 12/07/2013 WAT_Document new stuff # 12
                     //this.crear_mensajes("validation", "El campo de Centro de Costo y el campo de placa no pueden ser nulos");
-                    this.crear_mensajes("validation", "El campo de placa no pueden ser nulos");
+                    this.crear_mensajes("validation", "El campo de placa no pueden ser nulo");
                 }
             }
             catch (System.Exception ex)
@@ -1616,13 +1769,13 @@ namespace Modulo_Boston.Pages
                                                             //GPE 12/07/2013 WAT_Document new stuff # 14 - disable only for employers in 'Recursos humanos' group 
                                                             //if (new cls_traslado().check_observaciones_obligatory(this.txt_cod_solicitante.Text.Trim()))
                                                             //{
-                                                                if (string.IsNullOrEmpty(this.txt_observaciones_donacion.Text))
+                                                                /*if (string.IsNullOrEmpty(this.txt_observaciones_donacion.Text))
                                                                 {
                                                                     this.crear_mensajes("validation", "Escriba las observaciones.");
                                                                     this.txt_observaciones_donacion.Focus();
                                                                     result = false;
                                                                     return result;
-                                                                }
+                                                                }*/
                                                             //}
                                                         }
                                                         if (seccion == 2)
@@ -1899,7 +2052,14 @@ namespace Modulo_Boston.Pages
             string result;
             try
             {
-                string contenido = System.IO.File.ReadAllText(base.Server.MapPath("~/Templates/Mail.htm"));
+                string contenido = "";
+                if (id_movimiento != -1)
+                {
+                    contenido = System.IO.File.ReadAllText(base.Server.MapPath("~/Templates/Mail.htm"));
+                }
+                else {
+                    contenido = System.IO.File.ReadAllText(base.Server.MapPath("~/Templates/MailCancelacion.htm"));
+                }
                 contenido = contenido.Replace("[NOMBRE_TIPO_MOVIMIENTO]", this.ddl_tipo_movimiento.SelectedItem.ToString());
                 contenido = contenido.Replace("[ID_MOVIMIENTO]", this.txt_num_solicitud.Text);
                 contenido = contenido.Replace("[NOMBRE_SOLICITANTE]", this.txt_nombre_solicitante.Text);
@@ -1941,6 +2101,20 @@ namespace Modulo_Boston.Pages
                 {
                     contenido = contenido.Replace("[URL_DESCRIPCION]", "La solicitud fue cancelada");
                     contenido = contenido.Replace("[URL]", "#");
+                    string items_table_historico = "<table style=\"width: 800px;border: 1px solid #000;border-collapse: collapse;\"><tr>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Fecha</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Paso Aprobación</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Usuario</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripcion Tipo de Movimiento</span></td>\r\n                    </tr>";
+                    cls_bitacora historico = new cls_bitacora();
+                    System.Data.DataTable dt_historico = historico.cargar_bitacora(System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
+                    for (int x = 0; x < dt_historico.Rows.Count; x++)
+                    {
+                        items_table_historico = items_table_historico + "<tr><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION"].ToString();
+                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["FECHA"].ToString();
+                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["PASO_APROVACION_ACTUAL"].ToString();
+                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["USUARIO"].ToString();
+                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION_TIPO_MOVIMIENTO"].ToString();
+                        items_table_historico += "</td></tr>";
+                    }
+                    items_table_historico += "</table>";
+                    contenido = contenido.Replace("[HISTORICO]", items_table_historico);
                 }
                 else
                 {
@@ -1948,6 +2122,7 @@ namespace Modulo_Boston.Pages
                     //GPE 12.09.2013 change string navigate_url = "http://cylmult12//WebAssetsTransfer/wbfrm_login.aspx/?codigo_compania=" + this.Session["CODIGO_COMPANIA"].ToString() + "&id_movimiento=" + id_movimiento.ToString();
                     string navigate_url = string.Format("{0}/wbfrm_login.aspx/?codigo_compania={1}&id_movimiento={2}", HttpTools.HttpUrlPath, this.Session["CODIGO_COMPANIA"].ToString(), id_movimiento.ToString());
                     contenido = contenido.Replace("[URL]", navigate_url);
+                    
                 }
                 result = contenido;
             }
@@ -2398,8 +2573,8 @@ namespace Modulo_Boston.Pages
                 this.txt_des_centro_costo.Text =
                     this.txt_responsable.Text = string.Empty;
             //update Felix
-            this.txt_cod_solicitante.Text = string.Empty;
-            this.txt_nombre_solicitante.Text = string.Empty;
+            //this.txt_cod_solicitante.Text = string.Empty;
+            //this.txt_nombre_solicitante.Text = string.Empty;
 
             //this.btn_buscar_centro_costo.Visible = status;
         }
@@ -2516,8 +2691,8 @@ namespace Modulo_Boston.Pages
             this.ddl_planta_destino.Items.Clear();
             ListItem first = new ListItem("Seleccione la Localización", "0");
             this.ddl_localizacion_destino.Items.Add(first);
-            this.txt_codigo_centro_costo_destino.Text = "";
-            this.txt_nombre_centro_costo_destino.Text = "";
+            //this.txt_codigo_centro_costo_destino.Text = "";
+            //this.txt_nombre_centro_costo_destino.Text = "";
         }
         
     }

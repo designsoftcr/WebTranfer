@@ -135,18 +135,116 @@ namespace WebAssetsTransfer.Pages
             this.cargar_grid(tipo_busqueda, this.Session["FILTRO"].ToString());
         }
 
-        private void cargar_grid(string tipo_busqueda, int codigo, string descripcion)
+        private void cargar_grid(string tipo_busqueda, string codigo, string descripcion)
         {
             try
             {
                 if (tipo_busqueda == "grupos_de_acceso")
+                {
+                    int lCodigo = 0;
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+
+                    try
+                    {
+                        lCodigo = int.Parse(codigo);
+                    }catch(Exception e)
+                    {
+                        System.Console.WriteLine(e);
+                    }
+
+                    cls_popup groupos = new cls_popup();
+                    System.Data.DataTable dt = groupos.cargar_grupos_de_acceso(lCodigo, descripcion);
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+                if (tipo_busqueda == "centro_costo")
+                {
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+                    cls_popup centro_costo = new cls_popup();
+                    if (Session["SES_COD_CIA_PRO"] == null || string.IsNullOrEmpty(Session["SES_COD_CIA_PRO"].ToString()))
+                    {
+                        Session["SES_COD_CIA_PRO"] = string.Empty;
+                    }
+                    if (Session["SES_Movimenent_Type"] == null || string.IsNullOrEmpty(Session["SES_Movimenent_Type"].ToString()))
+                    {
+                        Session["SES_Movimenent_Type"] = string.Empty;
+                    }
+                    string strMovementType = Session["SES_Movimenent_Type"].ToString().Trim();
+                    string strCOD_CIA_PRO = Session["SES_COD_CIA_PRO"].ToString().Trim();
+                    DataTable dt = new DataTable();
+                    if ((strMovementType == "5" || strMovementType == "7") && !string.IsNullOrEmpty(strCOD_CIA_PRO))
+                    {
+                        dt = centro_costo.cargar_centros_costo_filtro(descripcion, strCOD_CIA_PRO, this.txt_filtro_codigo.Text, strMovementType);
+                    }
+                    else
+                    {
+                        dt = centro_costo.cargar_centros_costo_filtro(descripcion, this.txt_filtro_codigo.Text);
+                    }
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+                if (tipo_busqueda == "solicitante" || tipo_busqueda == "responsable")
+                {
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+                    cls_popup solicitante = new cls_popup();
+                    System.Data.DataTable dt = solicitante.cargar_empleado_filtro(codigo, descripcion);
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+
+                if (tipo_busqueda == "usuarios_por_grupo_de_acceso")
+                {
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+
+                    cls_popup groupos = new cls_popup();
+                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso(codigo,descripcion);
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+                if (tipo_busqueda == "grupo_upgde")
                 {
                     if (string.IsNullOrEmpty(descripcion))
                     {
                         descripcion = "todo";
                     }
                     cls_popup groupos = new cls_popup();
-                    System.Data.DataTable dt = groupos.cargar_grupos_de_acceso(codigo, descripcion);
+                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso_id_grupo(descripcion);
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+
+                if (tipo_busqueda == "empleado_upgde")
+                {
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+                    cls_popup groupos = new cls_popup();
+                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso_empleado(descripcion);
+                    this.gv_datos.DataSource = dt;
+                    this.gv_datos.DataBind();
+                }
+
+                if (tipo_busqueda == "propcompania_upgde")
+                {
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+                    cls_popup groupos = new cls_popup();
+                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_propetary_company(descripcion);
                     this.gv_datos.DataSource = dt;
                     this.gv_datos.DataBind();
                 }
@@ -156,6 +254,8 @@ namespace WebAssetsTransfer.Pages
                 this.crear_mensajes("error", ex.ToString());
             }
         }
+
+
 
         private void cargar_grid(string tipo_busqueda, string filtro)
         {
@@ -312,13 +412,13 @@ namespace WebAssetsTransfer.Pages
         }
         protected void btn_realizar_filtrado_Click(object sender, System.EventArgs e)
         {
-            int lcodigo = 0;
+            string lcodigo = "";
             this.Session["FILTRO"] = this.txt_filtro_descripcion.Text;
             if (!string.IsNullOrEmpty(this.txt_filtro_codigo.Text))
-                lcodigo = int.Parse(txt_filtro_codigo.Text);
+                lcodigo = txt_filtro_codigo.Text;
 
-            //this.cargar_grid(this.Session["TIPO_BUSQUEDA"].ToString(),lcodigo, this.Session["FILTRO"].ToString());
-            this.cargar_grid(this.Session["TIPO_BUSQUEDA"].ToString(), this.Session["FILTRO"].ToString());
+            this.cargar_grid(this.Session["TIPO_BUSQUEDA"].ToString(),lcodigo, this.Session["FILTRO"].ToString());
+            //this.cargar_grid(this.Session["TIPO_BUSQUEDA"].ToString(), this.Session["FILTRO"].ToString());
         }
         protected void btn_limpiar_Click(object sender, System.EventArgs e)
         {

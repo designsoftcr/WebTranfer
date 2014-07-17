@@ -154,7 +154,7 @@
     <value>Solicitud de Denuncia de Robo &amp; Pérdida de Activos Fijos</value>
   </data>
   <data name="lb_id_responsable_destino" xml:space="preserve">
-    <value>ID Responsable Destino</value>
+    <value>ID Usuario</value>
   </data>
   <data name="lb_id_solicitante" xml:space="preserve">
     <value>ID Solicitante</value>

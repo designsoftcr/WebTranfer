@@ -11,6 +11,20 @@ namespace BLL
     {
         private BostonEntities db = new BostonEntities();
 
+        public DataTable select_usuario_por_grupo_de_acceso(int Id_Grupo, string Cod_Compania, string Usuario)
+        {
+                var usuario =
+                from c in this.db.AFT_MOV_GRUPO_USUARIOS
+                where c.USUARIO == Usuario && c.ID_GRUPO == Id_Grupo && c.ESTADO == true && c.COD_COMPANIA == Cod_Compania 
+                select new
+                {
+                    USUARIO = c.USUARIO,
+                    ID_GRUPO = c.ID_GRUPO
+                };
+                return usuario.AsDataTable();
+
+        }
+
         public bool update_cusuarios_por_grupo_de_acceso(string Id_Empleado, int Id_Grupo, string Cod_Compania, string Usuario, bool Estado, string Cod_Cia_Pro)
         {
             bool result = false;

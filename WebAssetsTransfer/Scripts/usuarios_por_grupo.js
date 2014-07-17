@@ -28,7 +28,8 @@ function filtro(filtro, id_control_codigo, id_control_descripcion, id_responsabl
         //margin: [50, 60, 50, 60], // Increase left/right
         //padding: 5
         //Add BY GPE 3/7/2013 point.3 doc. After my visit
-        width: 1000
+        //width: 1000
+        width:"100%"
     });
 }
 
@@ -55,7 +56,8 @@ function cargar_usuarios_por_grupo_de_acceso(cod_compania, code_grupo, grupo, co
     $(".div_mensaje_class").remove();
     $("[id*=btn_excepto]").hide();
     radioStatus = false;
-    DisableControls();
+    //DisableControls();
+    EnableControls();
 }
 
 function EnableControls() {
@@ -71,7 +73,7 @@ function EnableControls() {
         $("[id*=status_control]").val("Edit");
         $("[id*=btn_excepto]").show();
 
-        alert("Ahora se puede editar!!!");
+        //alert("Ahora se puede editar!!!");
     }
 }
 
@@ -149,7 +151,7 @@ function CreateNew() {
     $("[id*=status_control]").val("Create");
     $("[id*=btn_excepto]").show();
 
-    alert("Ahora usted puede crear nuevas usuario!!!");
+    //alert("Ahora usted puede crear nuevas usuario!!!");
 }
 
 function cargar_grupo(id_grupo, grupo, propcompania) {

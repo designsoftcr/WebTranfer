@@ -13,7 +13,7 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
      <%--<link rel="stylesheet" href="../Scripts/jquery-ui-themes-1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />--%>
     <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/Scripts/jquery-ui-themes-1.10.3/themes/smoothness/jquery-ui.css") %>" type="text/css" />
     <%--<link rel="stylesheet" href="../fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />--%>
-    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/fancybox/source/jquery.fancybox.css?v=2.1.4") %>"type="text/css" media="screen" />
+    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/fancybox/source/jquery.fancybox.css?v=2.1.4") %>" type="text/css" media="screen" />
  
        <!-- Add jQuery library -->
    <%-- <script type="text/javascript" src="../Scripts/jquery-ui-1.10.3/jquery-1.9.1.js"></script>--%>
@@ -48,7 +48,7 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
         
        <input ID="img_btn_new" title="Nuevo Registro" class="img_btn_new" type="button" value="" runat="server" onclick="javascript:CreateNew();"/>
        <input ID="img_btn_select" title="Buscar" class="img_btn_select" type="button" value="" runat="server" onclick="javascript:filtro('usuarios_por_grupo_de_acceso','txt_cod_solicitante','txt_nombre_solicitante', 'txt_responsable');" />
-       <input ID="img_btn_edit" title="Editar" class="img_btn_edit" type="button" value="" runat="server" onclick="javascript:EnableControlsEdit();" />
+       <!--<input ID="img_btn_edit" title="Editar" class="img_btn_edit" type="button" value="" runat="server" onclick="javascript:EnableControlsEdit();" />-->
 <%--       <input ID="img_btn_delete" class="img_btn_delete" type="button" value="" runat="server" onclick="img_btn_delete_Click" />--%>
        <asp:Button ID="img_btn_delete" title="Borrar" CssClass="img_btn_delete"  runat="server" OnClientClick="javascript:alert('Está seguro de?');" OnClick="img_btn_delete_Click" />
 <%--       <input ID="img_btn_back" title="Cerrar" class="img_btn_back" type="button" value="" runat="server" onclick="window.location='/Pages/wbfrm_traslado_activo.aspx';" />--%>

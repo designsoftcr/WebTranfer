@@ -136,7 +136,19 @@ namespace BLL
                     from c in this.db.AFM_MAEST_ACTIV
                     from d in this.db.AFM_MARCA_ACTIV
                     from e in this.db.AFM_MODEL_ACTIV
-                    where c.COD_MARCA == d.COD_MARCA && d.COD_MARCA == e.COD_MARCA && e.COD_MODELO != "0" && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST == centro_costo
+                        where 
+                    c.COD_MARCA == d.COD_MARCA && 
+                    d.COD_MARCA == e.COD_MARCA && e.COD_MODELO != "0" 
+                    && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST == centro_costo
+                    //&& (c.COD_EST_ORI == "01" || c.COD_EST_ORI == "02" || c.COD_EST_ORI == "03")
+                /*var activos =
+                    from c in this.db.AFM_MAEST_ACTIV
+                    join d in this.db.AFM_MARCA_ACTIV on c.COD_MARCA equals d.COD_MARCA
+                    join e in this.db.AFM_MODEL_ACTIV on c.COD_MARCA equals e.COD_MARCA
+                    where 
+                    e.COD_MODELO != "0" 
+                    && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST == centro_costo
+                    && (c.COD_EST_ORI == "01" || c.COD_EST_ORI == "02" || c.COD_EST_ORI == "03")*/
                     select new
                     {
                         PLA_ACTIVO = c.PLA_ACTIVO,
@@ -158,7 +170,17 @@ namespace BLL
                    from c in this.db.AFM_MAEST_ACTIV
                    from d in this.db.AFM_MARCA_ACTIV
                    from e in this.db.AFM_MODEL_ACTIV
-                   where c.COD_MARCA == d.COD_MARCA && d.COD_MARCA == e.COD_MARCA && e.COD_MODELO != "0" && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST != "0"
+                   where c.COD_MARCA == d.COD_MARCA && d.COD_MARCA == e.COD_MARCA 
+                   && e.COD_MODELO != "0" 
+                   && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST != "0"
+                /*var activos =
+                    from c in this.db.AFM_MAEST_ACTIV
+                    join d in this.db.AFM_MARCA_ACTIV on c.COD_MARCA equals d.COD_MARCA
+                    join e in this.db.AFM_MODEL_ACTIV on c.COD_MARCA equals e.COD_MARCA
+                    where
+                    e.COD_MODELO != "0"
+                    && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST != ""
+                    && (c.COD_EST_ORI == "01" || c.COD_EST_ORI == "02" || c.COD_EST_ORI == "03")*/
                    select new
                    {
                        PLA_ACTIVO = c.PLA_ACTIVO,
@@ -174,6 +196,49 @@ namespace BLL
                 return activos.AsDataTable();
             }
         }
+
+        public bool comprobarDisponibilidadActivo(string placa_activo, string centro_costo = "")
+        {
+            var activos =
+                    from c in this.db.AFM_MAEST_ACTIV
+                    join d in this.db.AFM_MARCA_ACTIV on c.COD_MARCA equals d.COD_MARCA
+                    join e in this.db.AFM_MODEL_ACTIV on c.COD_MARCA equals e.COD_MARCA
+                    where
+                    e.COD_MODELO != "0"
+                    && c.PLA_ACTIVO.Trim() == placa_activo && c.COD_CEN_CST != ""
+                    && (c.COD_EST_ORI == "01" || c.COD_EST_ORI == "02" || c.COD_EST_ORI == "03")
+                    select new
+                    {
+                        PLA_ACTIVO = c.PLA_ACTIVO,
+                        REF_NUM_ACT = c.REF_NUM_ACT,
+                        DES_ACTIVO = c.DES_ACTIVO,
+                        DES_MARCA = d.DES_MARCA,
+                        NOM_MODELO = e.NOM_MODELO,
+                        SER_ACTIVO = c.SER_ACTIVO,
+                        VAL_LIBROS = c.VAL_LIBROS ?? 0m,
+                        CENTRO_COSTO = c.COD_CEN_CST,
+                        COD_CIA_PRO = c.COD_CIA_PRO
+                    };
+            if (activos.AsDataTable().Rows.Count > 0)
+            {
+                return false;
+            }
+            else 
+            {
+                var movimientos =
+                    from c in this.db.AFM_MAEST_ACTIV
+                    join d in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO on c.NUM_ACTIVO equals d.NUM_ACTIVO
+                    join e in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on d.ID_MOVIMIENTO equals e.ID_MOVIMIENTO
+                    where
+                    c.PLA_ACTIVO == placa_activo && e.ESTADO != "A"
+                    select new
+                    {
+                        PLA_ACTIVO = c.PLA_ACTIVO
+                    };
+                return movimientos.AsDataTable().Rows.Count == 0;
+            }
+        }
+
         public DataTable cargar_empleado(string cod_empleado)
         {
             var empleado =
@@ -581,6 +646,21 @@ namespace BLL
             }
             return id_movimiento2;
         }
+
+        public DataTable obtener_responsable(string cod_empleado, string cod_centro_costo)
+        {
+            var responsable =
+                from cc in this.db.AFM_CENTRO_COSTO
+                join ce in this.db.AFM_CATAL_EMPLE on cc.COD_EMPLEADO equals ce.COD_EMPLEADO
+                join mv in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on cc.COD_CEN_CST equals mv.CENTRO_COSTO
+                where ce.USUARIO_SESION == cod_empleado && cc.COD_CEN_CST == cod_centro_costo
+                select new
+                {
+                    COD_EMPLEADO = cc.COD_EMPLEADO
+                };
+            return responsable.AsDataTable();
+        }
+
         public string nombre_responsable(string codigo, bool interno = false)
         {
             var responsable =
@@ -682,7 +762,7 @@ namespace BLL
                 result = solicitante.First().DIR_ELECTR;
             }
             else
-            {
+            { 
                 result = string.Empty;
             }
             return result;

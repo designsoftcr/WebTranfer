@@ -1317,6 +1317,7 @@
     <Content Include="Styles\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Styles\smoothness\jquery-ui-1.8.18.custom.css" />
     <Content Include="Styles\style.css" />
+    <Content Include="Templates\MailCancelacion.htm" />
     <Content Include="Templates\Mail.htm" />
     <Content Include="Templates\Report.htm" />
     <Content Include="Templates\OldMail.htm" />

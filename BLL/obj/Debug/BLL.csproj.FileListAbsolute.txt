@@ -43,3 +43,16 @@ D:\Projects\PocketAssets\WebAssetsTransfer\BLL\bin\Debug\Entidades.pdb
 D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Debug\BLL.dll
 D:\Projects\PocketAssets\WebAssetsTransfer\BLL\obj\Debug\BLL.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\DAL.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\BLL.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\BLL.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\CapaLog.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\Entidades.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\System.Web.Data.Cloud.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\CapaLog.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\DAL.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\Entidades.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\bin\Debug\System.Web.Data.Cloud.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\obj\Debug\BLL.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\BLL\obj\Debug\BLL.pdb

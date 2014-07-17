@@ -3312,12 +3312,6 @@
       <End Role="AFM_CIAS" EntitySet="AFM_CIAS" />
       <End Role="AFM_CENTRO_COSTO" EntitySet="AFM_CENTRO_COSTO" />
     </AssociationSet>
-    <!-- GPE PROVERI
-          <AssociationSet Name="FK_AFM_CIAS_COD_CIA_PRO" Association="BostonModel.Store.FK_AFM_CIAS_COD_CIA_PRO">
-            <End Role="AFM_CIAS" EntitySet="AFM_CIAS" />
-            <End Role="AFT_MOV_GRUPOS_ACCESOS" EntitySet="AFT_MOV_GRUPOS_ACCESOS" />
-          </AssociationSet>
-	  -->
     <AssociationSet Name="FK_AFM_CLASE_ACTIV_AFM_TIPOS_ACTIV" Association="BostonModel.Store.FK_AFM_CLASE_ACTIV_AFM_TIPOS_ACTIV">
       <End Role="AFM_TIPOS_ACTIV" EntitySet="AFM_TIPOS_ACTIV" />
       <End Role="AFM_CLASE_ACTIV" EntitySet="AFM_CLASE_ACTIV" />
@@ -3982,10 +3976,6 @@
       <End Role="AFC_ATRIB_ACTIV" EntitySet="AFC_ATRIB_ACTIV" />
       <End Role="AFR_VALOR_ATRIB" EntitySet="AFR_VALOR_ATRIB" />
     </AssociationSet>
-    <AssociationSet Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS" Association="BostonModel.Store.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-      <End Role="AFT_MOV_GRUPOS_ACCESOS" EntitySet="AFT_MOV_GRUPOS_ACCESOS" />
-      <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" EntitySet="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" />
-    </AssociationSet>
     <AssociationSet Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS" Association="BostonModel.Store.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS">
       <End Role="AFT_MOV_TIPOS_MOVIMIENTOS" EntitySet="AFT_MOV_TIPOS_MOVIMIENTOS" />
       <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" EntitySet="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" />
@@ -3996,10 +3986,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_AssetsWEB_MOV_GRUPO_USUARIOS_AFM_CATAL_EMPLE" Association="BostonModel.Store.FK_AssetsWEB_MOV_GRUPO_USUARIOS_AFM_CATAL_EMPLE">
       <End Role="AFM_CATAL_EMPLE" EntitySet="AFM_CATAL_EMPLE" />
-      <End Role="AFT_MOV_GRUPO_USUARIOS" EntitySet="AFT_MOV_GRUPO_USUARIOS" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS" Association="BostonModel.Store.FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-      <End Role="AFT_MOV_GRUPOS_ACCESOS" EntitySet="AFT_MOV_GRUPOS_ACCESOS" />
       <End Role="AFT_MOV_GRUPO_USUARIOS" EntitySet="AFT_MOV_GRUPO_USUARIOS" />
     </AssociationSet>
     <AssociationSet Name="FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AFM_CATAL_EMPLE" Association="BostonModel.Store.FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AFM_CATAL_EMPLE">
@@ -7214,20 +7200,20 @@
       <PropertyRef Name="ID_EMPLEADO" />
       <PropertyRef Name="ID_GRUPO" />
       <PropertyRef Name="COD_COMPANIA" />
-      <!-- GPE PROVERI <PropertyRef Name="COD_CIA_PRO" /> -->
+      <PropertyRef Name="COD_CIA_PRO" />
     </Key>
     <Property Name="ID_EMPLEADO" Type="char" Nullable="false" MaxLength="10" />
     <Property Name="ID_GRUPO" Type="int" Nullable="false" />
     <Property Name="COD_COMPANIA" Type="char" Nullable="false" MaxLength="5" />
     <Property Name="ESTADO" Type="bit" />
     <Property Name="USUARIO" Type="nvarchar" MaxLength="100" />
-    <!-- <Property Name="COD_CIA_PRO" Type="char" Nullable="false" MaxLength="5" /> -->
+    <Property Name="COD_CIA_PRO" Type="char" Nullable="false" MaxLength="5" />
   </EntityType>
   <EntityType Name="AFT_MOV_GRUPOS_ACCESOS">
     <Key>
       <PropertyRef Name="ID_GRUPO" />
       <PropertyRef Name="COD_COMPANIA" />
-      <!-- GPE PROVERI <PropertyRef Name="COD_CIA_PRO" /> -->
+      <PropertyRef Name="COD_CIA_PRO" />
     </Key>
     <Property Name="ID_GRUPO" Type="int" Nullable="false" />
     <Property Name="COD_COMPANIA" Type="char" Nullable="false" MaxLength="5" />
@@ -11716,20 +11702,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <!-- GPE PROVERI
-        <Association Name="FK_AFM_CIAS_COD_CIA_PRO">
-          <End Role="AFM_CIAS" Type="BostonModel.Store.AFM_CIAS" Multiplicity="1" />
-          <End Role="AFT_MOV_GRUPOS_ACCESOS" Type="BostonModel.Store.AFT_MOV_GRUPOS_ACCESOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AFM_CIAS">
-              <PropertyRef Name="COD_COMPANIA" />
-            </Principal>
-            <Dependent Role="AFT_MOV_GRUPOS_ACCESOS">
-              <PropertyRef Name="COD_CIA_PRO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-	-->
   <Association Name="FK_AFM_CLASE_ACTIV_AFM_TIPOS_ACTIV">
     <End Role="AFM_TIPOS_ACTIV" Type="BostonModel.Store.AFM_TIPOS_ACTIV" Multiplicity="1" />
     <End Role="AFM_CLASE_ACTIV" Type="BostonModel.Store.AFM_CLASE_ACTIV" Multiplicity="*" />
@@ -13998,23 +13970,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-    <End Role="AFT_MOV_GRUPOS_ACCESOS" Type="BostonModel.Store.AFT_MOV_GRUPOS_ACCESOS" Multiplicity="0..1" />
-    <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Type="BostonModel.Store.AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFT_MOV_GRUPOS_ACCESOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-        <!-- GPE PROVERI -->
-        <!-- <PropertyRef Name="COD_CIA_PRO" /> -->
-      </Principal>
-      <Dependent Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-        <!-- <PropertyRef Name="COD_CIA_PRO" /> -->
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS">
     <End Role="AFT_MOV_TIPOS_MOVIMIENTOS" Type="BostonModel.Store.AFT_MOV_TIPOS_MOVIMIENTOS" Multiplicity="1" />
     <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Type="BostonModel.Store.AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Multiplicity="*" />
@@ -14054,23 +14009,6 @@
       <Dependent Role="AFT_MOV_GRUPO_USUARIOS">
         <PropertyRef Name="COD_COMPANIA" />
         <PropertyRef Name="ID_EMPLEADO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-    <End Role="AFT_MOV_GRUPOS_ACCESOS" Type="BostonModel.Store.AFT_MOV_GRUPOS_ACCESOS" Multiplicity="1" />
-    <End Role="AFT_MOV_GRUPO_USUARIOS" Type="BostonModel.Store.AFT_MOV_GRUPO_USUARIOS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFT_MOV_GRUPOS_ACCESOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-        <!-- GPE PROVERi  -->
-        <!--      <PropertyRef Name="COD_CIA_PRO" />  -->
-      </Principal>
-      <Dependent Role="AFT_MOV_GRUPO_USUARIOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-        <!--    <PropertyRef Name="COD_CIA_PRO" />  -->
       </Dependent>
     </ReferentialConstraint>
   </Association>

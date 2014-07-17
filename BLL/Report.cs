@@ -41,7 +41,7 @@ namespace BLL
         public string Imprimir_Usuario { get; set; }
         public string Imprimir_Descripcion { get; set; }
         public string Imprimir_Descripcion_Tipo_Movimiento { get; set; }
-        
+        public string Imprimir_Estado { get; set; }
     }
 
     public class MovMaestro

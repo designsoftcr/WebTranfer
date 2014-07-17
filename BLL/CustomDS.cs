@@ -195,7 +195,8 @@ namespace BLL
                     FECHA = r.BITACORA.FECHA,
                     PASO_APROVACION_ACTUAL = r.BITACORA.PASO_APROBACION,
                     USUARIO = r.BITACORA.USUARIO,
-                    DESCRIPCION_TIPO_MOVIMIENTO = r.BITACORA.DESCRIPCION_TIPO_MOVIMIENTO
+                    DESCRIPCION_TIPO_MOVIMIENTO = r.BITACORA.DESCRIPCION_TIPO_MOVIMIENTO,
+                    ESTADO = r.MOVIMIENTOS.ESTADO
                 };
 
             List<Imprimir> imprimirreport = new List<Imprimir>();
@@ -210,11 +211,25 @@ namespace BLL
                 imprimir.Imprimir_PasoAcrobacion = a.PASO_APROVACION_ACTUAL;
                 imprimir.Imprimir_Usuario = a.USUARIO;
                 imprimir.Imprimir_Descripcion_Tipo_Movimiento = a.DESCRIPCION_TIPO_MOVIMIENTO;
+                imprimir.Imprimir_Estado = this.obtenerEstado(a.ESTADO);
 
                 imprimirreport.Add(imprimir);
             }
 
             return imprimirreport;
+        }
+
+        private string obtenerEstado(string estado) {
+            switch (estado) 
+            { 
+                case "A":
+                    return "Aceptado";
+                case "P":
+                    return "Pendiente";
+                case "C":
+                    return "Cancelado";
+            }
+            return estado;
         }
 
         public List<MovMaestro> GetReportMovMaestro(int id_movimiento, string cod_centro_costo, string cod_solicitante, string fetcha, int tipo_movimiento)

@@ -19,6 +19,47 @@ namespace BLL
                 };
             return empleado.AsDataTable();
         }
+
+        public DataTable cargar_empleado_filtro(string cod_empleado, string nombre_empleado)
+        {
+            if (cod_empleado != "" && nombre_empleado != "todo")
+            {
+                var empleado =
+                    from c in this.db.AFM_CATAL_EMPLE
+                    where c.COD_EMPLEADO.Contains(cod_empleado) &&
+                    nombre_empleado == "todo" || c.NOM_EMPLEADO.Contains(nombre_empleado)
+                    select new
+                    {
+                        COD_EMPLEADO = c.COD_EMPLEADO,
+                        NOMBRE_EMPLEADO = c.NOM_EMPLEADO
+                    };
+                return empleado.AsDataTable();
+            }
+            else if (cod_empleado != "" && nombre_empleado == "todo")
+            {
+                var empleado =
+                    from c in this.db.AFM_CATAL_EMPLE
+                    where c.COD_EMPLEADO.Contains(cod_empleado)
+                    select new
+                    {
+                        COD_EMPLEADO = c.COD_EMPLEADO,
+                        NOMBRE_EMPLEADO = c.NOM_EMPLEADO
+                    };
+                return empleado.AsDataTable();
+            }
+            else {
+                var empleado =
+                    from c in this.db.AFM_CATAL_EMPLE
+                    where nombre_empleado == "todo" || c.NOM_EMPLEADO.Contains(nombre_empleado)
+                    select new
+                    {
+                        COD_EMPLEADO = c.COD_EMPLEADO,
+                        NOMBRE_EMPLEADO = c.NOM_EMPLEADO
+                    };
+                return empleado.AsDataTable();
+            }
+        }
+
         public DataTable cargar_centros_costo_filtro(string descripcion, string strCod_Cia_Pro, string strCOD_CEN_CST, string strMovementType)
         {
             if (!string.IsNullOrEmpty(strCOD_CEN_CST))
@@ -124,6 +165,7 @@ namespace BLL
             var grupos_de_acceso =
                 from c in this.db.AFT_MOV_GRUPOS_ACCESOS
                 where descripcion == "todo" || c.DESCRIPCION.Contains(descripcion)
+
                 select new
                 {
                     ID_GRUPO = c.ID_GRUPO,
@@ -138,7 +180,24 @@ namespace BLL
 
         public DataTable cargar_grupos_de_acceso(int iCodigo, string descripcion)
         {
-            if (iCodigo > 0)
+            if (iCodigo > 0 && descripcion != "todo")
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    where c.ID_GRUPO == iCodigo &&
+                    c.DESCRIPCION.Contains(descripcion)
+                    select new
+                    {
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = c.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        EMAIL_GRUPO = c.EMAIL_GRUPO,
+                        ESTADO = c.ESTADO,
+                        COD_CIA_PRO = c.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            else if (iCodigo > 0 && descripcion == "todo")
             {
                 var grupos_de_acceso =
                     from c in this.db.AFT_MOV_GRUPOS_ACCESOS
@@ -154,7 +213,7 @@ namespace BLL
                     };
                 return grupos_de_acceso.AsDataTable();
             }
-            else
+            else 
             {
                 var grupos_de_acceso =
                     from c in this.db.AFT_MOV_GRUPOS_ACCESOS
@@ -195,6 +254,76 @@ namespace BLL
                     COD_COMPANIA_PROP = e.COD_CIA_PRO
                 };
             return grupos_de_acceso.AsDataTable();
+        }
+
+        public DataTable cargar_usuarios_por_grupo_de_acceso(string codigo, string descripcion)
+        {
+            if (codigo != "" && descripcion != "todo")
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    join d in this.db.AFM_CATAL_EMPLE
+                    on c.ID_EMPLEADO equals d.COD_EMPLEADO
+                    join e in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    on c.ID_GRUPO equals e.ID_GRUPO
+                    where c.ID_EMPLEADO.Contains(codigo) &&
+                    d.NOM_EMPLEADO.Contains(descripcion)
+                    select new
+                    {
+                        COD_EMPLEADO = d.COD_EMPLEADO,
+                        NOM_EMPLEADO = d.NOM_EMPLEADO,
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = e.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        USUARIO = c.USUARIO,
+                        ESTADO = c.ESTADO,
+                        COD_COMPANIA_PROP = e.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            else if (codigo != "" && descripcion == "todo")
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    join d in this.db.AFM_CATAL_EMPLE
+                    on c.ID_EMPLEADO equals d.COD_EMPLEADO
+                    join e in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    on c.ID_GRUPO equals e.ID_GRUPO
+                    where c.ID_EMPLEADO.Contains(codigo)
+                    select new
+                    {
+                        COD_EMPLEADO = d.COD_EMPLEADO,
+                        NOM_EMPLEADO = d.NOM_EMPLEADO,
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = e.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        USUARIO = c.USUARIO,
+                        ESTADO = c.ESTADO,
+                        COD_COMPANIA_PROP = e.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            else {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    join d in this.db.AFM_CATAL_EMPLE
+                    on c.ID_EMPLEADO equals d.COD_EMPLEADO
+                    join e in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    on c.ID_GRUPO equals e.ID_GRUPO
+                    where descripcion == "todo" || d.NOM_EMPLEADO.Contains(descripcion)
+                    select new
+                    {
+                        COD_EMPLEADO = d.COD_EMPLEADO,
+                        NOM_EMPLEADO = d.NOM_EMPLEADO,
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = e.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        USUARIO = c.USUARIO,
+                        ESTADO = c.ESTADO,
+                        COD_COMPANIA_PROP = e.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
         }
 
         //add by GPE 16.09.2013

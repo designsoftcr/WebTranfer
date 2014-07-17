@@ -27,3 +27,4 @@ C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\bin\Release\DAL.dll
 C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\bin\Release\DAL.pdb
 C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\obj\Release\DAL.dll
 C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\obj\Release\DAL.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache

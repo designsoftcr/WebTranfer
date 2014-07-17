@@ -7,12 +7,23 @@ $(function () {
 
 $(document).ready(function () {
     DisableControls();
+    alert("va cargando");
+    $('[id*="txt_cod_centro_costo"]').blur(function () {
+        $("[id*='btn_cargar_centro_costo']").click();
+        alert("Se salió del contro de centro de costo");
+        return false;
+    });
+    $('[id*="txt_cod_solicitante"]').blur(function () {
+        $("[id*='btn_cargar_responsable']").click();
+        alert("Se salió del contro de solicitante");
+        return false;
+    });
 });
 
 function DisableControls() {
-    $("[id*=txt_cod_centro_costo]").prop('readOnly', true);
+    //$("[id*=txt_cod_centro_costo]").prop('readOnly', false);
     $("[id*=txt_des_centro_costo]").prop('readOnly', true);
-    $("[id*=txt_cod_solicitante]").prop('readOnly', true);
+    //$("[id*=txt_cod_solicitante]").prop('readOnly', false);
     $("[id*=txt_nombre_solicitante]").prop('readOnly', true);
 }
 
@@ -23,9 +34,34 @@ function filtro(filtro, id_control_codigo, id_control_descripcion, id_responsabl
         //href:'wbfrm_centro_costo.aspx?filtro=centro_costo&id_control_descripcion=txt_nombre_solicitante&id_control_codigo=txt_cod_solicitante';
         href: 'wbfrm_popup.aspx?tipo_filtro=' + filtro + '&id_control_codigo=' + id_control_codigo + '&id_control_descripcion=' + id_control_descripcion + '&id_responsable=' + id_responsable,
         type: 'iframe',
-        margin: [50, 60, 50, 60], // Increase left/right
-        padding: 5
+        //margin: [50, 60, 50, 60], // Increase left/right
+        //padding: 5,
+        width:"100%"
     });
+}
+
+function centro_costo_key_press(event) {
+    if (event.keyCode == 13) {
+        $("[id*='btn_cargar_centro_costo']").click();
+        //alert("Presionó ENTER Centro de costo");
+        return false; // 
+    }
+}
+
+function solicitante_key_press(event) {
+    if (event.keyCode == 13) {
+        //alert("Presionó ENTER");
+        $("[id*='btn_cargar_solicitante']").click();
+        return false; // 
+    }
+}
+
+function realizar_busqueda(event) {
+    if (event.keyCode == 13) {
+        alert("Presionó ENTER");
+        $("[id*='btn_realizar_filtrado']").click();
+        return false; // 
+    }
 }
 
 function cargar_controles(id_control_codigo, id_control_descripcion, id_responsable, codigo, descripcion, responsable) {

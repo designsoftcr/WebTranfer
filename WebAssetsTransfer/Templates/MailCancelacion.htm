@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+       
+ table {
+         font-size:0.9em;
+        }  
+
+       
+    </style>
+</head>
+<body>
+
+ <table align="center" style="width:900px; padding-top:10px; padding-bottom:10px;">
+       <tr style="width:900px; text-align:center;">
+            <td colspan="2">
+               <img src="cid:img_header"/>
+            </td>
+        </tr>
+       <tr style=" text-align:center;">
+            <td  colspan="2" style="color: #1F497D; font-size: 1.7em; font-weight: bold; padding-top:20px;">
+                  Solicitud de Aprobación de Movimiento de Activos Fijos                           
+            </td>
+
+       </tr>
+        <tr style="width:900px; text-align:left;">
+           <td style="width:400px; text-align:center;">
+                  <img align="middle" alt="Control Integrida Responsabilidad" 
+                     src="cid:bg_content_mail" />
+            </td>
+            <td style="width:500px;color:#000000;font-size:1em;text-align:left;padding-top:40px;">
+                <b>Tipo de Movimiento: </b>[NOMBRE_TIPO_MOVIMIENTO] <br />
+                <b>Solicitud Número: </b>[ID_MOVIMIENTO]<br />
+                <b>Planta: </b>[PLANTA_1], [PLANTA_2]<br />
+                <b>Solicitante: </b>[NOMBRE_SOLICITANTE]  <br /><br />
+                <table style="width: 480px;">
+                    <tr>
+                        <td>
+                            <b>Ubicación Actual</b><br />[UBICACION_ACTUAL]</td>
+                        <td>
+                            <b>Departamento Receptor</b><br /><br />[DEPARTAMENTO_RECEPTOR]</td>
+                    </tr>
+                    <tr>
+                        <td colspan ="2">
+                            <table style="width: 480px">
+                                <tr>
+                                    <td>
+                                          <b>Centro de Costo Actual: </b>
+                                    </td>
+                                    <td>
+                                        <b>Centro de Costo Descripcion: </b>
+                                    </td>
+                                 </tr>
+                                <tr>
+                                    <td>
+                                        [CENTRO_COSTO_ACTUAL]                
+                                    </td>
+                                    <td>
+                                        [CENTRO_DE_COSTO] 
+                                    </td>
+                                 </tr>
+                                </table>
+                          </td>
+                    </tr>
+                    <tr>
+                        <td colspan ="2">
+                             <b>Centro de Costo Receptor</b><br />
+                             [CENTRO_COSTO_RECEPTOR]
+                        </td>
+                    </tr>
+                     <tr>
+                        <td colspan ="2">
+                             <b>Total Valor en Libros: </b>[VALOR_LIBROS]
+                        </td>
+                    </tr>                  
+                </table>
+            </td>
+        </tr>  
+       <tr align="center">
+            <td colspan="2"  style="width:800px; text-align:center;">
+                 <a style="color: #3366CC;font-size: 1.2em;text-decoration: underline;" href="[URL]">[URL_DESCRIPCION]</a>                                     
+            </td>
+        </tr>
+     <tr style="width:900px; text-align:left;">
+         <td colspan="2">
+             <span style="padding:0px 0px;color:#000000;font-size:1.2em;text-align:left;font-weight:bold;">Historico de Movimientos : </span>
+         </td>
+     </tr>
+     <tr style="width:900px; text-align:left;">
+         <td colspan="2">
+             [HISTORICO]<br />
+             <br />
+             &nbsp;
+         </td>
+     </tr>
+    </table> 
+</body>
+</html>

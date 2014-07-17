@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -22,13 +23,48 @@ namespace WebAssetsTransfer
                 //Page.ResolveClientUrl("~/Pages/WATImprimir.rdlc"); //"Pages\\WATImprimir.rdlc";
            if (!Page.IsPostBack)
            {
-               id_movimiento = Convert.ToInt32(base.Request.QueryString["id"]);
-               usuario = base.Request.QueryString["usuario"];
-               code_centro_costo = base.Request.QueryString["code_centro_costo"];
-               code_solicitante = base.Request.QueryString["code_solicitante"];
-               fetcha = base.Request.QueryString["fetcha"];
-               tipomovimiento = base.Request.QueryString["tipomovimiento"];
+               if (base.Request.QueryString["id"] != null)
+               {
+                   id_movimiento = Convert.ToInt32(base.Request.QueryString["id"]);
+               }
+               else if (base.Request.QueryString["id_movimiento"] != null) {
+                   id_movimiento = Convert.ToInt32(base.Request.QueryString["id_movimiento"]);
+               }
+               if (base.Request.QueryString["usuario"] != null)
+               {
+                   usuario = base.Request.QueryString["usuario"];
+               }
+               if (base.Request.QueryString["code_centro_costo"] != null)
+               {
+                   code_centro_costo = base.Request.QueryString["code_centro_costo"];
+               }
+               if (base.Request.QueryString["code_solicitante"] != null)
+               {
+                   code_solicitante = base.Request.QueryString["code_solicitante"];
+               }
+               if (base.Request.QueryString["fetcha"] != null)
+               {
+                   fetcha = base.Request.QueryString["fetcha"];
+               }
+               if (base.Request.QueryString["tipomovimiento"] != null)
+               {
+                   tipomovimiento = base.Request.QueryString["tipomovimiento"];
+               }
            }
+        }
+
+        private void LoadReport() {
+            try
+            {
+                DataTable dt = new DataTable();
+               //ObjectDataSource1.data
+               // ReportViewer1.LocalReport.DataSources.Add(dt);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         protected void ObjectDataSource1_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)

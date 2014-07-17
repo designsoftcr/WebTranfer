@@ -10,10 +10,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div style="width:100%; margin-left: auto; margin-right: auto ;">
-        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="10pt" Height="930px" Width="607px">
+    <div style="width:100%; margin-left: auto; margin-right: auto;">
+        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="10pt" style="width:95%; margin: auto;" Height="100%">
             <LocalReport ReportEmbeddedResource="WebAssetsTransfer.Pages.WATImprimir.rdlc">
-                <DataSources>
+            <DataSources>
                     <rsweb:ReportDataSource DataSourceId="ObjectDataSource1" Name="DataSet4" />                   
                 </DataSources>
             </LocalReport>

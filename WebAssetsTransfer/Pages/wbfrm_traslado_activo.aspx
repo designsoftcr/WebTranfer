@@ -13,7 +13,7 @@
      <%--<link rel="stylesheet" href="../Scripts/jquery-ui-themes-1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />--%>
     <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/Scripts/jquery-ui-themes-1.10.3/themes/smoothness/jquery-ui.css") %>" type="text/css" />
     <%--<link rel="stylesheet" href="../fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />--%>
-    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/fancybox/source/jquery.fancybox.css?v=2.1.4") %>"type="text/css" media="screen" />
+    <link rel="stylesheet" href="<%= Page.ResolveClientUrl("~/fancybox/source/jquery.fancybox.css?v=2.1.4") %>" type="text/css" media="screen" />
  
        <!-- Add jQuery library -->
    <%-- <script type="text/javascript" src="../Scripts/jquery-ui-1.10.3/jquery-1.9.1.js"></script>--%>
@@ -57,10 +57,10 @@
                         CssClass="button_filtrar" />
                   <%--  <asp:TextBox ID="txt_cod_centro_costo" onKeyPress="return centro_costo_key_press(event)"
                         runat="server" CssClass="txt_filtro_input"></asp:TextBox>--%>
-                      <asp:TextBox ID="txt_cod_centro_costo" runat="server" CssClass="txt_filtro_input"></asp:TextBox>
+                      <asp:TextBox ID="txt_cod_centro_costo" runat="server" ReadOnly="true" CssClass="txt_filtro_input"></asp:TextBox>
                 </td>
                 <td class="td_encabezado_txt">
-                    <asp:TextBox ID="txt_des_centro_costo" runat="server" CssClass="txt_detalle"></asp:TextBox>
+                    <asp:TextBox ID="txt_des_centro_costo" runat="server" ReadOnly="true" CssClass="txt_detalle"></asp:TextBox>
                   <%--  <input id="btn_buscar_centro_costo" runat="server" title="Buscar Información de Centro de Costo" class="button_buscar" onclick="javascript:filtro('centro_costo','txt_cod_centro_costo','txt_des_centro_costo', 'txt_responsable');"
                         type="button" value="" />--%>
                 </td>
@@ -201,7 +201,7 @@
                                 CssClass="button_filtrar" />
                         </td>
                         <td>
-                            <asp:TextBox ID="txt_nombre_centro_costo_destino" runat="server" CssClass="txt_detalle_area_destino"></asp:TextBox>
+                            <asp:TextBox ID="txt_nombre_centro_costo_destino" runat="server" ReadOnly="true" CssClass="txt_detalle_area_destino"></asp:TextBox>
                             <input id="btn_buscar_centro_costo_destino" title="Buscar Información de Centro de Costo Destino" runat="server" class ="button_buscar" onclick="javascript:filtro('centro_costo','txt_codigo_centro_costo_destino','txt_nombre_centro_costo_destino', 'txt_cargo_responsable_costo_destino');" type="button" value="" />
                         </td>
                         <td>
@@ -225,7 +225,7 @@
                                 CssClass="button_filtrar" />
                         </td>
                         <td>
-                            <asp:TextBox ID="txt_nombre_responsable_destino" runat="server" CssClass="txt_detalle_area_destino"></asp:TextBox>
+                            <asp:TextBox ID="txt_nombre_responsable_destino" runat="server" ReadOnly="true" CssClass="txt_detalle_area_destino"></asp:TextBox>
                             <input id="btn_buscar_resposable_destino" title="Buscar Información de Responsable Destino" class="button_buscar" runat="server" onclick="javascript:filtro('responsable','txt_cod_responsable_destino','txt_nombre_responsable_destino');"
                                 type="button" value="" />
                         </td>

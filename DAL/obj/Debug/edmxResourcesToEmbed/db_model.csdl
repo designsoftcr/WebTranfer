@@ -123,7 +123,6 @@
     <EntitySet Name="AFM_INDIC_DBFS" EntityType="BostonModel.AFM_INDIC_DBFS" />
     <EntitySet Name="AFM_JERAR_GRUPO" EntityType="BostonModel.AFM_JERAR_GRUPO" />
     <EntitySet Name="AFM_LOTES_TOMFI" EntityType="BostonModel.AFM_LOTES_TOMFI" />
-    <EntitySet Name="AFM_MAEST_ACTIV" EntityType="BostonModel.AFM_MAEST_ACTIV" />
     <EntitySet Name="AFM_MAEST_ACTIV_GRUPO" EntityType="BostonModel.AFM_MAEST_ACTIV_GRUPO" />
     <EntitySet Name="AFM_MAEST_ACTIV_TEMP" EntityType="BostonModel.AFM_MAEST_ACTIV_TEMP" />
     <EntitySet Name="AFM_MAQUI_SESIO" EntityType="BostonModel.AFM_MAQUI_SESIO" />
@@ -188,7 +187,6 @@
     <EntitySet Name="AFT_MOV_BITACORA" EntityType="BostonModel.AFT_MOV_BITACORA" />
     <EntitySet Name="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" EntityType="BostonModel.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" />
     <EntitySet Name="AFT_MOV_GRUPO_USUARIOS" EntityType="BostonModel.AFT_MOV_GRUPO_USUARIOS" />
-    <EntitySet Name="AFT_MOV_GRUPOS_ACCESOS" EntityType="BostonModel.AFT_MOV_GRUPOS_ACCESOS" />
     <EntitySet Name="AFT_MOV_MAESTRO_MOVIMIENTOS" EntityType="BostonModel.AFT_MOV_MAESTRO_MOVIMIENTOS" />
     <EntitySet Name="AFT_MOV_MOVIMIENTOS_APROBACIONES" EntityType="BostonModel.AFT_MOV_MOVIMIENTOS_APROBACIONES" />
     <EntitySet Name="AFT_MOV_TIPOS_MOVIMIENTOS" EntityType="BostonModel.AFT_MOV_TIPOS_MOVIMIENTOS" />
@@ -590,10 +588,6 @@
       <End Role="AFM_ESTAD_ORIGE" EntitySet="AFM_ESTAD_ORIGE" />
       <End Role="AFM_ACTIV_MOVIL" EntitySet="AFM_ACTIV_MOVIL" />
     </AssociationSet>
-    <AssociationSet Name="FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_ACTIV_MOVIL" EntitySet="AFM_ACTIV_MOVIL" />
-    </AssociationSet>
     <AssociationSet Name="FK_AFM_ACTIV_MOVIL_AFM_ORDEN_MOVIL" Association="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_ORDEN_MOVIL">
       <End Role="AFM_ORDEN_MOVIL" EntitySet="AFM_ORDEN_MOVIL" />
       <End Role="AFM_ACTIV_MOVIL" EntitySet="AFM_ACTIV_MOVIL" />
@@ -846,14 +840,6 @@
       <End Role="AFM_ESTAD_ORIGE" EntitySet="AFM_ESTAD_ORIGE" />
       <End Role="AFM_COMPO_ACTIV" EntitySet="AFM_COMPO_ACTIV" />
     </AssociationSet>
-    <AssociationSet Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1" Association="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_COMPO_ACTIV" EntitySet="AFM_COMPO_ACTIV" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2" Association="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_COMPO_ACTIV" EntitySet="AFM_COMPO_ACTIV" />
-    </AssociationSet>
     <AssociationSet Name="FK_AFM_COMPO_ACTIV_AFM_ORIGE_ESTAD" Association="BostonModel.FK_AFM_COMPO_ACTIV_AFM_ORIGE_ESTAD">
       <End Role="AFM_ORIGE_ESTAD" EntitySet="AFM_ORIGE_ESTAD" />
       <End Role="AFM_COMPO_ACTIV" EntitySet="AFM_COMPO_ACTIV" />
@@ -870,10 +856,6 @@
       <End Role="AFM_ESTAD_ORIGE" EntitySet="AFM_ESTAD_ORIGE" />
       <End Role="AFM_CONTR_TRASL" EntitySet="AFM_CONTR_TRASL" />
     </AssociationSet>
-    <AssociationSet Name="FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_DEPRE_ACTIV" EntitySet="AFM_DEPRE_ACTIV" />
-    </AssociationSet>
     <AssociationSet Name="FK_AFM_MOVIM_DEPRE_AFM_METOD_DEPRE" Association="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_METOD_DEPRE">
       <End Role="AFM_METOD_DEPRE" EntitySet="AFM_METOD_DEPRE" />
       <End Role="AFM_DEPRE_ACTIV" EntitySet="AFM_DEPRE_ACTIV" />
@@ -882,16 +864,8 @@
       <End Role="AFM_MOVIM_VALOR" EntitySet="AFM_MOVIM_VALOR" />
       <End Role="AFM_DETAL_MOVFI" EntitySet="AFM_DETAL_MOVFI" />
     </AssociationSet>
-    <AssociationSet Name="FK_AFM_DETA_REF_699_AFM_MAES" Association="BostonModel.FK_AFM_DETA_REF_699_AFM_MAES">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_DETAL_MOVFI" EntitySet="AFM_DETAL_MOVFI" />
-    </AssociationSet>
     <AssociationSet Name="FK_AFM_DETAL_TOMAF_AFM_ESTAD_ORIGE" Association="BostonModel.FK_AFM_DETAL_TOMAF_AFM_ESTAD_ORIGE">
       <End Role="AFM_ESTAD_ORIGE" EntitySet="AFM_ESTAD_ORIGE" />
-      <End Role="AFM_DETAL_TOMAF" EntitySet="AFM_DETAL_TOMAF" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
       <End Role="AFM_DETAL_TOMAF" EntitySet="AFM_DETAL_TOMAF" />
     </AssociationSet>
     <AssociationSet Name="FK_AFM_DETAL_TOMAF_AFM_ORIGE_ESTAD" Association="BostonModel.FK_AFM_DETAL_TOMAF_AFM_ORIGE_ESTAD">
@@ -909,18 +883,6 @@
     <AssociationSet Name="FK_AFM_DETAL_TOMAF_AFM_UBICA_ACTIV" Association="BostonModel.FK_AFM_DETAL_TOMAF_AFM_UBICA_ACTIV">
       <End Role="AFM_UBICA_ACTIV" EntitySet="AFM_UBICA_ACTIV" />
       <End Role="AFM_DETAL_TOMAF" EntitySet="AFM_DETAL_TOMAF" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_DETCIE_DEPRE" EntitySet="AFM_DETCIE_DEPRE" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_DETCIE_DEPRE_COR" EntitySet="AFM_DETCIE_DEPRE_COR" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_DOCADJ_ACTIV" EntitySet="AFM_DOCADJ_ACTIV" />
     </AssociationSet>
     <AssociationSet Name="FK_AFM_DOCU_REF_638_AFM_DOCU" Association="BostonModel.FK_AFM_DOCU_REF_638_AFM_DOCU">
       <End Role="AFM_DOCUM_REFER" EntitySet="AFM_DOCUM_REFER" />
@@ -944,10 +906,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_AFM_EMPLE_ACTIV_AFM_ESTAD_ORIGE" Association="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_ESTAD_ORIGE">
       <End Role="AFM_ESTAD_ORIGE" EntitySet="AFM_ESTAD_ORIGE" />
-      <End Role="AFM_EMPLE_ACTIV" EntitySet="AFM_EMPLE_ACTIV" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
       <End Role="AFM_EMPLE_ACTIV" EntitySet="AFM_EMPLE_ACTIV" />
     </AssociationSet>
     <AssociationSet Name="FK_AFM_EMPLE_ACTIV_AFM_ORIGE_ESTAD" Association="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_ORIGE_ESTAD">
@@ -1066,10 +1024,6 @@
       <End Role="AFM_SESIO_TRABA" EntitySet="AFM_SESIO_TRABA" />
       <End Role="AFM_HISTO_EXPOR" EntitySet="AFM_HISTO_EXPOR" />
     </AssociationSet>
-    <AssociationSet Name="FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFM_IMPRE_PLACAS" EntitySet="AFM_IMPRE_PLACAS" />
-    </AssociationSet>
     <AssociationSet Name="FK_AFM_IMPRE_PLACAS_UBICA_AFM_UBICA_ACTIV" Association="BostonModel.FK_AFM_IMPRE_PLACAS_UBICA_AFM_UBICA_ACTIV">
       <End Role="AFM_UBICA_ACTIV" EntitySet="AFM_UBICA_ACTIV" />
       <End Role="AFM_IMPRE_PLACAS_UBICA" EntitySet="AFM_IMPRE_PLACAS_UBICA" />
@@ -1085,10 +1039,6 @@
     <AssociationSet Name="FK_AFM_USUAR_TOMAS_AFM_LOTES_TOMFI" Association="BostonModel.FK_AFM_USUAR_TOMAS_AFM_LOTES_TOMFI">
       <End Role="AFM_LOTES_TOMFI" EntitySet="AFM_LOTES_TOMFI" />
       <End Role="AFM_USUAR_TOMAS" EntitySet="AFM_USUAR_TOMAS" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV">
-      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
-      <End Role="AFR_VALOR_ACTIV" EntitySet="AFR_VALOR_ACTIV" />
     </AssociationSet>
     <AssociationSet Name="FK_AFM_MARCA_SESIO_AFM_MARCA_ACTIV" Association="BostonModel.FK_AFM_MARCA_SESIO_AFM_MARCA_ACTIV">
       <End Role="AFM_MARCA_ACTIV" EntitySet="AFM_MARCA_ACTIV" />
@@ -1226,10 +1176,6 @@
       <End Role="AFR_VALOR_ATRIB" EntitySet="AFR_VALOR_ATRIB" />
       <End Role="AFR_VALOR_ACTIV" EntitySet="AFR_VALOR_ACTIV" />
     </AssociationSet>
-    <AssociationSet Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS" Association="BostonModel.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-      <End Role="AFT_MOV_GRUPOS_ACCESOS" EntitySet="AFT_MOV_GRUPOS_ACCESOS" />
-      <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" EntitySet="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" />
-    </AssociationSet>
     <AssociationSet Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS" Association="BostonModel.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS">
       <End Role="AFT_MOV_TIPOS_MOVIMIENTOS" EntitySet="AFT_MOV_TIPOS_MOVIMIENTOS" />
       <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" EntitySet="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" />
@@ -1242,10 +1188,6 @@
       <End Role="AFT_MOV_MAESTRO_MOVIMIENTOS" EntitySet="AFT_MOV_MAESTRO_MOVIMIENTOS" />
       <End Role="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" EntitySet="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" />
     </AssociationSet>
-    <AssociationSet Name="FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS" Association="BostonModel.FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-      <End Role="AFT_MOV_GRUPOS_ACCESOS" EntitySet="AFT_MOV_GRUPOS_ACCESOS" />
-      <End Role="AFT_MOV_GRUPO_USUARIOS" EntitySet="AFT_MOV_GRUPO_USUARIOS" />
-    </AssociationSet>
     <AssociationSet Name="FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS" Association="BostonModel.FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS">
       <End Role="AFT_MOV_TIPOS_MOVIMIENTOS" EntitySet="AFT_MOV_TIPOS_MOVIMIENTOS" />
       <End Role="AFT_MOV_MAESTRO_MOVIMIENTOS" EntitySet="AFT_MOV_MAESTRO_MOVIMIENTOS" />
@@ -1253,6 +1195,56 @@
     <AssociationSet Name="FK_AssetsWEB_MOV_MOVIMIENTOS_APROBACIONES_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS" Association="BostonModel.FK_AssetsWEB_MOV_MOVIMIENTOS_APROBACIONES_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS">
       <End Role="AFT_MOV_MAESTRO_MOVIMIENTOS" EntitySet="AFT_MOV_MAESTRO_MOVIMIENTOS" />
       <End Role="AFT_MOV_MOVIMIENTOS_APROBACIONES" EntitySet="AFT_MOV_MOVIMIENTOS_APROBACIONES" />
+    </AssociationSet>
+    <EntitySet Name="AFT_MOV_GRUPOS_ACCESOS" EntityType="BostonModel.AFT_MOV_GRUPOS_ACCESOS" />
+    <EntitySet Name="AFM_MAEST_ACTIV" EntityType="BostonModel.AFM_MAEST_ACTIV" />
+    <AssociationSet Name="FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_ACTIV_MOVIL" EntitySet="AFM_ACTIV_MOVIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1" Association="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_COMPO_ACTIV" EntitySet="AFM_COMPO_ACTIV" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2" Association="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_COMPO_ACTIV" EntitySet="AFM_COMPO_ACTIV" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_DEPRE_ACTIV" EntitySet="AFM_DEPRE_ACTIV" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_DETA_REF_699_AFM_MAES" Association="BostonModel.FK_AFM_DETA_REF_699_AFM_MAES">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_DETAL_MOVFI" EntitySet="AFM_DETAL_MOVFI" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_DETAL_TOMAF" EntitySet="AFM_DETAL_TOMAF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_DETCIE_DEPRE" EntitySet="AFM_DETCIE_DEPRE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_DETCIE_DEPRE_COR" EntitySet="AFM_DETCIE_DEPRE_COR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_DOCADJ_ACTIV" EntitySet="AFM_DOCADJ_ACTIV" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_EMPLE_ACTIV" EntitySet="AFM_EMPLE_ACTIV" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFM_IMPRE_PLACAS" EntitySet="AFM_IMPRE_PLACAS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV" Association="BostonModel.FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV">
+      <End Role="AFM_MAEST_ACTIV" EntitySet="AFM_MAEST_ACTIV" />
+      <End Role="AFR_VALOR_ACTIV" EntitySet="AFR_VALOR_ACTIV" />
     </AssociationSet>
     <!-- GPE PROVERI
           <AssociationSet Name="FK_AFM_CIAS_COD_CIA_PRO" Association="BostonModel.FK_AFM_CIAS_COD_CIA_PRO">
@@ -1273,7 +1265,7 @@
     <Property Name="DES_ARC_DBF" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NOM_ARC_DTD" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
     <Property Name="BIN_GENERA" Type="Boolean" />
-    <Property Name="FYH_ULT_GEN" Type="DateTime" />
+    <Property Name="FYH_ULT_GEN" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="adtm_CAMPO">
@@ -1329,7 +1321,7 @@
     <Property Name="CAMPO28" Type="String" MaxLength="4" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO1" Type="Int32" />
     <Property Name="CAMPO4" Type="Int32" />
-    <Property Name="MSGFEC" Type="DateTime" Nullable="false" />
+    <Property Name="MSGFEC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="MSGDES" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="adtm_DATO1">
@@ -1520,7 +1512,7 @@
     <Property Name="CAMPO27" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO21" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="CAMPO63" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="TIMESTAMP" Type="DateTime" />
+    <Property Name="TIMESTAMP" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="adtm_DATO2">
     <Key>
@@ -1542,7 +1534,7 @@
     <Property Name="CAMPO3" Type="Int16" Nullable="false" />
     <Property Name="CAMPO4" Type="Int16" Nullable="false" />
     <Property Name="CAMPO24" Type="Decimal" Nullable="false" Precision="1" Scale="0" />
-    <Property Name="TIMESTAMP" Type="DateTime" />
+    <Property Name="TIMESTAMP" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="adtm_DATO3">
     <Key>
@@ -1851,7 +1843,7 @@
     <Property Name="BIN_TIE_COM" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" Nullable="false" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -1880,7 +1872,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="NUM_IMPOR" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_IMPOR" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_IMPOR" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DES_ACTIVO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
     <Property Name="PLA_ACTIVO" Type="String" MaxLength="30" Unicode="false" FixedLength="true" />
     <Property Name="COD_TIP_ACT" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
@@ -1898,9 +1890,9 @@
     <Property Name="BIN_TIE_COM" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="TIMESTAMP" Type="DateTime" />
+    <Property Name="TIMESTAMP" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="AFM_ACTIV_ASIGNA">
     <Key>
@@ -1912,15 +1904,15 @@
     </Key>
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="OPERACION" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FECHA_SINCRONIZA" Type="DateTime" Nullable="false" />
+    <Property Name="FECHA_SINCRONIZA" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="AFM_COD_EMPLEADO" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
     <Property Name="COD_ROL_USO" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="USUARIO" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FECHA_ESTADO" Type="DateTime" />
-    <Property Name="TIMESTAMP" Type="DateTime" />
+    <Property Name="FECHA_ESTADO" Type="DateTime" Precision="3" />
+    <Property Name="TIMESTAMP" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="AFM_ACTIV_AUXIL">
     <Key>
@@ -1935,7 +1927,7 @@
     <Property Name="SER_ACTIVO" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NUM_IDENTI" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="VAL_ADQUIS" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
     <Property Name="VAL_DEP_ACU" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIB_ACT" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="COD_EMP_ADQ" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
@@ -1948,8 +1940,8 @@
     <Property Name="COD_ACT_BAS" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_DOCUME" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="DOC_REFERE" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="FEC_ADQUIS" Type="DateTime" />
-    <Property Name="FEC_CAPITAL" Type="DateTime" />
+    <Property Name="FEC_ADQUIS" Type="DateTime" Precision="3" />
+    <Property Name="FEC_CAPITAL" Type="DateTime" Precision="3" />
     <Property Name="NUM_CAPITAL" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
     <Property Name="VAL_CAN_ACT" Type="Int16" />
     <Property Name="NOT_OBSERV" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
@@ -2023,7 +2015,7 @@
     <Property Name="MTO_GAR_FIN" Type="Decimal" Precision="12" Scale="2" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_ACTI_REF_2360_AFM_ESTA" FromRole="AFM_ACTIV_GARAN" ToRole="AFM_ESTAD_ORIGE" />
     <NavigationProperty Name="AFM_MONED" Relationship="BostonModel.FK_AFM_ACTI_REF_6717_AFM_MONE" FromRole="AFM_ACTIV_GARAN" ToRole="AFM_MONED" />
@@ -2068,7 +2060,7 @@
     <Property Name="COD_APROPI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="COD_PROVINCIA" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -2090,14 +2082,14 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_adtm_DATO17" FromRole="AFM_ACTIV_MOVIL" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_CATAL_EMPLE" FromRole="AFM_ACTIV_MOVIL" ToRole="AFM_CATAL_EMPLE" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_ESTAD_ORIGE" FromRole="AFM_ACTIV_MOVIL" ToRole="AFM_ESTAD_ORIGE" />
-    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV" FromRole="AFM_ACTIV_MOVIL" ToRole="AFM_MAEST_ACTIV" />
     <NavigationProperty Name="AFM_ORDEN_MOVIL" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_ORDEN_MOVIL" FromRole="AFM_ACTIV_MOVIL" ToRole="AFM_ORDEN_MOVIL" />
     <NavigationProperty Name="AFM_MOVIL_ACTIV" Relationship="BostonModel.FK_AFM_MOVIL_ACTIV_AFM_ACTIV_MOVIL" FromRole="AFM_ACTIV_MOVIL" ToRole="AFM_MOVIL_ACTIV" />
+    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV" FromRole="AFM_ACTIV_MOVIL" ToRole="AFM_MAEST_ACTIV" />
   </EntityType>
   <EntityType Name="AFM_ACTIV_SESIO">
     <Key>
@@ -2133,7 +2125,7 @@
     <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="COD_PROVINCIA" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -2149,7 +2141,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="NUM_AJUSTE" Type="Int32" Nullable="false" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_AJUSTE" Type="DateTime" />
+    <Property Name="FYH_AJUSTE" Type="DateTime" Precision="3" />
     <Property Name="DET_AJUSTE" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="VAL_COMPRA" Type="Decimal" Precision="20" Scale="2" />
     <Property Name="VAL_COMPRA_COL" Type="Decimal" Precision="20" Scale="2" />
@@ -2169,7 +2161,7 @@
     <Property Name="COD_PROVEE" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
     <Property Name="COD_TIP_GAR" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="NUM_GAR_ACT" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_APLICA" Type="DateTime" />
+    <Property Name="FYH_APLICA" Type="DateTime" Precision="3" />
     <Property Name="MOT_APLICA" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_GARAN_ACTIV" Relationship="BostonModel.FK_AFM_APLI_REF_5040_AFM_GARA" FromRole="AFM_APLICA_GARAN" ToRole="AFM_GARAN_ACTIV" />
@@ -2182,7 +2174,7 @@
     <Property Name="DES_ARC_DBF" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NOM_ARC_DBF" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
     <Property Name="NOM_ARC_DTD" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ULT_GEN" Type="DateTime" />
+    <Property Name="FYH_ULT_GEN" Type="DateTime" Precision="3" />
     <Property Name="BIN_GENERA" Type="Boolean" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -2192,9 +2184,9 @@
       <PropertyRef Name="OPERACION" />
       <PropertyRef Name="FECHA_SINCRONIZA" />
     </Key>
-    <Property Name="COD_COMPANIA" Type="DateTime" Nullable="false" />
+    <Property Name="COD_COMPANIA" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="OPERACION" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FECHA_SINCRONIZA" Type="DateTime" Nullable="false" />
+    <Property Name="FECHA_SINCRONIZA" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="USUARIO_TRANSMITE" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
@@ -2220,10 +2212,10 @@
     <Property Name="DET_ATRIBU" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="COD_OPERAC" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="USU_OPERAC" Type="Int16" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -2234,7 +2226,7 @@
     </Key>
     <Property Name="ID_REGISTRO" Type="Int32" Nullable="false" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_REGISTRO" Type="DateTime" Nullable="false" />
+    <Property Name="FEC_REGISTRO" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="TIP_MODIFICACION" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="USUARIO" Type="Int16" />
     <Property Name="DET_ANTERIOR" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -2252,7 +2244,7 @@
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="PLA_ANTERIOR" Type="String" MaxLength="30" Unicode="false" FixedLength="true" />
     <Property Name="PLA_ACTUAL" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_REGISTRO" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_REGISTRO" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -2268,7 +2260,7 @@
     <Property Name="COD_SEC_LOC" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_UBI_ACT" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_EMPLEADO" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_REGISTRO" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_REGISTRO" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" Nullable="false" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -2282,11 +2274,11 @@
     <Property Name="COD_PROVEE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="CED_CONTAC" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_EQUIPO" Type="Int32" />
-    <Property Name="FYH_BOLETA" Type="DateTime" />
+    <Property Name="FYH_BOLETA" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_BOLET_INGRE_adtm_DATO17" FromRole="AFM_BOLET_INGRE" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_EQUIP_TERCE" Relationship="BostonModel.FK_AFM_BOLET_INGRE_AFM_EQUIP_TERCE" FromRole="AFM_BOLET_INGRE" ToRole="AFM_EQUIP_TERCE" />
@@ -2407,7 +2399,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="IMG_EMPLEADO" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="IND_RES_TOMAF" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -2565,7 +2557,7 @@
     <Property Name="IND_COM_GRU" Type="Boolean" />
     <Property Name="LON_NUM_ACT" Type="Int16" />
     <Property Name="IND_CALDEP_DIA" Type="Boolean" />
-    <Property Name="FEC_ULT_DEPREC" Type="DateTime" />
+    <Property Name="FEC_ULT_DEPREC" Type="DateTime" Precision="3" />
     <Property Name="NUM_ASI_CON" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_DOC_DEP" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="IND_ENL_CON" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
@@ -2634,7 +2626,7 @@
     </Key>
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="NUM_IDE_DEP" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="FYH_CIERRE_MES" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_CIERRE_MES" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="IND_CIERRE" Type="Boolean" Nullable="false" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -2674,9 +2666,9 @@
     <Property Name="COD_OPERAC" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="USU_OPERAC" Type="Int16" Nullable="false" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -2710,14 +2702,14 @@
     <Property Name="NUM_COM_ACT" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_ADTM_DATO17" FromRole="AFM_COMPO_ACTIV" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_ESTAD_ORIGE" FromRole="AFM_COMPO_ACTIV" ToRole="AFM_ESTAD_ORIGE" />
+    <NavigationProperty Name="AFM_ORIGE_ESTAD" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_ORIGE_ESTAD" FromRole="AFM_COMPO_ACTIV" ToRole="AFM_ORIGE_ESTAD" />
     <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1" FromRole="AFM_COMPO_ACTIV" ToRole="AFM_MAEST_ACTIV" />
     <NavigationProperty Name="AFM_MAEST_ACTIV1" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2" FromRole="AFM_COMPO_ACTIV" ToRole="AFM_MAEST_ACTIV" />
-    <NavigationProperty Name="AFM_ORIGE_ESTAD" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_ORIGE_ESTAD" FromRole="AFM_COMPO_ACTIV" ToRole="AFM_ORIGE_ESTAD" />
   </EntityType>
   <EntityType Name="AFM_CONDI_ACTIV">
     <Key>
@@ -2728,7 +2720,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="CONDICION" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_EST_ORI" Type="DateTime" />
+    <Property Name="FYH_EST_ORI" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -2764,9 +2756,9 @@
     <Property Name="COD_LOC_ACT" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_SEC_LOC" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_UBI_ACT" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_SOLICITUD" Type="DateTime" />
+    <Property Name="FYH_SOLICITUD" Type="DateTime" Precision="3" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_TRASLA" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_TRASLA" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="COD_TRASLADO" Type="Int32" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
@@ -2784,26 +2776,26 @@
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="NUM_DOC_DEP" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="COD_MET_DEP" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
-    <Property Name="FEC_FIN_DEP" Type="DateTime" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_FIN_DEP" Type="DateTime" Precision="3" />
     <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIBROS" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_ULT_DEP_ANT" Type="DateTime" />
+    <Property Name="FEC_ULT_DEP_ANT" Type="DateTime" Precision="3" />
     <Property Name="VAL_DEPREC_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_ULT_DEP_ANT_COR" Type="DateTime" />
+    <Property Name="FEC_ULT_DEP_ANT_COR" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="VAL_VID_UTL_ACUM" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_VID_UTL_ACUM_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RES_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RES_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_MOVIM_DEPRE_adtm_DATO17" FromRole="AFM_DEPRE_ACTIV" ToRole="adtm_DATO17" />
-    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV" FromRole="AFM_DEPRE_ACTIV" ToRole="AFM_MAEST_ACTIV" />
     <NavigationProperty Name="AFM_METOD_DEPRE" Relationship="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_METOD_DEPRE" FromRole="AFM_DEPRE_ACTIV" ToRole="AFM_METOD_DEPRE" />
+    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV" FromRole="AFM_DEPRE_ACTIV" ToRole="AFM_MAEST_ACTIV" />
   </EntityType>
   <EntityType Name="AFM_DEPRE_AJUST_ACTIV">
     <Key>
@@ -2817,8 +2809,8 @@
     <Property Name="NUM_AJUSTE" Type="Int32" Nullable="false" />
     <Property Name="NUM_DOC_DEP" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="COD_MET_DEP" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
-    <Property Name="FEC_FIN_DEP" Type="DateTime" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_FIN_DEP" Type="DateTime" Precision="3" />
     <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIBROS" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
@@ -2828,7 +2820,7 @@
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RES_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -2874,7 +2866,7 @@
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_EST_ORI" Type="DateTime" />
+    <Property Name="FYH_EST_ORI" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="COD_LOC_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
@@ -2884,11 +2876,11 @@
     <NavigationProperty Name="AFM_CATAL_LOCAL" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_CATAL_LOCAL" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_CATAL_LOCAL" />
     <NavigationProperty Name="AFM_CIAS" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_CIAS" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_CIAS" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_ESTAD_ORIGE" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_ESTAD_ORIGE" />
-    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_MAEST_ACTIV" />
     <NavigationProperty Name="AFM_ORIGE_ESTAD" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_ORIGE_ESTAD" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_ORIGE_ESTAD" />
     <NavigationProperty Name="AFM_SECCI_LOCAL" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_SECCI_LOCAL" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_SECCI_LOCAL" />
     <NavigationProperty Name="AFM_TOMAS_FISIC" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_TOMAS_FISIC" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_TOMAS_FISIC" />
     <NavigationProperty Name="AFM_UBICA_ACTIV" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_UBICA_ACTIV" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_UBICA_ACTIV" />
+    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV" FromRole="AFM_DETAL_TOMAF" ToRole="AFM_MAEST_ACTIV" />
   </EntityType>
   <EntityType Name="AFM_DETCIE_DEPRE">
     <Key>
@@ -2903,7 +2895,7 @@
     <Property Name="COD_CUENTA" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="MTO_DEBE" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="MTO_HABER" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <NavigationProperty Name="AFM_CATAL_CUENT" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_AFM_CATAL_CUENT" FromRole="AFM_DETCIE_DEPRE" ToRole="AFM_CATAL_CUENT" />
     <NavigationProperty Name="AFM_CIERR_DEPRE" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_AFM_CIERR_DEPRE" FromRole="AFM_DETCIE_DEPRE" ToRole="AFM_CIERR_DEPRE" />
@@ -2922,7 +2914,7 @@
     <Property Name="COD_CUENTA" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="MTO_DEBE" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="MTO_HABER" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <NavigationProperty Name="AFM_CATAL_CUENT" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_COR_AFM_CATAL_CUENT" FromRole="AFM_DETCIE_DEPRE_COR" ToRole="AFM_CATAL_CUENT" />
     <NavigationProperty Name="AFM_CIERR_DEPRE" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_COR_AFM_CIERR_DEPRE" FromRole="AFM_DETCIE_DEPRE_COR" ToRole="AFM_CIERR_DEPRE" />
@@ -2989,16 +2981,16 @@
     <Property Name="COD_ROL_USO" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_CATAL_EMPLE" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_CATAL_EMPLE" />
     <NavigationProperty Name="AFM_CIAS" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_CIAS" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_CIAS" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_EMPL_REF_5010_AFM_ESTA" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_ESTAD_ORIGE" />
     <NavigationProperty Name="AFM_ROLES_USO" Relationship="BostonModel.FK_AFM_EMPL_REF_5025_AFM_ROLE" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_ROLES_USO" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE1" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_ESTAD_ORIGE" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_ESTAD_ORIGE" />
-    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_MAEST_ACTIV" />
     <NavigationProperty Name="AFM_ORIGE_ESTAD" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_ORIGE_ESTAD" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_ORIGE_ESTAD" />
     <NavigationProperty Name="AFM_ROLES_USO1" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_ROLES_USO" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_ROLES_USO" />
+    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_EMPLE_ACTIV" ToRole="AFM_MAEST_ACTIV" />
   </EntityType>
   <EntityType Name="AFM_EMPLE_GRUAU">
     <Key>
@@ -3012,7 +3004,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_EMPLE_GRUAU_adtm_DATO17" FromRole="AFM_EMPLE_GRUAU" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AFM_EMPLE_GRUAU_AFM_CATAL_EMPLE" FromRole="AFM_EMPLE_GRUAU" ToRole="AFM_CATAL_EMPLE" />
@@ -3031,7 +3023,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_EMPLE_GRUPO_adtm_DATO17" FromRole="AFM_EMPLE_GRUPO" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_EMPLE_GRUPO_AFM_ESTAD_ORIGE" FromRole="AFM_EMPLE_GRUPO" ToRole="AFM_ESTAD_ORIGE" />
@@ -3066,10 +3058,10 @@
     <Property Name="IDE_SESION" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
     <Property Name="IDE_MAQUIN" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="NUM_EXPORT" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_EXPORT" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_EXPORT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="NOM_CAR_IMP" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_CATAL_MAQUI" Relationship="BostonModel.FK_AFM_ENCAB_IMPO_AFM_CATAL_MAQUI" FromRole="AFM_ENCAB_IMPOR" ToRole="AFM_CATAL_MAQUI" />
     <NavigationProperty Name="AFM_EMPLE_SESIO" Relationship="BostonModel.FK_AFM_EMPLE_SESIO_AFM_ENCAB_IMPOR" FromRole="AFM_ENCAB_IMPOR" ToRole="AFM_EMPLE_SESIO" />
@@ -3171,8 +3163,8 @@
     <Property Name="COD_PROVEE" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
     <Property Name="COD_TIP_GAR" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="NUM_GAR_ACT" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="FEC_INI_GAR" Type="DateTime" />
-    <Property Name="FEC_FIN_GAR" Type="DateTime" />
+    <Property Name="FEC_INI_GAR" Type="DateTime" Precision="3" />
+    <Property Name="FEC_FIN_GAR" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_APLICA_GARAN" Relationship="BostonModel.FK_AFM_APLI_REF_5040_AFM_GARA" FromRole="AFM_GARAN_ACTIV" ToRole="AFM_APLICA_GARAN" />
   </EntityType>
@@ -3190,7 +3182,7 @@
     <Property Name="MTO_GAR_FIN" Type="Decimal" Precision="14" Scale="2" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_MONED" Relationship="BostonModel.FK_AFM_GARA_REF_6721_AFM_MONE" FromRole="AFM_GARAN_FINAN" ToRole="AFM_MONED" />
   </EntityType>
@@ -3229,7 +3221,7 @@
     </Key>
     <Property Name="IDE_SESION" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
     <Property Name="IDE_MAQUIN" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_EXPORT" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_EXPORT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_HISTO_EXPOR_ADTM_DATO17" FromRole="AFM_HISTO_EXPOR" ToRole="adtm_DATO17" />
@@ -3304,7 +3296,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_JERAR_GRUPO_adtm_DATO17" FromRole="AFM_JERAR_GRUPO" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_JERAR_GRUPO_AFM_ESTAD_ORIGE" FromRole="AFM_JERAR_GRUPO" ToRole="AFM_ESTAD_ORIGE" />
@@ -3326,7 +3318,7 @@
     <Property Name="IND_ACT_EXP" Type="Boolean" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AFM_LOTES_TOMFI_AFM_CATAL_EMPLE" FromRole="AFM_LOTES_TOMFI" ToRole="AFM_CATAL_EMPLE" />
@@ -3334,135 +3326,6 @@
     <NavigationProperty Name="AFM_SESIO_TRABA" Relationship="BostonModel.FK_AFM_LOTES_TOMFI_AFM_SESIO_TRABA" FromRole="AFM_LOTES_TOMFI" ToRole="AFM_SESIO_TRABA" />
     <NavigationProperty Name="AFM_TOMAS_FISIC" Relationship="BostonModel.FK_AFM_LOTES_TOMFI_AFM_TOMAS_FISIC" FromRole="AFM_LOTES_TOMFI" ToRole="AFM_TOMAS_FISIC" />
     <NavigationProperty Name="AFM_USUAR_TOMAS" Relationship="BostonModel.FK_AFM_USUAR_TOMAS_AFM_LOTES_TOMFI" FromRole="AFM_LOTES_TOMFI" ToRole="AFM_USUAR_TOMAS" />
-  </EntityType>
-  <EntityType Name="AFM_MAEST_ACTIV">
-    <Key>
-      <PropertyRef Name="COD_COMPANIA" />
-      <PropertyRef Name="NUM_ACTIVO" />
-    </Key>
-    <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="COD_CIA_PRO" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="PLA_ACTIVO" Type="String" MaxLength="30" Unicode="false" FixedLength="true" />
-    <Property Name="DES_ACTIVO" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
-    <Property Name="DES_ACTIVO_ANT" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
-    <Property Name="PLA_ANTERIOR" Type="String" MaxLength="30" Unicode="false" FixedLength="true" />
-    <Property Name="PLA_INICIAL" Type="String" MaxLength="30" Unicode="false" FixedLength="true" />
-    <Property Name="COD_ACT_AUX" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="DES_UBI_PLACA" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="COD_TIPO_PLACA" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="SER_ACTIVO" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="COD_MARCA" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="COD_MODELO" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="COD_TIP_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_CLA_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_SUB_CLA" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_ACT_BAS" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_LOC_ACT" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_SEC_LOC" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_UBI_ACT" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_EMPLEADO" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="IND_MOV_ACT" Type="Boolean" />
-    <Property Name="COD_CEN_CST" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_COMPRA" Type="DateTime" />
-    <Property Name="FYH_ULT_TOMA" Type="DateTime" />
-    <Property Name="ORD_COMPRA" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_CAPITAL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_CONSEC" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_RETIRO" Type="DateTime" />
-    <Property Name="NUM_DEC_ADU" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_DEC_ADU_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" />
-    <Property Name="IND_ACT_EXC" Type="Boolean" />
-    <Property Name="FYH_ACT_EXC" Type="DateTime" />
-    <Property Name="COD_APROPI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="VAL_COMPRA" Type="Decimal" Precision="25" Scale="10" />
-    <Property Name="VAL_COMPRA_COL" Type="Decimal" Precision="25" Scale="10" />
-    <Property Name="VAL_LIBROS" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_CAPITAL" Type="DateTime" />
-    <Property Name="FYH_COMPRA" Type="DateTime" />
-    <Property Name="OBS_ACTIVO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_FACTUR" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_LICITA" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_AMPLIA" Type="Int16" />
-    <Property Name="COD_CTA_DEPACU" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="COD_CTA_GASDEP" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="COD_CTA_DEPACU_COR" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="COD_CTA_GASDEP_COR" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="COD_MET_DEP" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="NUM_POLIZA" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_POLIZA_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="VAL_ADU_DOL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
-    <Property Name="FEC_INI_DEP_COR" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" />
-    <Property Name="VAL_RESIDUAL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_RESIDUAL_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="NUM_CHEQUE" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="VAL_TIP_CAM" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="COD_PROVEE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="COD_EST_ADU" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="COD_TIP_OPE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="REF_NUM_ACT" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="NUM_ASI_CON" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="IND_DEPREC" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_EXP_GAR" Type="DateTime" />
-    <Property Name="COD_ORI_STS" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
-    <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="COD_MON_COM" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="IND_REG_SER" Type="Boolean" />
-    <Property Name="CAN_ACT_NUE" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-    <Property Name="VAL_DEPREC_MEN" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_DEPREC_MEN_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_VID_UTL_ACUM" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_VID_UTL_ACUM_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_RES_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_RES_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_LIB_ACT" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_FIN_DEPREC" Type="DateTime" />
-    <Property Name="NUM_MES_DEPREC" Type="Int16" />
-    <Property Name="COD_CTA_DEP_REVAL" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="COD_CTA_GASDEP_REVAL" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="VAL_REVALS" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
-    <Property Name="VAL_DEPACU_REVAL" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
-    <Property Name="VAL_GASDEPACU_REVAL" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
-    <Property Name="cod_patrimonio" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="cod_provincia" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-    <Property Name="cod_canton" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-    <Property Name="cod_distrito" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-    <Property Name="anno_presupuesto" Type="Int32" />
-    <Property Name="cod_acta" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="cod_folio" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="cod_prog_presupuestario" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
-    <Property Name="cod_subprog_presupuestario" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
-    <Property Name="ind_exportado" Type="Boolean" Nullable="false" />
-    <Property Name="ind_act_grupo" Type="Boolean" />
-    <Property Name="COD_CTA_COSTO" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
-    <Property Name="COD_MON_COM_COR" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="NUM_BLOQUE" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="AFM_ACTIV_MOVIL" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_ACTIV_MOVIL" />
-    <NavigationProperty Name="AFM_COMPO_ACTIV" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_COMPO_ACTIV" />
-    <NavigationProperty Name="AFM_COMPO_ACTIV1" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_COMPO_ACTIV" />
-    <NavigationProperty Name="AFM_DEPRE_ACTIV" Relationship="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DEPRE_ACTIV" />
-    <NavigationProperty Name="AFM_DETAL_MOVFI" Relationship="BostonModel.FK_AFM_DETA_REF_699_AFM_MAES" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETAL_MOVFI" />
-    <NavigationProperty Name="AFM_DETAL_TOMAF" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETAL_TOMAF" />
-    <NavigationProperty Name="AFM_DETCIE_DEPRE" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETCIE_DEPRE" />
-    <NavigationProperty Name="AFM_DETCIE_DEPRE_COR" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETCIE_DEPRE_COR" />
-    <NavigationProperty Name="AFM_DOCADJ_ACTIV" Relationship="BostonModel.FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DOCADJ_ACTIV" />
-    <NavigationProperty Name="AFM_EMPLE_ACTIV" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_EMPLE_ACTIV" />
-    <NavigationProperty Name="AFM_IMPRE_PLACAS" Relationship="BostonModel.FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_IMPRE_PLACAS" />
-    <NavigationProperty Name="AFR_VALOR_ACTIV" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFR_VALOR_ACTIV" />
   </EntityType>
   <EntityType Name="AFM_MAEST_ACTIV_GRUPO">
     <Key>
@@ -3497,23 +3360,23 @@
     <Property Name="MOD_COD_EMPLEADO" Type="Boolean" />
     <Property Name="COD_CEN_CST" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="MOD_COD_CEN_CST" Type="Boolean" />
-    <Property Name="FEC_COMPRA" Type="DateTime" />
+    <Property Name="FEC_COMPRA" Type="DateTime" Precision="3" />
     <Property Name="MOD_FEC_COMPRA" Type="Boolean" />
-    <Property Name="FYH_ULT_TOMA" Type="DateTime" />
+    <Property Name="FYH_ULT_TOMA" Type="DateTime" Precision="3" />
     <Property Name="MOD_FYH_ULT_TOMA" Type="Boolean" />
     <Property Name="ORD_COMPRA" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="MOD_ORD_COMPRA" Type="Boolean" />
-    <Property Name="FYH_RETIRO" Type="DateTime" />
+    <Property Name="FYH_RETIRO" Type="DateTime" Precision="3" />
     <Property Name="MOD_FYH_RETIRO" Type="Boolean" />
     <Property Name="NUM_DEC_ADU" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="MOD_NUM_DEC_ADU" Type="Boolean" />
     <Property Name="NUM_DEC_ADU_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="MOD_NUM_DEC_ADU_SAL" Type="Boolean" />
-    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" />
+    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" Precision="3" />
     <Property Name="MOD_FYH_DEC_ADU_SAL" Type="Boolean" />
     <Property Name="IND_ACT_EXC" Type="Boolean" />
     <Property Name="MOD_IND_ACT_EXC" Type="Boolean" />
-    <Property Name="FYH_ACT_EXC" Type="DateTime" />
+    <Property Name="FYH_ACT_EXC" Type="DateTime" Precision="3" />
     <Property Name="MOD_FYH_ACT_EXC" Type="Boolean" />
     <Property Name="COD_APROPI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="MOD_COD_APROPI" Type="Boolean" />
@@ -3525,9 +3388,9 @@
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_CAPITAL" Type="DateTime" />
+    <Property Name="FYH_CAPITAL" Type="DateTime" Precision="3" />
     <Property Name="MOD_FYH_CAPITAL" Type="Boolean" />
-    <Property Name="FYH_COMPRA" Type="DateTime" />
+    <Property Name="FYH_COMPRA" Type="DateTime" Precision="3" />
     <Property Name="MOD_FYH_COMPRA" Type="Boolean" />
     <Property Name="OBS_ACTIVO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="MOD_OBS_ACTIVO" Type="Boolean" />
@@ -3551,12 +3414,12 @@
     <Property Name="MOD_NUM_POLIZA_SAL" Type="Boolean" />
     <Property Name="VAL_ADU_DOL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="MOD_VAL_ADU_DOL" Type="Boolean" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
     <Property Name="MOD_FEC_INI_DEP" Type="Boolean" />
-    <Property Name="FEC_INI_DEP_COR" Type="DateTime" />
+    <Property Name="FEC_INI_DEP_COR" Type="DateTime" Precision="3" />
     <Property Name="MOD_FEC_INI_DEP_COR" Type="Boolean" />
-    <Property Name="FEC_ULT_DEP" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" />
+    <Property Name="FEC_ULT_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" Precision="3" />
     <Property Name="VAL_RESIDUAL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="MOD_VAL_RESIDUAL" Type="Boolean" />
     <Property Name="VAL_RESIDUAL_COR" Type="Decimal" Precision="20" Scale="10" />
@@ -3581,12 +3444,12 @@
     <Property Name="MOD_NUM_ASI_CON" Type="Boolean" />
     <Property Name="IND_DEPREC" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="MOD_IND_DEPREC" Type="Boolean" />
-    <Property Name="FEC_EXP_GAR" Type="DateTime" />
+    <Property Name="FEC_EXP_GAR" Type="DateTime" Precision="3" />
     <Property Name="MOD_FEC_EXP_GAR" Type="Boolean" />
     <Property Name="COD_ORI_STS" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="MOD_COD_EST_ORI" Type="Boolean" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="COD_MON_COM" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
@@ -3635,17 +3498,17 @@
     <Property Name="IND_MOV_ACT" Type="Boolean" />
     <Property Name="COD_CEN_CST" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_COMPRA" Type="DateTime" />
-    <Property Name="FYH_ULT_TOMA" Type="DateTime" />
+    <Property Name="FEC_COMPRA" Type="DateTime" Precision="3" />
+    <Property Name="FYH_ULT_TOMA" Type="DateTime" Precision="3" />
     <Property Name="ORD_COMPRA" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CAPITAL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CONSEC" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_RETIRO" Type="DateTime" />
+    <Property Name="FYH_RETIRO" Type="DateTime" Precision="3" />
     <Property Name="NUM_DEC_ADU" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_DEC_ADU_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" />
+    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" Precision="3" />
     <Property Name="IND_ACT_EXC" Type="Boolean" />
-    <Property Name="FYH_ACT_EXC" Type="DateTime" />
+    <Property Name="FYH_ACT_EXC" Type="DateTime" Precision="3" />
     <Property Name="COD_APROPI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="VAL_COMPRA" Type="Decimal" Precision="25" Scale="10" />
     <Property Name="VAL_COMPRA_COL" Type="Decimal" Precision="25" Scale="10" />
@@ -3653,8 +3516,8 @@
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_CAPITAL" Type="DateTime" />
-    <Property Name="FYH_COMPRA" Type="DateTime" />
+    <Property Name="FYH_CAPITAL" Type="DateTime" Precision="3" />
+    <Property Name="FYH_COMPRA" Type="DateTime" Precision="3" />
     <Property Name="OBS_ACTIVO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NUM_FACTUR" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NUM_LICITA" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
@@ -3667,10 +3530,10 @@
     <Property Name="NUM_POLIZA" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_POLIZA_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="VAL_ADU_DOL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
-    <Property Name="FEC_INI_DEP_COR" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_INI_DEP_COR" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" Precision="3" />
     <Property Name="VAL_RESIDUAL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RESIDUAL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
@@ -3683,10 +3546,10 @@
     <Property Name="REF_NUM_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="NUM_ASI_CON" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="IND_DEPREC" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_EXP_GAR" Type="DateTime" />
+    <Property Name="FEC_EXP_GAR" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="COD_MON_COM" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="VAL_LIB_ACT" Type="Decimal" Precision="20" Scale="10" />
@@ -3694,7 +3557,7 @@
     <Property Name="CAN_ACT_NUE" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_FIN_DEPREC" Type="DateTime" />
+    <Property Name="FYH_FIN_DEPREC" Type="DateTime" Precision="3" />
     <Property Name="NUM_MES_DEPREC" Type="Int16" />
     <Property Name="COD_CTA_DEP_REVAL" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="COD_CTA_GASDEP_REVAL" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
@@ -3750,7 +3613,7 @@
     <Property Name="COD_MARCA_IMP" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="DES_MARCA_IMP" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
     <Property Name="COD_MAR_REE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Precision="3" />
     <Property Name="USU_OPERAC" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -3768,7 +3631,7 @@
     <Property Name="DES_MARCA_IMP" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
     <Property Name="COD_MAR_REE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="USU_OPERAC" Type="Int16" />
-    <Property Name="FYH_OPERAC" Type="DateTime" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_MARCA_SESIO_ADTM_DATO17" FromRole="AFM_MARCA_SESIO" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ENCAB_IMPOR" Relationship="BostonModel.FK_AFM_MARCA_SESIO_AFM_ENCAB_IMPOR" FromRole="AFM_MARCA_SESIO" ToRole="AFM_ENCAB_IMPOR" />
@@ -3814,7 +3677,7 @@
     <Property Name="COD_MAR_REE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_MOD_REE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="USU_OPERAC" Type="Int16" />
-    <Property Name="FYH_OPERAC" Type="DateTime" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="AFM_MODEL_SESIO">
@@ -3834,7 +3697,7 @@
     <Property Name="COD_MAR_REE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_MOD_REE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="USU_OPERAC" Type="Int16" />
-    <Property Name="FYH_OPERAC" Type="DateTime" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_MODEL_SESIO_ADTM_DATO17" FromRole="AFM_MODEL_SESIO" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ENCAB_IMPOR" Relationship="BostonModel.FK_AFM_MODEL_SESIO_AFM_ENCAB_IMPOR" FromRole="AFM_MODEL_SESIO" ToRole="AFM_ENCAB_IMPOR" />
@@ -3876,7 +3739,7 @@
     </Key>
     <Property Name="COD_OPERAC" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_MOTIVO" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="TIMESTAMP" Type="DateTime" />
+    <Property Name="TIMESTAMP" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="AFM_MOTIV">
     <Key>
@@ -3913,7 +3776,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_TIP_MOV" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="NUM_MOVIMI" Type="Int32" Nullable="false" />
-    <Property Name="FYH_MOVILI" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_MOVILI" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="COD_PUE_CTR" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_IDE_SEG" Type="Int32" />
@@ -3940,7 +3803,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_TIP_MOV" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="NUM_MOVIMI" Type="Int32" Nullable="false" />
-    <Property Name="FYH_MOVILI" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_MOVILI" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="PLA_ACTIVO" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="COD_PUE_CTR" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
@@ -3965,7 +3828,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_MOVIM_AUTOR_adtm_DATO17" FromRole="AFM_MOVIM_AUTOR" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_MOVIM_AUTOR_AFM_ESTAD_ORIGE" FromRole="AFM_MOVIM_AUTOR" ToRole="AFM_ESTAD_ORIGE" />
@@ -3982,7 +3845,7 @@
     <Property Name="COD_PUE_CTR" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_IDE_SEG" Type="Int32" />
     <Property Name="IND_ING_SAL" Type="Boolean" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_BOLET_INGRE" Relationship="BostonModel.FK_AFM_MOVIM_EQUIP_AFM_BOLET_INGRE" FromRole="AFM_MOVIM_EQUIP" ToRole="AFM_BOLET_INGRE" />
     <NavigationProperty Name="AFM_RESPO_CONTR" Relationship="BostonModel.FK_AFM_MOVIM_EQUIP_AFM_RESPO_CONTR" FromRole="AFM_MOVIM_EQUIP" ToRole="AFM_RESPO_CONTR" />
@@ -4001,8 +3864,8 @@
     <Property Name="COD_LOC_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_SEC_LOC" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_UBI_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" Nullable="false" />
-    <Property Name="FYH_RIG_MOV" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FYH_RIG_MOV" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_DETAL_MOVFI" Relationship="BostonModel.FK_AFM_DETA_REF_686_AFM_MOVI" FromRole="AFM_MOVIM_VALOR" ToRole="AFM_DETAL_MOVFI" />
     <NavigationProperty Name="AFM_MONED" Relationship="BostonModel.FK_AFM_MOVI_REF_677_AFM_MONE" FromRole="AFM_MOVIM_VALOR" ToRole="AFM_MONED" />
@@ -4040,9 +3903,9 @@
     <Property Name="COD_MOTIVO" Type="Int16" />
     <Property Name="NUM_ACT_OPE" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ACT_REE" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="USU_OPERAC" Type="Int16" Nullable="false" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -4067,12 +3930,12 @@
     <Property Name="NUM_ACT_OPE" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ACT_REE" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ACT_ASI" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="USU_OPERAC" Type="Int16" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="COD_EST_ORI_INI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_OPERA_SESIO_ADTM_DATO17_1" FromRole="AFM_OPERA_SESIO" ToRole="adtm_DATO17" />
@@ -4104,10 +3967,10 @@
     <Property Name="COD_UBI_IMP" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_OPERAC" Type="Int16" Nullable="false" />
     <Property Name="COD_MOTIVO" Type="Int16" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="COD_UBI_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -4132,12 +3995,12 @@
     <Property Name="COD_SEC_LOC" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_UBI_IMP" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_OPERAC" Type="Int16" Nullable="false" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="USU_OPERAC" Type="Int16" />
     <Property Name="COD_MOTIVO" Type="Int16" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="AFM_OPERA_UBICA_SESIO">
@@ -4159,7 +4022,7 @@
     <Property Name="COD_SEC_LOC" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_UBI_IMP" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_OPERAC" Type="Int16" Nullable="false" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="COD_MOTIVO" Type="Int16" />
     <Property Name="DES_UBI_IMP" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
     <Property Name="COD_BAR_UBI" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
@@ -4168,7 +4031,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_OPERA_UBICA_SESIO_ADTM_DATO17" FromRole="AFM_OPERA_UBICA_SESIO" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ENCAB_IMPOR" Relationship="BostonModel.FK_AFM_OPERA_UBICA_SESIO_AFM_ENCAB_IMPOR" FromRole="AFM_OPERA_UBICA_SESIO" ToRole="AFM_ENCAB_IMPOR" />
@@ -4184,8 +4047,8 @@
     <Property Name="COD_TIP_MOV" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="NUM_MOVIMI" Type="Int32" Nullable="false" />
     <Property Name="DES_MOVIMI" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
-    <Property Name="FYH_LIM_SAL" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
+    <Property Name="FYH_LIM_SAL" Type="DateTime" Precision="3" />
     <Property Name="IND_AUT_IND" Type="Boolean" />
     <Property Name="COD_EMP_TRA" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_EMP_AUT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
@@ -4194,7 +4057,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_ORDEN_MOVIL_adtm_DATO17" FromRole="AFM_ORDEN_MOVIL" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ACTIV_MOVIL" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_ORDEN_MOVIL" FromRole="AFM_ORDEN_MOVIL" ToRole="AFM_ACTIV_MOVIL" />
@@ -4247,7 +4110,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_BOLET_INGRE" Relationship="BostonModel.FK_AFM_BOLET_INGRE_AFM_PERSO_PROVE" FromRole="AFM_PERSO_PROVE" ToRole="AFM_BOLET_INGRE" />
     <NavigationProperty Name="AFM_MOVIL_ACTIV" Relationship="BostonModel.FK_AFM_MOVIL_ACTIV_AFM_PERSO_PROVE" FromRole="AFM_PERSO_PROVE" ToRole="AFM_MOVIL_ACTIV" />
@@ -4268,7 +4131,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_PERSO_SEGUR_adtm_DATO17" FromRole="AFM_PERSO_SEGUR" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_PERSO_SEGUR_AFM_ESTAD_ORIGE" FromRole="AFM_PERSO_SEGUR" ToRole="AFM_ESTAD_ORIGE" />
@@ -4301,7 +4164,7 @@
     <Property Name="COD_MOVIMI" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="COD_PROVEE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_DOCUME" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_DOCUME" Type="DateTime" />
+    <Property Name="FEC_DOCUME" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_CATAL_PROVE" Relationship="BostonModel.FK_AFM_REFE_REF_767_AFM_CATA" FromRole="AFM_REFER_MOVIN" ToRole="AFM_CATAL_PROVE" />
     <NavigationProperty Name="AFM_DOCUM_TIPMOV" Relationship="BostonModel.FK_AFM_REFE_REF_727_AFM_DOCU" FromRole="AFM_REFER_MOVIN" ToRole="AFM_DOCUM_TIPMOV" />
@@ -4319,7 +4182,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_RESPO_CONTR_adtm_DATO17" FromRole="AFM_RESPO_CONTR" ToRole="adtm_DATO17" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_RESPO_CONTR_AFM_ESTAD_ORIGE" FromRole="AFM_RESPO_CONTR" ToRole="AFM_ESTAD_ORIGE" />
@@ -4336,7 +4199,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="NUM_REVAL" Type="Int32" Nullable="false" />
     <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_REVAL" Type="DateTime" />
+    <Property Name="FYH_REVAL" Type="DateTime" Precision="3" />
     <Property Name="DET_REVAL" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="MONTO" Type="Decimal" Precision="20" Scale="2" />
     <Property Name="VIDA_UTIL" Type="Int32" />
@@ -4400,11 +4263,11 @@
     <Property Name="MONTO_SEGURO" Type="Decimal" Precision="14" Scale="2" />
     <Property Name="MONTO_PRIMA" Type="Decimal" Precision="14" Scale="2" />
     <Property Name="DEDUCC_SEGURO" Type="Decimal" Precision="14" Scale="2" />
-    <Property Name="FYH_INICIO_VEN" Type="DateTime" />
-    <Property Name="FYH_FIN_VEN" Type="DateTime" />
+    <Property Name="FYH_INICIO_VEN" Type="DateTime" Precision="3" />
+    <Property Name="FYH_FIN_VEN" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_EST_ORI" Type="DateTime" />
+    <Property Name="FYH_EST_ORI" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFM_ACTIV_CUBIE" Relationship="BostonModel.FK_AFM_ACTI_REF_6743_AFM_SEGU" FromRole="AFM_SEGUR_ACTIV" ToRole="AFM_ACTIV_CUBIE" />
     <NavigationProperty Name="AFM_ESTAD_ORIGE" Relationship="BostonModel.FK_AFM_SEGU_REF_6755_AFM_ESTA" FromRole="AFM_SEGUR_ACTIV" ToRole="AFM_ESTAD_ORIGE" />
@@ -4432,8 +4295,8 @@
     </Key>
     <Property Name="IDE_SESION" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
     <Property Name="DET_SESION" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_INI_SES" Type="DateTime" />
-    <Property Name="FYH_FIN_SES" Type="DateTime" />
+    <Property Name="FYH_INI_SES" Type="DateTime" Precision="3" />
+    <Property Name="FYH_FIN_SES" Type="DateTime" Precision="3" />
     <Property Name="BIN_ACTIVA" Type="Boolean" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -4518,12 +4381,12 @@
     <Property Name="COD_TOMA_FISICA" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
     <Property Name="NUM_ACT_OPE" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="IDE_MAQUIN" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Precision="3" />
     <Property Name="BIN_TOM" Type="Boolean" />
     <Property Name="USU_OPERAC" Type="Int16" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="COD_LOC_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_SEC_LOC" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_UBI_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
@@ -4545,12 +4408,12 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_TOMA_FISICA" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
     <Property Name="NUM_ACT_OPE" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="BIN_TOM" Type="Boolean" />
     <Property Name="USU_OPERAC" Type="Int16" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="COD_LOC_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_SEC_LOC" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
@@ -4571,7 +4434,7 @@
     <Property Name="TIP_TOMA_FISICA" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="adtm_DATO17" Relationship="BostonModel.FK_AFM_TOMAS_FISIC_ADTM_DATO17" FromRole="AFM_TOMAS_FISIC" ToRole="adtm_DATO17" />
@@ -4682,10 +4545,10 @@
     <Property Name="COD_EMPLEADO" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="COD_OPERAC" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="USU_OPERAC" Type="Int16" Nullable="false" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
@@ -4712,7 +4575,7 @@
     </Key>
     <Property Name="USUARIO" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
     <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="TIMESTAMP" Type="DateTime" />
+    <Property Name="TIMESTAMP" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="AFR_ATRIB_BASES">
     <Key>
@@ -4759,8 +4622,8 @@
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="AFC_ATRIB_ACTIV" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFC_ATRIB_ACTIV" FromRole="AFR_VALOR_ACTIV" ToRole="AFC_ATRIB_ACTIV" />
     <NavigationProperty Name="AFM_CIAS" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFM_CIAS" FromRole="AFR_VALOR_ACTIV" ToRole="AFM_CIAS" />
-    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV" FromRole="AFR_VALOR_ACTIV" ToRole="AFM_MAEST_ACTIV" />
     <NavigationProperty Name="AFR_VALOR_ATRIB" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFR_VALOR_ATRIB" FromRole="AFR_VALOR_ACTIV" ToRole="AFR_VALOR_ATRIB" />
+    <NavigationProperty Name="AFM_MAEST_ACTIV" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV" FromRole="AFR_VALOR_ACTIV" ToRole="AFM_MAEST_ACTIV" />
   </EntityType>
   <EntityType Name="AFR_VALOR_ATRIB">
     <Key>
@@ -4787,7 +4650,6 @@
     <Property Name="ID_GRUPO" Type="Int32" />
     <Property Name="REQUIERE_APROBACION" Type="Boolean" />
     <Property Name="ESTADO" Type="Boolean" />
-    <NavigationProperty Name="AFT_MOV_GRUPOS_ACCESOS" Relationship="BostonModel.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS" FromRole="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" ToRole="AFT_MOV_GRUPOS_ACCESOS" />
     <NavigationProperty Name="AFT_MOV_TIPOS_MOVIMIENTOS" Relationship="BostonModel.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS" FromRole="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" ToRole="AFT_MOV_TIPOS_MOVIMIENTOS" />
     <NavigationProperty Name="AFT_MOV_MOVIMIENTOS_APROBACIONES" Relationship="BostonModel.FK_AssetsWEB_MOV_MOVIMIENTOS_APROBACIONES_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS" FromRole="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" ToRole="AFT_MOV_MOVIMIENTOS_APROBACIONES" />
   </EntityType>
@@ -4801,7 +4663,7 @@
     <Property Name="ID_MOVIMIENTO" Type="Int32" Nullable="false" />
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="FECHA" Type="DateTime" Nullable="false" />
+    <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DESCRIPCION_TIPO_MOVIMIENTO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="USUARIO" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="PASO_APROBACION" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
@@ -4839,6 +4701,7 @@
       <PropertyRef Name="ID_EMPLEADO" />
       <PropertyRef Name="ID_GRUPO" />
       <PropertyRef Name="COD_COMPANIA" />
+      <PropertyRef Name="COD_CIA_PRO" />
     </Key>
     <Property Name="ID_EMPLEADO" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="ID_GRUPO" Type="Int32" Nullable="false" />
@@ -4846,27 +4709,8 @@
     <Property Name="ESTADO" Type="Boolean" />
     <Property Name="USUARIO" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AssetsWEB_MOV_GRUPO_USUARIOS_AFM_CATAL_EMPLE" FromRole="AFT_MOV_GRUPO_USUARIOS" ToRole="AFM_CATAL_EMPLE" />
-    <NavigationProperty Name="AFT_MOV_GRUPOS_ACCESOS" Relationship="BostonModel.FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS" FromRole="AFT_MOV_GRUPO_USUARIOS" ToRole="AFT_MOV_GRUPOS_ACCESOS" />
-    <!-- GPE PROVERI <Property Type="String" Name="COD_CIA_PRO" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />  -->
-  </EntityType>
-  <EntityType Name="AFT_MOV_GRUPOS_ACCESOS">
-    <Key>
-      <PropertyRef Name="ID_GRUPO" />
-      <PropertyRef Name="COD_COMPANIA" />
-    </Key>
-    <Property Name="ID_GRUPO" Type="Int32" Nullable="false" />
-    <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
-    <Property Name="DESCRIPCION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="EMAIL_GRUPO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="ESTADO" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Relationship="BostonModel.FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS" FromRole="AFT_MOV_GRUPOS_ACCESOS" ToRole="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" />
-    <NavigationProperty Name="AFT_MOV_GRUPO_USUARIOS" Relationship="BostonModel.FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS" FromRole="AFT_MOV_GRUPOS_ACCESOS" ToRole="AFT_MOV_GRUPO_USUARIOS" />
     <Property Type="String" Name="COD_CIA_PRO" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
-    <!-- GPE PROVERI 
-	  <NavigationProperty Name="AFM_CIAS" Relationship="BostonModel.FK_AFM_CIAS_COD_CIA_PRO" FromRole="AFT_MOV_GRUPOS_ACCESOS" ToRole="AFM_CIAS" />
-          <NavigationProperty Name="AFT_MOV_GRUPOS_ACCESOS1" Relationship="BostonModel.FK_AFT_MOV_GRUPOS_ACCESOS_AFT_MOV_GRUPOS_ACCESOS" FromRole="AFT_MOV_GRUPOS_ACCESOS" ToRole="AFT_MOV_GRUPOS_ACCESOS1" />
-          <NavigationProperty Name="AFT_MOV_GRUPOS_ACCESOS2" Relationship="BostonModel.FK_AFT_MOV_GRUPOS_ACCESOS_AFT_MOV_GRUPOS_ACCESOS" FromRole="AFT_MOV_GRUPOS_ACCESOS1" ToRole="AFT_MOV_GRUPOS_ACCESOS" />
-     -->
+    <!-- GPE PROVERI <Property Type="String" Name="COD_CIA_PRO" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />  -->
   </EntityType>
   <EntityType Name="AFT_MOV_MAESTRO_MOVIMIENTOS">
     <Key>
@@ -4877,7 +4721,7 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="CENTRO_COSTO" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="ID_EMPLEADO" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-    <Property Name="FECHA_MOVIMIENTO" Type="DateTime" Nullable="false" />
+    <Property Name="FECHA_MOVIMIENTO" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DESCRIPCION_CENTRO_COSTOS" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="EMPLEADO_RESPONSABLE_CC" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="ID_TIPO_MOVIMIENTO" Type="Int32" Nullable="false" />
@@ -4901,7 +4745,7 @@
     <Property Name="ID_MOVIMIENTO" Type="Int32" Nullable="false" />
     <Property Name="ID_APROBACION" Type="Int32" Nullable="false" />
     <Property Name="ID_TIPO_MOVIMIENTO" Type="Int32" Nullable="false" />
-    <Property Name="FECHA" Type="DateTime" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" />
     <Property Name="APROBADO" Type="Boolean" />
     <Property Name="ID_EMPLEADO" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AssetsWEB_MOV_MOVIMIENTOS_APROBACIONES_AFM_CATAL_EMPLE" FromRole="AFT_MOV_MOVIMIENTOS_APROBACIONES" ToRole="AFM_CATAL_EMPLE" />
@@ -4935,8 +4779,8 @@
     <Property Name="LNAM" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
     <Property Name="LABL" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
     <Property Name="LCKD" Type="Int16" />
-    <Property Name="CDAT" Type="DateTime" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="BK_AFM_MAEST_ACTIV">
     <Key>
@@ -4978,17 +4822,17 @@
     <Property Name="IND_MOV_ACT" Type="Boolean" />
     <Property Name="COD_CEN_CST" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_COMPRA" Type="DateTime" />
-    <Property Name="FYH_ULT_TOMA" Type="DateTime" />
+    <Property Name="FEC_COMPRA" Type="DateTime" Precision="3" />
+    <Property Name="FYH_ULT_TOMA" Type="DateTime" Precision="3" />
     <Property Name="ORD_COMPRA" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CAPITAL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CONSEC" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_RETIRO" Type="DateTime" />
+    <Property Name="FYH_RETIRO" Type="DateTime" Precision="3" />
     <Property Name="NUM_DEC_ADU" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_DEC_ADU_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" />
+    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" Precision="3" />
     <Property Name="IND_ACT_EXC" Type="Boolean" />
-    <Property Name="FYH_ACT_EXC" Type="DateTime" />
+    <Property Name="FYH_ACT_EXC" Type="DateTime" Precision="3" />
     <Property Name="COD_APROPI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="VAL_COMPRA" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_COMPRA_COL" Type="Decimal" Precision="25" Scale="10" />
@@ -4996,8 +4840,8 @@
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_CAPITAL" Type="DateTime" />
-    <Property Name="FYH_COMPRA" Type="DateTime" />
+    <Property Name="FYH_CAPITAL" Type="DateTime" Precision="3" />
+    <Property Name="FYH_COMPRA" Type="DateTime" Precision="3" />
     <Property Name="OBS_ACTIVO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NUM_FACTUR" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NUM_LICITA" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
@@ -5010,10 +4854,10 @@
     <Property Name="NUM_POLIZA" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_POLIZA_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="VAL_ADU_DOL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
-    <Property Name="FEC_INI_DEP_COR" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_INI_DEP_COR" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" Precision="3" />
     <Property Name="VAL_RESIDUAL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RESIDUAL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
@@ -5026,10 +4870,10 @@
     <Property Name="REF_NUM_ACT" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_ASI_CON" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="IND_DEPREC" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_EXP_GAR" Type="DateTime" />
+    <Property Name="FEC_EXP_GAR" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="COD_MON_COM" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="IND_REG_SER" Type="Boolean" />
@@ -5043,7 +4887,7 @@
     <Property Name="VAL_RES_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIB_ACT" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_FIN_DEPREC" Type="DateTime" />
+    <Property Name="FYH_FIN_DEPREC" Type="DateTime" Precision="3" />
     <Property Name="NUM_MES_DEPREC" Type="Int16" />
     <Property Name="COD_CTA_DEP_REVAL" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="COD_CTA_GASDEP_REVAL" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
@@ -5101,9 +4945,9 @@
     <Property Name="CTGR" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
     <Property Name="RSRV" Type="Int16" />
     <Property Name="VALE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
   </EntityType>
   <EntityType Name="dtproperty">
@@ -5270,9 +5114,9 @@
     <Property Name="RSRV" Type="Int16" />
     <Property Name="VALE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
     <Property Name="LABL" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
   </EntityType>
   <EntityType Name="EXAV">
@@ -5286,9 +5130,9 @@
     <Property Name="EXAT" Type="Int32" Nullable="false" />
     <Property Name="OBJT" Type="Int32" />
     <Property Name="VALE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
   </EntityType>
   <EntityType Name="FONT">
@@ -5317,7 +5161,7 @@
     </Key>
     <Property Name="OBJT" Type="Int32" Nullable="false" />
     <Property Name="CLSS" Type="Int16" Nullable="false" />
-    <Property Name="LDAT" Type="DateTime" />
+    <Property Name="LDAT" Type="DateTime" Precision="3" />
     <Property Name="LUSR" Type="Int32" />
   </EntityType>
   <EntityType Name="MCDASSC">
@@ -5491,9 +5335,9 @@
     <Property Name="NAME" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
     <Property Name="CODE" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
     <Property Name="VERS" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
     <Property Name="DSCR" Type="Int32" />
     <Property Name="ANNT" Type="Int32" />
@@ -5751,9 +5595,9 @@
     <Property Name="NAME" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
     <Property Name="DSCR" Type="Int32" />
     <Property Name="ANNT" Type="Int32" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
     <Property Name="NUMR" Type="Int32" />
     <Property Name="LNKT" Type="Int32" />
@@ -5778,7 +5622,7 @@
     <Property Name="ACT_PARAME" Type="Int32" />
     <Property Name="VAL_CAR_PAR" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="VAL_NUM_PAR" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="VAL_FEC_PAR" Type="DateTime" />
+    <Property Name="VAL_FEC_PAR" Type="DateTime" Precision="3" />
     <Property Name="TIMESTAMP" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="PCSDFDI">
@@ -5905,9 +5749,9 @@
     <Property Name="DSCR" Type="Int32" />
     <Property Name="ANNT" Type="Int32" />
     <Property Name="LABL" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
   </EntityType>
   <EntityType Name="PWBEDIT">
@@ -5924,9 +5768,9 @@
     <Property Name="FLAG" Type="Int32" />
     <Property Name="RSVD" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="PWBFRMT">
     <Key>
@@ -5940,9 +5784,9 @@
     <Property Name="CNTR" Type="Int32" />
     <Property Name="GENE" Type="Int32" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="PWBVALD">
     <Key>
@@ -5957,9 +5801,9 @@
     <Property Name="VALD" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
     <Property Name="VMSG" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="REDO">
     <Key>
@@ -6026,9 +5870,9 @@
     <Property Name="CODE" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
     <Property Name="PRIV" Type="Int16" />
     <Property Name="VERS" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
-    <Property Name="CDAT" Type="DateTime" />
+    <Property Name="CDAT" Type="DateTime" Precision="3" />
     <Property Name="CUSR" Type="Int32" />
-    <Property Name="MDAT" Type="DateTime" />
+    <Property Name="MDAT" Type="DateTime" Precision="3" />
     <Property Name="MUSR" Type="Int32" />
     <Property Name="GRPH" Type="Int32" />
     <Property Name="DSCR" Type="Int32" />
@@ -6136,7 +5980,7 @@
     <Property Name="IND_SER_SEG" Type="Boolean" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="CAMPO62" Type="Int16" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="IND_RES_TOMAF" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="COD_USUARIO" Type="Int16" />
     <Property Name="cod_identificacion" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
@@ -6219,7 +6063,7 @@
     <Property Name="COD_ROL_USO" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="tmp_ESTAD_ADUAN">
     <Key>
@@ -6282,25 +6126,25 @@
     <Property Name="COD_SUB_CLA" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="IND_MOV_ACT" Type="Boolean" />
     <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_COMPRA" Type="DateTime" />
-    <Property Name="FYH_ULT_TOMA" Type="DateTime" />
+    <Property Name="FEC_COMPRA" Type="DateTime" Precision="3" />
+    <Property Name="FYH_ULT_TOMA" Type="DateTime" Precision="3" />
     <Property Name="ORD_COMPRA" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CAPITAL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CONSEC" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_RETIRO" Type="DateTime" />
+    <Property Name="FYH_RETIRO" Type="DateTime" Precision="3" />
     <Property Name="NUM_DEC_ADU" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_DEC_ADU_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" />
+    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" Precision="3" />
     <Property Name="IND_ACT_EXC" Type="Boolean" />
-    <Property Name="FYH_ACT_EXC" Type="DateTime" />
+    <Property Name="FYH_ACT_EXC" Type="DateTime" Precision="3" />
     <Property Name="COD_APROPI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="VAL_COMPRA_COL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIBROS" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU_COR" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_CAPITAL" Type="DateTime" />
-    <Property Name="FYH_COMPRA" Type="DateTime" />
+    <Property Name="FYH_CAPITAL" Type="DateTime" Precision="3" />
+    <Property Name="FYH_COMPRA" Type="DateTime" Precision="3" />
     <Property Name="OBS_ACTIVO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NUM_LICITA" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NUM_AMPLIA" Type="Int16" />
@@ -6312,9 +6156,9 @@
     <Property Name="NUM_POLIZA" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_POLIZA_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="VAL_ADU_DOL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_INI_DEP_COR" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" />
+    <Property Name="FEC_INI_DEP_COR" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" Precision="3" />
     <Property Name="VAL_RESIDUAL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RESIDUAL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
@@ -6325,9 +6169,9 @@
     <Property Name="COD_EST_ADU" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_TIP_OPE" Type="String" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ASI_CON" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FEC_EXP_GAR" Type="DateTime" />
+    <Property Name="FEC_EXP_GAR" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="IND_REG_SER" Type="Boolean" />
     <Property Name="CAN_ACT_NUE" Type="Decimal" Precision="18" Scale="0" />
@@ -6339,7 +6183,7 @@
     <Property Name="VAL_RES_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIB_ACT" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_FIN_DEPREC" Type="DateTime" />
+    <Property Name="FYH_FIN_DEPREC" Type="DateTime" Precision="3" />
     <Property Name="NUM_MES_DEPREC" Type="Int16" />
     <Property Name="COD_CTA_DEP_REVAL" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="COD_CTA_GASDEP_REVAL" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
@@ -6520,8 +6364,8 @@
     </Key>
     <Property Name="cod_usuario" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="cod_session" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="fecha_inicio" Type="DateTime" Nullable="false" />
-    <Property Name="fecha_fin" Type="DateTime" />
+    <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="fecha_fin" Type="DateTime" Precision="0" />
     <Property Name="estado" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="direccion_ip" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
   </EntityType>
@@ -6758,12 +6602,12 @@
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="COD_TOMA_FISICA" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
     <Property Name="NUM_ACT_OPE" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" />
+    <Property Name="FYH_OPERAC" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="BIN_TOM" Type="Boolean" />
     <Property Name="USU_OPERAC" Type="Int16" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="COD_LOC_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="DES_LOC_ACT" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
@@ -6838,9 +6682,9 @@
     <Property Name="OBJTNAME" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
     <Property Name="OBJTOCLS" Type="Int32" Nullable="false" />
     <Property Name="OBJTCLSS" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="OBJTCDAT" Type="DateTime" />
+    <Property Name="OBJTCDAT" Type="DateTime" Precision="3" />
     <Property Name="OBJTCUSR" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="OBJTMDAT" Type="DateTime" />
+    <Property Name="OBJTMDAT" Type="DateTime" Precision="3" />
     <Property Name="OBJTMUSR" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="OBJTNUMR" Type="Int32" />
   </EntityType>
@@ -7909,12 +7753,12 @@
     <Property Name="NOM_EMPLEADO" Type="String" MaxLength="70" Unicode="false" FixedLength="false" />
     <Property Name="IND_MOV_ACT" Type="Boolean" />
     <Property Name="BIN_TIE_COM" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_COMPRA" Type="DateTime" />
-    <Property Name="FYH_ULT_TOMA" Type="DateTime" />
+    <Property Name="FEC_COMPRA" Type="DateTime" Precision="3" />
+    <Property Name="FYH_ULT_TOMA" Type="DateTime" Precision="3" />
     <Property Name="ORD_COMPRA" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CAPITAL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
     <Property Name="NUM_CONSEC" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_RETIRO" Type="DateTime" />
+    <Property Name="FYH_RETIRO" Type="DateTime" Precision="3" />
     <Property Name="VAL_LIB_ACT" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="NUM_DEC_ADU" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="IND_ACT_EXC" Type="Boolean" />
@@ -7922,14 +7766,14 @@
     <Property Name="VAL_DEPREC" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_DEPACU" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_VID_UTL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_CAPITAL" Type="DateTime" />
-    <Property Name="FYH_COMPRA" Type="DateTime" />
+    <Property Name="FYH_CAPITAL" Type="DateTime" Precision="3" />
+    <Property Name="FYH_COMPRA" Type="DateTime" Precision="3" />
     <Property Name="OBS_ACTIVO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NUM_FACTUR" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="NUM_LICITA" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="DES_ACTIVO_ANT" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ACT_EXC" Type="DateTime" />
+    <Property Name="FYH_ACT_EXC" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="NUM_AMPLIA" Type="Int16" />
@@ -7937,7 +7781,7 @@
     <Property Name="COD_CTA_DEPACU" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="COD_CTA_GASDEP" Type="String" MaxLength="20" Unicode="false" FixedLength="true" />
     <Property Name="COD_MET_DEP" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-    <Property Name="FYH_FIN_DEPREC" Type="DateTime" />
+    <Property Name="FYH_FIN_DEPREC" Type="DateTime" Precision="3" />
     <Property Name="NUM_MES_DEPREC" Type="Int16" />
     <Property Name="DES_CLA_ACT" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
     <Property Name="DES_SUB_CLA" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
@@ -7946,7 +7790,7 @@
     <Property Name="CAN_ACT_NUE" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="IND_REG_SER" Type="Boolean" />
     <Property Name="COD_MON_COM" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-    <Property Name="FEC_EXP_GAR" Type="DateTime" />
+    <Property Name="FEC_EXP_GAR" Type="DateTime" Precision="3" />
     <Property Name="IND_DEPREC" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
     <Property Name="NUM_ASI_CON" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="REF_NUM_ACT" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -7958,10 +7802,10 @@
     <Property Name="VAL_VID_UTL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RESIDUAL_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_RESIDUAL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" />
-    <Property Name="FEC_ULT_DEP" Type="DateTime" />
-    <Property Name="FEC_INI_DEP_COR" Type="DateTime" />
-    <Property Name="FEC_INI_DEP" Type="DateTime" />
+    <Property Name="FEC_ULT_DEP_COR" Type="DateTime" Precision="3" />
+    <Property Name="FEC_ULT_DEP" Type="DateTime" Precision="3" />
+    <Property Name="FEC_INI_DEP_COR" Type="DateTime" Precision="3" />
+    <Property Name="FEC_INI_DEP" Type="DateTime" Precision="3" />
     <Property Name="VAL_ADU_DOL" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="NUM_POLIZA_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
     <Property Name="NUM_POLIZA" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
@@ -7971,7 +7815,7 @@
     <Property Name="VAL_LIBROS_COR" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_LIBROS" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="VAL_COMPRA_COL" Type="Decimal" Precision="20" Scale="10" />
-    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" />
+    <Property Name="FYH_DEC_ADU_SAL" Type="DateTime" Precision="3" />
     <Property Name="NUM_DEC_ADU_SAL" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="WAS_Adquisiciones">
@@ -8024,7 +7868,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="DES_EST_ORI" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="WAS_DescripcionActivos">
     <Key>
@@ -8091,7 +7935,7 @@
     <Property Name="DES_ORI_STS" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="DES_EST_ORI" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="WAS_EquipoTerceros">
     <Key>
@@ -8120,8 +7964,8 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="DES_EST_ORI" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_MOVIMI" Type="DateTime" />
-    <Property Name="FYH_LIM_SAL" Type="DateTime" />
+    <Property Name="FYH_MOVIMI" Type="DateTime" Precision="3" />
+    <Property Name="FYH_LIM_SAL" Type="DateTime" Precision="3" />
     <Property Name="IND_AUT_IND" Type="Boolean" />
     <Property Name="COD_EMP_TRA" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
     <Property Name="NOM_EMPLEADO" Type="String" MaxLength="70" Unicode="false" FixedLength="false" />
@@ -8185,7 +8029,7 @@
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="COD_EST_ORI" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
     <Property Name="DES_EST_ORI" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="WAS_TipoMovimiento">
     <Key>
@@ -8213,7 +8057,7 @@
     <Property Name="DES_EST_ORI" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="CAMPO62" Type="Int16" />
     <Property Name="CAMPO64" Type="String" MaxLength="60" Unicode="false" FixedLength="false" />
-    <Property Name="FYH_ESTADO" Type="DateTime" />
+    <Property Name="FYH_ESTADO" Type="DateTime" Precision="3" />
     <Property Name="COD_ORI_STS" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
   </EntityType>
   <EntityType Name="WAS_UsuarioActivos">
@@ -8874,20 +8718,6 @@
         <PropertyRef Name="COD_COMPANIA" />
         <PropertyRef Name="COD_ORI_STS" />
         <PropertyRef Name="COD_EST_ORI" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_ACTIV_MOVIL" Type="BostonModel.AFM_ACTIV_MOVIL" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_ACTIV_MOVIL">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -9729,34 +9559,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_COMPO_ACTIV" Type="BostonModel.AFM_COMPO_ACTIV" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_COMPO_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_COMPO_ACTIV" Type="BostonModel.AFM_COMPO_ACTIV" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_COMPO_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_COM_ACT" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AFM_COMPO_ACTIV_AFM_ORIGE_ESTAD">
     <End Role="AFM_ORIGE_ESTAD" Type="BostonModel.AFM_ORIGE_ESTAD" Multiplicity="0..1" />
     <End Role="AFM_COMPO_ACTIV" Type="BostonModel.AFM_COMPO_ACTIV" Multiplicity="*" />
@@ -9815,20 +9617,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_DEPRE_ACTIV" Type="BostonModel.AFM_DEPRE_ACTIV" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_DEPRE_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AFM_MOVIM_DEPRE_AFM_METOD_DEPRE">
     <End Role="AFM_METOD_DEPRE" Type="BostonModel.AFM_METOD_DEPRE" Multiplicity="1" />
     <End Role="AFM_DEPRE_ACTIV" Type="BostonModel.AFM_DEPRE_ACTIV" Multiplicity="*" />
@@ -9857,20 +9645,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AFM_DETA_REF_699_AFM_MAES">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="0..1" />
-    <End Role="AFM_DETAL_MOVFI" Type="BostonModel.AFM_DETAL_MOVFI" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_DETAL_MOVFI">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AFM_DETAL_TOMAF_AFM_ESTAD_ORIGE">
     <End Role="AFM_ESTAD_ORIGE" Type="BostonModel.AFM_ESTAD_ORIGE" Multiplicity="0..1" />
     <End Role="AFM_DETAL_TOMAF" Type="BostonModel.AFM_DETAL_TOMAF" Multiplicity="*" />
@@ -9884,20 +9658,6 @@
         <PropertyRef Name="COD_COMPANIA" />
         <PropertyRef Name="COD_ORI_STS" />
         <PropertyRef Name="COD_EST_ORI" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_DETAL_TOMAF" Type="BostonModel.AFM_DETAL_TOMAF" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_DETAL_TOMAF">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -9960,48 +9720,6 @@
         <PropertyRef Name="COD_LOC_ACT" />
         <PropertyRef Name="COD_SEC_LOC" />
         <PropertyRef Name="COD_UBI_ACT" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_DETCIE_DEPRE" Type="BostonModel.AFM_DETCIE_DEPRE" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_DETCIE_DEPRE">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_DETCIE_DEPRE_COR" Type="BostonModel.AFM_DETCIE_DEPRE_COR" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_DETCIE_DEPRE_COR">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_DOCADJ_ACTIV" Type="BostonModel.AFM_DOCADJ_ACTIV" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_DOCADJ_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -10090,20 +9808,6 @@
         <PropertyRef Name="COD_COMPANIA" />
         <PropertyRef Name="COD_ORI_STS" />
         <PropertyRef Name="COD_EST_ORI" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_EMPLE_ACTIV" Type="BostonModel.AFM_EMPLE_ACTIV" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_EMPLE_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -10535,20 +10239,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFM_IMPRE_PLACAS" Type="BostonModel.AFM_IMPRE_PLACAS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFM_IMPRE_PLACAS">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AFM_IMPRE_PLACAS_UBICA_AFM_UBICA_ACTIV">
     <End Role="AFM_UBICA_ACTIV" Type="BostonModel.AFM_UBICA_ACTIV" Multiplicity="1" />
     <End Role="AFM_IMPRE_PLACAS_UBICA" Type="BostonModel.AFM_IMPRE_PLACAS_UBICA" Multiplicity="*" />
@@ -10608,20 +10298,6 @@
         <PropertyRef Name="IDE_MAQUIN" />
         <PropertyRef Name="COD_COMPANIA" />
         <PropertyRef Name="COD_TOMA_FISICA" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV">
-    <End Role="AFM_MAEST_ACTIV" Type="BostonModel.AFM_MAEST_ACTIV" Multiplicity="1" />
-    <End Role="AFR_VALOR_ACTIV" Type="BostonModel.AFR_VALOR_ACTIV" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFM_MAEST_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
-      </Principal>
-      <Dependent Role="AFR_VALOR_ACTIV">
-        <PropertyRef Name="COD_COMPANIA" />
-        <PropertyRef Name="NUM_ACTIVO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -11097,20 +10773,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-    <End Role="AFT_MOV_GRUPOS_ACCESOS" Type="BostonModel.AFT_MOV_GRUPOS_ACCESOS" Multiplicity="0..1" />
-    <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Type="BostonModel.AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFT_MOV_GRUPOS_ACCESOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-      </Principal>
-      <Dependent Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AssetsWEB_MOV_APROBACIONES_TIPO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS">
     <End Role="AFT_MOV_TIPOS_MOVIMIENTOS" Type="BostonModel.AFT_MOV_TIPOS_MOVIMIENTOS" Multiplicity="1" />
     <End Role="AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Type="BostonModel.AFT_MOV_APROBACIONES_TIPO_MOVIMIENTOS" Multiplicity="*" />
@@ -11155,20 +10817,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AssetsWEB_MOV_GRUPO_USUARIOS_AssetsWEB_MOV_GRUPOS_ACCESOS">
-    <End Role="AFT_MOV_GRUPOS_ACCESOS" Type="BostonModel.AFT_MOV_GRUPOS_ACCESOS" Multiplicity="1" />
-    <End Role="AFT_MOV_GRUPO_USUARIOS" Type="BostonModel.AFT_MOV_GRUPO_USUARIOS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AFT_MOV_GRUPOS_ACCESOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-      </Principal>
-      <Dependent Role="AFT_MOV_GRUPO_USUARIOS">
-        <PropertyRef Name="ID_GRUPO" />
-        <PropertyRef Name="COD_COMPANIA" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS">
     <End Role="AFT_MOV_TIPOS_MOVIMIENTOS" Type="BostonModel.AFT_MOV_TIPOS_MOVIMIENTOS" Multiplicity="1" />
     <End Role="AFT_MOV_MAESTRO_MOVIMIENTOS" Type="BostonModel.AFT_MOV_MAESTRO_MOVIMIENTOS" Multiplicity="*" />
@@ -11194,6 +10842,316 @@
       <Dependent Role="AFT_MOV_MOVIMIENTOS_APROBACIONES">
         <PropertyRef Name="ID_MOVIMIENTO" />
         <PropertyRef Name="COD_COMPANIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AFT_MOV_GRUPOS_ACCESOS">
+    <Key>
+      <PropertyRef Name="ID_GRUPO" />
+      <PropertyRef Name="COD_COMPANIA" />
+      <PropertyRef Name="COD_CIA_PRO" />
+    </Key>
+    <Property Type="Int32" Name="ID_GRUPO" Nullable="false" />
+    <Property Type="String" Name="COD_COMPANIA" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="DESCRIPCION" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="EMAIL_GRUPO" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="ESTADO" Nullable="false" />
+    <Property Type="String" Name="COD_CIA_PRO" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="AFM_MAEST_ACTIV">
+    <Key>
+      <PropertyRef Name="COD_COMPANIA" />
+      <PropertyRef Name="NUM_ACTIVO" />
+    </Key>
+    <Property Type="String" Name="COD_COMPANIA" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="NUM_ACTIVO" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_CIA_PRO" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="PLA_ACTIVO" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="DES_ACTIVO" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DES_ACTIVO_ANT" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PLA_ANTERIOR" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="PLA_INICIAL" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="COD_ACT_AUX" Precision="18" Scale="0" />
+    <Property Type="String" Name="DES_UBI_PLACA" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="COD_TIPO_PLACA" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="SER_ACTIVO" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="COD_MARCA" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_MODELO" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_TIP_ACT" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_CLA_ACT" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_SUB_CLA" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_ACT_BAS" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_LOC_ACT" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_SEC_LOC" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_UBI_ACT" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_EMPLEADO" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="Boolean" Name="IND_MOV_ACT" />
+    <Property Type="String" Name="COD_CEN_CST" MaxLength="15" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="BIN_TIE_COM" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="FEC_COMPRA" Precision="3" />
+    <Property Type="DateTime" Name="FYH_ULT_TOMA" Precision="3" />
+    <Property Type="String" Name="ORD_COMPRA" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_CAPITAL" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_CONSEC" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="FYH_RETIRO" Precision="3" />
+    <Property Type="String" Name="NUM_DEC_ADU" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_DEC_ADU_SAL" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="FYH_DEC_ADU_SAL" Precision="3" />
+    <Property Type="Boolean" Name="IND_ACT_EXC" />
+    <Property Type="DateTime" Name="FYH_ACT_EXC" Precision="3" />
+    <Property Type="String" Name="COD_APROPI" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="VAL_COMPRA" Precision="25" Scale="10" />
+    <Property Type="Decimal" Name="VAL_COMPRA_COL" Precision="25" Scale="10" />
+    <Property Type="Decimal" Name="VAL_LIBROS" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_LIBROS_COR" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_DEPACU" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_DEPACU_COR" Precision="20" Scale="10" />
+    <Property Type="DateTime" Name="FYH_CAPITAL" Precision="3" />
+    <Property Type="DateTime" Name="FYH_COMPRA" Precision="3" />
+    <Property Type="String" Name="OBS_ACTIVO" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_FACTUR" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_LICITA" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="NUM_AMPLIA" />
+    <Property Type="String" Name="COD_CTA_DEPACU" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_CTA_GASDEP" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_CTA_DEPACU_COR" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_CTA_GASDEP_COR" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_MET_DEP" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="NUM_POLIZA" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_POLIZA_SAL" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="VAL_ADU_DOL" Precision="20" Scale="10" />
+    <Property Type="DateTime" Name="FEC_INI_DEP" Precision="3" />
+    <Property Type="DateTime" Name="FEC_INI_DEP_COR" Precision="3" />
+    <Property Type="DateTime" Name="FEC_ULT_DEP" Precision="3" />
+    <Property Type="DateTime" Name="FEC_ULT_DEP_COR" Precision="3" />
+    <Property Type="Decimal" Name="VAL_RESIDUAL" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_RESIDUAL_COR" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_VID_UTL" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_VID_UTL_COR" Precision="20" Scale="10" />
+    <Property Type="String" Name="NUM_CHEQUE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="VAL_TIP_CAM" Precision="20" Scale="10" />
+    <Property Type="String" Name="COD_PROVEE" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_EST_ADU" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_TIP_OPE" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="REF_NUM_ACT" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_ASI_CON" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IND_DEPREC" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="FEC_EXP_GAR" Precision="3" />
+    <Property Type="String" Name="COD_ORI_STS" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_EST_ORI" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="FYH_ESTADO" Precision="3" />
+    <Property Type="Int16" Name="CAMPO62" />
+    <Property Type="String" Name="COD_MON_COM" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="Boolean" Name="IND_REG_SER" />
+    <Property Type="Decimal" Name="CAN_ACT_NUE" Precision="18" Scale="0" />
+    <Property Type="Binary" Name="TIMESTAMP" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <Property Type="Decimal" Name="VAL_DEPREC_MEN" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_DEPREC_MEN_COR" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_VID_UTL_ACUM" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_VID_UTL_ACUM_COR" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_RES_VID_UTL" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_RES_VID_UTL_COR" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_LIB_ACT" Precision="20" Scale="10" />
+    <Property Type="Decimal" Name="VAL_DEPREC" Precision="20" Scale="10" />
+    <Property Type="DateTime" Name="FYH_FIN_DEPREC" Precision="3" />
+    <Property Type="Int16" Name="NUM_MES_DEPREC" />
+    <Property Type="String" Name="COD_CTA_DEP_REVAL" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_CTA_GASDEP_REVAL" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="VAL_REVALS" Nullable="false" Precision="20" Scale="2" />
+    <Property Type="Decimal" Name="VAL_DEPACU_REVAL" Nullable="false" Precision="20" Scale="2" />
+    <Property Type="Decimal" Name="VAL_GASDEPACU_REVAL" Nullable="false" Precision="20" Scale="2" />
+    <Property Type="String" Name="cod_patrimonio" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cod_provincia" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cod_canton" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cod_distrito" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="anno_presupuesto" />
+    <Property Type="String" Name="cod_acta" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cod_folio" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cod_prog_presupuestario" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cod_subprog_presupuestario" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="ind_exportado" Nullable="false" />
+    <Property Type="Boolean" Name="ind_act_grupo" />
+    <Property Type="String" Name="COD_CTA_COSTO" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="COD_MON_COM_COR" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="NUM_BLOQUE" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AFM_ACTIV_MOVIL" Relationship="BostonModel.FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_ACTIV_MOVIL" />
+    <NavigationProperty Name="AFM_COMPO_ACTIV" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_COMPO_ACTIV" />
+    <NavigationProperty Name="AFM_COMPO_ACTIV1" Relationship="BostonModel.FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_COMPO_ACTIV" />
+    <NavigationProperty Name="AFM_DEPRE_ACTIV" Relationship="BostonModel.FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DEPRE_ACTIV" />
+    <NavigationProperty Name="AFM_DETAL_MOVFI" Relationship="BostonModel.FK_AFM_DETA_REF_699_AFM_MAES" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETAL_MOVFI" />
+    <NavigationProperty Name="AFM_DETAL_TOMAF" Relationship="BostonModel.FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETAL_TOMAF" />
+    <NavigationProperty Name="AFM_DETCIE_DEPRE" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETCIE_DEPRE" />
+    <NavigationProperty Name="AFM_DETCIE_DEPRE_COR" Relationship="BostonModel.FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DETCIE_DEPRE_COR" />
+    <NavigationProperty Name="AFM_DOCADJ_ACTIV" Relationship="BostonModel.FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_DOCADJ_ACTIV" />
+    <NavigationProperty Name="AFM_EMPLE_ACTIV" Relationship="BostonModel.FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_EMPLE_ACTIV" />
+    <NavigationProperty Name="AFM_IMPRE_PLACAS" Relationship="BostonModel.FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFM_IMPRE_PLACAS" />
+    <NavigationProperty Name="AFR_VALOR_ACTIV" Relationship="BostonModel.FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV" FromRole="AFM_MAEST_ACTIV" ToRole="AFR_VALOR_ACTIV" />
+  </EntityType>
+  <Association Name="FK_AFM_ACTIV_MOVIL_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_ACTIV_MOVIL" Role="AFM_ACTIV_MOVIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_ACTIV_MOVIL">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV1">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_COMPO_ACTIV" Role="AFM_COMPO_ACTIV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_COMPO_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_COMPO_ACTIV_AFM_MAEST_ACTIV2">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_COMPO_ACTIV" Role="AFM_COMPO_ACTIV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_COMPO_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_COM_ACT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_MOVIM_DEPRE_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_DEPRE_ACTIV" Role="AFM_DEPRE_ACTIV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_DEPRE_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_DETA_REF_699_AFM_MAES">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="0..1" />
+    <End Type="BostonModel.AFM_DETAL_MOVFI" Role="AFM_DETAL_MOVFI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_DETAL_MOVFI">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_DETAL_TOMAF_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_DETAL_TOMAF" Role="AFM_DETAL_TOMAF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_DETAL_TOMAF">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_DETCIE_DEPRE_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_DETCIE_DEPRE" Role="AFM_DETCIE_DEPRE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_DETCIE_DEPRE">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_DETCIE_DEPRE_COR_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_DETCIE_DEPRE_COR" Role="AFM_DETCIE_DEPRE_COR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_DETCIE_DEPRE_COR">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_DOCADJ_ACTIV_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_DOCADJ_ACTIV" Role="AFM_DOCADJ_ACTIV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_DOCADJ_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_EMPLE_ACTIV_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_EMPLE_ACTIV" Role="AFM_EMPLE_ACTIV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_EMPLE_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFM_IMPRE_PLACAS_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFM_IMPRE_PLACAS" Role="AFM_IMPRE_PLACAS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFM_IMPRE_PLACAS">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AFR_VALOR_ACTIV_AFM_MAEST_ACTIV">
+    <End Type="BostonModel.AFM_MAEST_ACTIV" Role="AFM_MAEST_ACTIV" Multiplicity="1" />
+    <End Type="BostonModel.AFR_VALOR_ACTIV" Role="AFR_VALOR_ACTIV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFM_MAEST_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
+      </Principal>
+      <Dependent Role="AFR_VALOR_ACTIV">
+        <PropertyRef Name="COD_COMPANIA" />
+        <PropertyRef Name="NUM_ACTIVO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

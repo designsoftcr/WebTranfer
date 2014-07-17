@@ -13,3 +13,7 @@ D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\bin\Debug\Entidades.pdb
 D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Debug\Entidades.dll
 D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Debug\Entidades.pdb
 D:\PROGRAMI\C#\Jafett\WebAssetsTransfer\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\bin\Debug\Entidades.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\bin\Debug\Entidades.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Debug\Entidades.dll
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Debug\Entidades.pdb

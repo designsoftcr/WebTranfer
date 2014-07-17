@@ -36,6 +36,26 @@ namespace BLL
         {
             var movimientos =
                 from c in this.db.AFT_MOV_BITACORA
+                join d in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on c.ID_MOVIMIENTO equals d.ID_MOVIMIENTO
+                //join tm in this.db.AFT_MOV_TIPOS_MOVIMIENTOS on d.ID_TIPO_MOVIMIENTO equals tm.ID_TIPO_MOVIMIENTO
+                where c.ID_MOVIMIENTO == id_movimiento
+                select new
+                {
+                    ID_MOVIMIENTO = c.ID_MOVIMIENTO,
+                    ID_CODIGO_COMPANIA = c.COD_COMPANIA,
+                    DESCRIPCION = c.DESCRIPCION,
+                    FECHA = c.FECHA,
+                    PASO_APROVACION_ACTUAL = c.PASO_APROBACION,
+                    USUARIO = c.USUARIO,
+                    //DESCRIPCION_TIPO_MOVIMIENTO = c.DESCRIPCION_TIPO_MOVIMIENTO,
+                    //TIPO_MOVIMIENTO = tm.DESCRIPCION_TIPO_MOVIMIENTO,
+                    DESCRIPCION_TIPO_MOVIMIENTO = c.DESCRIPCION_TIPO_MOVIMIENTO,
+                    ESTADO = d.ESTADO
+                };
+            return movimientos.AsDataTable();
+
+            /*var movimientos =
+                from c in this.db.AFT_MOV_BITACORA
                 where c.ID_MOVIMIENTO == id_movimiento
                 select new
                 {
@@ -47,7 +67,7 @@ namespace BLL
                     USUARIO = c.USUARIO,
                     DESCRIPCION_TIPO_MOVIMIENTO = c.DESCRIPCION_TIPO_MOVIMIENTO
                 };
-            return movimientos.AsDataTable();
+            return movimientos.AsDataTable();*/
         }
 
         //add by GPE 04.24.2014
@@ -63,9 +83,8 @@ namespace BLL
         //add by GPE 18.09.2013
         public DataTable cargar_bitacora_filtro(string usuario, int id_movimiento, string cod_centro_costo, string cod_solicitante, string fetcha, string tipo_movimiento)
         {
-            
-           
-                var allList = from c in this.db.AFT_MOV_BITACORA
+
+            var allList = from c in this.db.AFT_MOV_BITACORA
                           join d in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
                           on c.ID_MOVIMIENTO equals d.ID_MOVIMIENTO
                           select new
@@ -110,7 +129,8 @@ namespace BLL
                     FECHA = r.BITACORA.FECHA,
                     PASO_APROVACION_ACTUAL = r.BITACORA.PASO_APROBACION,
                     USUARIO = r.BITACORA.USUARIO,
-                    DESCRIPCION_TIPO_MOVIMIENTO = r.BITACORA.DESCRIPCION_TIPO_MOVIMIENTO
+                    DESCRIPCION_TIPO_MOVIMIENTO = r.BITACORA.DESCRIPCION_TIPO_MOVIMIENTO,
+                    ESTADO = r.MOVIMIENTOS.ESTADO
                 };
             return movimientos.AsDataTable();
         }
@@ -118,7 +138,9 @@ namespace BLL
         public DataTable cargar_bitacora_por_usuario(int id_movimiento, string usuario)
         {
             var movimientos =
-                from c in this.db.AFT_MOV_BITACORA
+                from c in this.db.AFT_MOV_BITACORA 
+                join d in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
+                on c.ID_MOVIMIENTO equals d.ID_MOVIMIENTO
                 where c.ID_MOVIMIENTO == id_movimiento && c.USUARIO == usuario
                 select new
                 {
@@ -128,7 +150,8 @@ namespace BLL
                     FECHA = c.FECHA,
                     PASO_APROVACION_ACTUAL = c.PASO_APROBACION,
                     USUARIO = c.USUARIO,
-                    DESCRIPCION_TIPO_MOVIMIENTO = c.DESCRIPCION_TIPO_MOVIMIENTO
+                    DESCRIPCION_TIPO_MOVIMIENTO = c.DESCRIPCION_TIPO_MOVIMIENTO,
+                    ESTADO = d.ESTADO
                 };
             return movimientos.AsDataTable();
         }
