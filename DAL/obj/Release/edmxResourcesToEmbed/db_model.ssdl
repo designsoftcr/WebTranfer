@@ -7170,30 +7170,30 @@
   </EntityType>
   <EntityType Name="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO">
     <Key>
-      <PropertyRef Name="COD_COMPANIA" />
-      <PropertyRef Name="ID_MOVIMIENTO" />
-      <PropertyRef Name="NUM_ACTIVO" />
+      <PropertyRef Name="ID_DETALLE" />
     </Key>
+    <Property Name="ID_DETALLE" Type="int" Nullable="false" />
     <Property Name="COD_COMPANIA" Type="char" Nullable="false" MaxLength="5" />
     <Property Name="ID_MOVIMIENTO" Type="int" Nullable="false" />
-    <Property Name="NUM_ACTIVO" Type="char" Nullable="false" MaxLength="15" />
+    <Property Name="NUM_ACTIVO" Type="char" Nullable="true" MaxLength="15" />
     <Property Name="PLACA" Type="nchar" MaxLength="30" />
     <Property Name="DESCRIPCION" Type="nchar" MaxLength="150" />
     <Property Name="SERIE" Type="nchar" MaxLength="30" />
     <Property Name="VALOR_LIBROS" Type="numeric" Precision="20" Scale="10" />
     <Property Name="COD_MARCA" Type="nchar" MaxLength="5" />
-    <Property Name="MARCA" Type="nchar" Nullable="false" MaxLength="40" />
+    <Property Name="MARCA" Type="nchar" Nullable="true" MaxLength="40" />
     <Property Name="COD_MODELO" Type="nchar" MaxLength="5" />
-    <Property Name="MODELO" Type="nchar" Nullable="false" MaxLength="40" />
+    <Property Name="MODELO" Type="nchar" Nullable="true" MaxLength="40" />
     <Property Name="COD_LOC_ACT" Type="nchar" MaxLength="10" />
-    <Property Name="LOCALIZACION" Type="nchar" Nullable="false" MaxLength="40" />
+    <Property Name="LOCALIZACION" Type="nchar" Nullable="true" MaxLength="40" />
     <Property Name="COD_SEC_LOC" Type="nchar" MaxLength="10" />
-    <Property Name="SECCION" Type="nchar" Nullable="false" MaxLength="40" />
+    <Property Name="SECCION" Type="nchar" Nullable="true" MaxLength="40" />
     <Property Name="COD_UBI_ACT" Type="nchar" MaxLength="10" />
-    <Property Name="UBICACION" Type="nchar" Nullable="false" MaxLength="40" />
+    <Property Name="UBICACION" Type="nchar" Nullable="true" MaxLength="40" />
     <Property Name="COD_CEN_CST" Type="nchar" MaxLength="15" />
-    <Property Name="CENTRO_COSTO" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="CENTRO_COSTO" Type="nchar" Nullable="true" MaxLength="50" />
     <Property Name="RESPONSABLE_CC" Type="nchar" MaxLength="10" />
+    <Property Name="DESECHO_ELECTRONICO" Type="bit" />
   </EntityType>
   <EntityType Name="AFT_MOV_GRUPO_USUARIOS">
     <Key>
@@ -7239,6 +7239,7 @@
     <Property Name="ID_PASO_APROBACION_ACTUAL" Type="int" Nullable="false" />
     <Property Name="DETALLE_DESTINO_MOVIMIENTO" Type="xml" Nullable="false" />
     <Property Name="ACTA" Type="varchar" MaxLength="25" />
+    <Property Name="POSEE_PLACAS" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="AFT_MOV_MOVIMIENTOS_APROBACIONES">
     <Key>

@@ -22,8 +22,8 @@ namespace WebAssetsTransfer
                 //Page.ResolveClientUrl("~/Pages/WATMovimiento.rdlc");  //"Pages\\WATMovimiento.rdlc";
 
             //ReportViewer1.LocalReport.DataSources =
-           if (!Page.IsPostBack)
-           {
+          //if (!Page.IsPostBack)
+          // {
                if (base.Request.QueryString["id"] != null && !string.IsNullOrEmpty(base.Request.QueryString["id"]))
                {
                    id_movimiento = int.Parse(base.Request.QueryString["id"]);
@@ -46,7 +46,7 @@ namespace WebAssetsTransfer
                 {
                     tipo_movimiento = base.Request.QueryString["tipo_movimiento"];
                 }             
-           }
+           //}
         }
 
         protected void ObjectDataSource1_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)

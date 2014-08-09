@@ -29,6 +29,11 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
     <!-- GPE 1/22/2014 IE Problems -->
     <%--<script type="text/javascript" src="../Scripts/usuarios_por_grupo.js"></script>--%>
     <script type="text/javascript" src="<%= Page.ResolveClientUrl("~/Scripts/usuarios_por_grupo.js") %>"></script>
+<style type="text/css">
+    .txt_detalle {
+        width: 128px;
+    }
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="topfall" style="padding-top:40px;"></div>
@@ -60,7 +65,7 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
                 <td class="td_encabezado_col1">
                     <asp:Label ID="lbl_compania" runat="server" Text="Compañía"></asp:Label></td>
                 <td class="td_encabezado_txt">
-                    <asp:TextBox ID="tb_compania" runat="server" CssClass="txt_detalle"></asp:TextBox>
+                    <asp:TextBox ID="tb_compania" value="2380" runat="server" CssClass="txt_detalle"></asp:TextBox>
                 </td>
             </tr>
             <tr>
@@ -69,6 +74,7 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
                 </td>
                 <td class="td_encabezado_col2">
                      <asp:TextBox ID="tb_code_grupo" runat="server" CssClass="txt_filtro_input"></asp:TextBox>  
+                    <asp:TextBox ID="tb_code_grupo_old" runat="server" style="display:none;"></asp:TextBox> 
                      &nbsp;&nbsp;   
                      <asp:TextBox ID="tb_grupo" runat="server" CssClass="txt_detalle"></asp:TextBox>                 
                     <input id="btn_select_grupo" runat="server" class="button_buscar" onclick="javascript:filtro('grupo_upgde','txt_cod_centro_costo','txt_des_centro_costo', 'txt_responsable');"
@@ -80,7 +86,8 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
                     <asp:Label ID="lblPropCompania" runat="server" Text="Compañía Propietaria"></asp:Label>
                 </td>
                 <td class="td_encabezado_col2">
-                     <asp:TextBox ID="tb_propcompania" runat="server" CssClass="txt_filtro_input"></asp:TextBox>  
+                     <asp:TextBox ID="tb_propcompania" runat="server" CssClass="txt_filtro_input"></asp:TextBox> 
+                    <asp:TextBox ID="tb_cod_cia_pro_old" runat="server" style="display:none;"></asp:TextBox> 
                 </td>
             </tr>
             <tr>
@@ -89,10 +96,11 @@ CodeBehind="wbfrm_usuarios_por_grupo_de_acceso.aspx.cs" Inherits=" Modulo_Boston
                 </td>
                 <td class="td_encabezado_col2">
                     <asp:TextBox ID="tb_empeado_code" runat="server" CssClass="txt_filtro_input"></asp:TextBox>   
+                    <asp:TextBox ID="tb_codigo_empleado_old" runat="server" style="display:none;"></asp:TextBox>
                      &nbsp;&nbsp;   
                      <asp:TextBox ID="tb_empleado" runat="server" CssClass="txt_detalle"></asp:TextBox>                 
                     <input id="btn_select_empleado" runat="server" 
-                       class="button_buscar" onclick="javascript:filtro('empleado_upgde','txt_cod_centro_costo','txt_des_centro_costo', 'txt_responsable');"
+                       class="button_buscar" onclick="javascript: filtro('empleado_upgde', 'txt_cod_centro_costo', 'txt_des_centro_costo', 'tb_id_usuario');"
                         type="button" value="" /></td>
             </tr>
              <tr>

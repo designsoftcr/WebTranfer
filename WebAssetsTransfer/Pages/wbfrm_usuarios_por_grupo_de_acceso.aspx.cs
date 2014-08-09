@@ -78,7 +78,7 @@ namespace Modulo_Boston.Pages
                     if (rb_estado.SelectedValue == "activado")
                         estado = true;
 
-                     bool transaction = new cls_usuarios_por_grupo_de_acceso().update_cusuarios_por_grupo_de_acceso(this.tb_empeado_code.Text, Convert.ToInt32(this.tb_code_grupo.Text), this.tb_compania.Text, this.tb_id_usuario.Text, estado, this.tb_propcompania.Text);
+                    bool transaction = new cls_usuarios_por_grupo_de_acceso().update_cusuarios_por_grupo_de_acceso(this.tb_codigo_empleado_old.Text, this.tb_empeado_code.Text, this.tb_cod_cia_pro_old.Text, Convert.ToInt32(this.tb_code_grupo_old.Text), Convert.ToInt32(this.tb_code_grupo.Text), this.tb_compania.Text, this.tb_id_usuario.Text, estado, this.tb_propcompania.Text);
                      if (transaction)
                          this.crear_mensajes("success", "Los cambios se actualizaron correctamente!");
                      else

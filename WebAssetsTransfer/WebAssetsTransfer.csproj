@@ -95,6 +95,7 @@
     <Content Include="fancybox\source\jquery.fancybox.css" />
     <Content Include="fancybox\source\jquery.fancybox.js" />
     <Content Include="fancybox\source\jquery.fancybox.pack.js" />
+    <Content Include="Images\add.png" />
     <Content Include="Images\addrow.png" />
     <Content Include="Images\add_new.png" />
     <Content Include="Images\back_g.jpg" />
@@ -104,6 +105,7 @@
     <Content Include="Images\bg_content_right_mail.jpg" />
     <Content Include="Images\bg_header.png" />
     <Content Include="Images\bg_header_mail.jpg" />
+    <Content Include="Images\bg_header_mail_2.jpg" />
     <Content Include="Images\boston.jpg" />
     <Content Include="Images\BSH Activos Fijos Encabezado 9.jpg" />
     <Content Include="Images\btn_back.png" />
@@ -127,6 +129,7 @@
     <Content Include="Images\icons\usersadd.png" />
     <Content Include="Images\imobile130x50png.png" />
     <Content Include="Images\info.png" />
+    <Content Include="Images\info_1.png" />
     <Content Include="Images\line_up_mail.jpg" />
     <Content Include="Images\Logo BSH Activos Fijos.png" />
     <Content Include="Images\logo font sistemas-original.jpg" />
@@ -136,20 +139,29 @@
     <Content Include="Images\Logo_BostonS.png" />
     <Content Include="Images\logo_imobile_powered.jpg" />
     <Content Include="Images\new_bg_header_mail.jpg" />
+    <Content Include="Images\new_page.png" />
+    <Content Include="Images\notebook.png" />
     <Content Include="Images\old_bg_content_mail.jpg" />
     <Content Include="Images\old_bg_content_right_mail.jpg" />
     <Content Include="Images\old_bg_header_mail.jpg" />
+    <Content Include="Images\old_clock.png" />
+    <Content Include="Images\page.png" />
+    <Content Include="Images\print_1.png" />
     <Content Include="Images\print_report.png" />
     <Content Include="Images\search.png" />
+    <Content Include="Images\search_1.png" />
     <Content Include="Images\select.png" />
     <Content Include="Images\select_item.png" />
     <Content Include="Images\success.png" />
     <Content Include="Images\user.png" />
+    <Content Include="Images\users.png" />
+    <Content Include="Images\user_1.png" />
     <Content Include="Images\validation.png" />
     <Content Include="Images\warning.png" />
     <Content Include="Pages\ExportReportMovimiento.aspx" />
     <Content Include="Pages\ExportReportImprimir.aspx" />
     <Content Include="Pages\PrintReport.aspx" />
+    <Content Include="Pages\wbfrm_bitacora_detalle.aspx" />
     <Content Include="Pages\wbfrm_grupos_de_acceso.aspx" />
     <Content Include="Pages\wbfrm_bitacora.aspx" />
     <Content Include="Pages\wbfrm_traslado_activo.aspx" />
@@ -1300,6 +1312,8 @@
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.18.custom.min.js" />
     <Content Include="Scripts\usuarios_por_grupo.js" />
+    <Content Include="Styles\bootstrap.css" />
+    <Content Include="Styles\estilo_impresion.css" />
     <Content Include="Styles\layout.css" />
     <Content Include="Styles\login.css" />
     <Content Include="Styles\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1319,8 +1333,10 @@
     <Content Include="Styles\style.css" />
     <Content Include="Templates\MailCancelacion.htm" />
     <Content Include="Templates\Mail.htm" />
+    <Content Include="Templates\Report_old.htm" />
     <Content Include="Templates\Report.htm" />
     <Content Include="Templates\OldMail.htm" />
+    <Content Include="Templates\Shipping_old.htm" />
     <Content Include="Templates\Shipping.htm" />
     <Content Include="wbfrm_login.aspx" />
     <Content Include="Web.config">
@@ -1373,6 +1389,13 @@
     </Compile>
     <Compile Include="Pages\PrintReport.aspx.designer.cs">
       <DependentUpon>PrintReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\wbfrm_bitacora_detalle.aspx.cs">
+      <DependentUpon>wbfrm_bitacora_detalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\wbfrm_bitacora_detalle.aspx.designer.cs">
+      <DependentUpon>wbfrm_bitacora_detalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\wbfrm_grupos_de_acceso.aspx.cs">
       <DependentUpon>wbfrm_grupos_de_acceso.aspx</DependentUpon>
@@ -1513,7 +1536,12 @@
     <Content Include="Pages\WATImprimir.rdlc" />
     <Content Include="Pages\WAT.rdlc" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="fancybox\bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\WATDestruccion.rdlc" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

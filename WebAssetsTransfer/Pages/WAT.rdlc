@@ -512,7 +512,7 @@
         <Value>bg_header_mail</Value>
         <Sizing>Fit</Sizing>
         <Height>1.06944in</Height>
-        <Width>6.31167in</Width>
+        <Width>7.1971in</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -561,7 +561,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Historico de Movimientos :</Value>
+                <Value>Historico de Aprobaciones:</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -593,7 +593,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Lista de Activos :</Value>
+                <Value>Detalle de Activos :</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -622,60 +622,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.89045in</Width>
-            </TablixColumn>
-            <TablixColumn>
               <Width>1.51035in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.16458in</Width>
+              <Width>1.55in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95134in</Width>
+              <Width>1.19059in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.66646in</Width>
+              <Width>2.04685in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
               <Height>0.18229in</Height>
               <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox24">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Descripción</Value>
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox24</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox23">
@@ -790,7 +752,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Descripcion Tipo de Movimiento</Value>
+                              <Value>Observación</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -821,40 +783,6 @@
             <TablixRow>
               <Height>0.16146in</Height>
               <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="DESCRIPCION">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!DESCRIPCION.Value</Value>
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>DESCRIPCION</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="FECHA">
@@ -959,14 +887,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="DESCRIPCION_TIPO_MOVIMIENTO">
+                    <Textbox Name="DESCRIPCION1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DESCRIPCION_TIPO_MOVIMIENTO.Value</Value>
+                              <Value>=Fields!DESCRIPCION.Value</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                               </Style>
@@ -977,7 +905,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>DESCRIPCION_TIPO_MOVIMIENTO</rd:DefaultName>
+                      <rd:DefaultName>DESCRIPCION1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1001,7 +929,6 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -1018,7 +945,7 @@
         <Top>4.72096in</Top>
         <Left>0.01389in</Left>
         <Height>0.34375in</Height>
-        <Width>6.18318in</Width>
+        <Width>6.29779in</Width>
         <ZIndex>20</ZIndex>
         <Style>
           <Border>
@@ -1031,13 +958,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.34618in</Width>
+              <Width>0.5in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.7587in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.20036in</Width>
+              <Width>1.75in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.95959in</Width>
@@ -1046,7 +973,7 @@
               <Width>0.8277in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.36051in</Width>
+              <Width>0.75in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.74405in</Width>
@@ -1297,7 +1224,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.17187in</Height>
+              <Height>0.15625in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1606,7 +1533,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox45">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -1772,8 +1698,8 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet3</DataSetName>
         <Top>6.11007in</Top>
-        <Height>0.52083in</Height>
-        <Width>6.19709in</Width>
+        <Height>0.50521in</Height>
+        <Width>6.29004in</Width>
         <ZIndex>21</ZIndex>
         <Style>
           <Border>
@@ -1786,7 +1712,7 @@
     <Height>8.18541in</Height>
     <Style />
   </Body>
-  <Width>6.31168in</Width>
+  <Width>7.1971in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

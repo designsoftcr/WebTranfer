@@ -33,7 +33,8 @@ input[type=text]
 .txt_filtro_input
 {
     width:90px;
-    margin-top:6px;
+    /*margin-top:6px;*/
+    /*margin-bottom:2px;*/
 }
 .txt_filtro_input_not_enable
 {
@@ -42,13 +43,13 @@ input[type=text]
 }
 .txt_detalle_area_destino
 {
-    width:350px;
+    width:200px;
     
 }
 .txt_detalle
 {
-    width:245px;
-    margin-bottom:2px;
+    width:200px;
+    /*margin-bottom:2px;*/
 }
 
 .textbox_fecha {
@@ -269,7 +270,7 @@ p
     margin-top: 0px;
 }
 /****************Botones*************/
-.button_filtrar, .button_buscar, .button_bitacora
+.button_filtrar, .button_buscar/*, .button_bitacora*/
 {
     margin-top:0px;
     padding-top:0px;
@@ -417,16 +418,29 @@ border:none;
 {
     background-color:#1F497D;
     color:White;
-    font-size:15px;
-    height:20px;    
+    font-size:9pt;/*15px;
+    height:20px;    */
+}
+
+.HeaderStyleGrid :disabled
+{
+    text-decoration:none;
+    background-color:#1F497D;
+    color:White;
+    font-size:9pt;/*15px;
+    height:20px;    */
 }
 
 .HeaderStyleGrid th
 {
-    padding-top: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+    /*padding-top: 10px;
     padding-left: 10px;
     padding-bottom: 10px;
-    padding-right: 31px; 
+    padding-right: 31px; */
     /*border-right: solid 1px #CBE6A6;  */
 }
 
@@ -455,7 +469,7 @@ border:none;
 {
     color:#1F497D;    
     border:none;
-    padding:2px 5px 2px 5px; 
+    padding:2px 5px 2px 5px; AlternatingRowStyleGrid
     text-decoration:none;    
 } 
 
@@ -485,12 +499,14 @@ border:none;
 {
     background-color:#EDEDED;
     text-align:left;      
+    font-size:8pt;
 }
 
 .RowStyleGrid
 {
     text-align:left;
-    height:8px;          
+    font-size:8pt;
+    /*height:8px;   */       
 }
 
 .RowStyleGrid td, .AlternatingRowStyleGrid td, .SelectedRowStyleGrid td
@@ -704,13 +720,18 @@ padding-<left|right>: <width of image>px;
     display:none;
     }
 
+.image-print {
+    width:35px;
+    height:35px;
+}
+
 .btnPrintClass {
 /* GPE 1/26/2014 IE Issues Fixing*/
 border:none;
 margin:0px;
-background: #FFFFFF url('../Images/print_report.png') no-repeat 0px 0px;
-min-width:26px;
-min-height:29px;
+background: #FFFFFF url('../Images/print_1.png') no-repeat 0px 0px;
+width:26px;
+height:29px;
 cursor:pointer;
 /*background-image: url('../Images/print_report.png');
 background-repeat: no-repeat;
@@ -722,9 +743,19 @@ height:29px;*/
 /* GPE 1/26/2014 IE Issues Fixing*/
 border:none;
 margin:0px;
-background: #FFFFFF url('../Images/export_report.png') no-repeat 0px 0px;
-min-width:26px;
-min-height:29px;
+background: #FFFFFF url('../Images/page.png') no-repeat 0px 0px;
+width:26px;
+height:29px;
+cursor:pointer;
+}
+
+.btnDetalleClass {
+/* GPE 1/26/2014 IE Issues Fixing*/
+border:none;
+margin:0px;
+background: url('../Images/notebook.png') no-repeat 0px 0px;
+width:26px;
+height:29px;
 cursor:pointer;
 }
 
@@ -745,4 +776,75 @@ height:23px;
 .force_overflow {
    overflow-x: scroll !important;
    overflow-y: scroll !important;
+}
+
+
+/* Menú lateral */
+
+#menu {
+	width: 100%;/*200px;*/
+	border-style: solid solid none solid;
+	border-color: #94AA74;
+	border-width: 1px;
+}
+
+    #menu ul {
+        list-style:none;
+    }
+
+
+.btn_funcion {
+    background-color:#5D7B9D;/*#1F497D;*/
+    width:160px;
+    height:30px;
+    color:#fff;
+    font-size:9pt;
+    line-height:1.25;
+    text-align:left;
+    font-weight:bold;
+    border:1px solid white;
+    padding:0px;
+    margin:0px;
+    text-align:center;
+}
+
+.btn_nuevo {
+    background:url(../images/new_page.png) no-repeat;
+    background-color:#5D7B9D;
+}
+
+.btn_aprobadores {
+    background:url(../images/user_1.png) no-repeat;
+    background-color:#5D7B9D;
+}
+
+.btn_grupos {
+    background:url(../images/users.png) no-repeat;
+    background-color:#5D7B9D;
+}
+
+.btn_pendientes {
+    background:url(../images/old_clock.png) no-repeat;
+    background-color:#5D7B9D;
+}
+
+.btn_movimientos {
+    background:url(../images/info_1.png) no-repeat;
+    background-color:#5D7B9D;
+}
+
+
+
+    .btn_funcion:hover {
+        cursor:pointer;
+    background-color:#1F497D;
+    }
+
+.lbl_entrada {
+    width:300px;
+}
+
+
+.td1 {
+    width:125px;
 }

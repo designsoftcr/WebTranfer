@@ -119,6 +119,7 @@ namespace WebAssetsTransfer.Pages
 
                 this.gv_datos.Columns.Add(new WebAssetsTransfer.Functions.cls_funciones().CreaBoundField("COD_EMPLEADO", "Code Empleado", true));
                 this.gv_datos.Columns.Add(new WebAssetsTransfer.Functions.cls_funciones().CreaBoundField("NOM_EMPLEADO", "Nombre Empleado", true));
+                this.gv_datos.Columns.Add(new WebAssetsTransfer.Functions.cls_funciones().CreaBoundField("NOMBRE_USUARIO", "Usuario Empleado", true));
             }
 
             if (tipo_busqueda == "propcompania_upgde")
@@ -219,8 +220,24 @@ namespace WebAssetsTransfer.Pages
                     {
                         descripcion = "todo";
                     }
+
+                    int lCodigo = 0;
+                    if (string.IsNullOrEmpty(descripcion))
+                    {
+                        descripcion = "todo";
+                    }
+
+                    try
+                    {
+                        lCodigo = int.Parse(codigo);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Console.WriteLine(e);
+                    }
+
                     cls_popup groupos = new cls_popup();
-                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso_id_grupo(descripcion);
+                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso_id_grupo(lCodigo, descripcion);
                     this.gv_datos.DataSource = dt;
                     this.gv_datos.DataBind();
                 }
@@ -232,7 +249,7 @@ namespace WebAssetsTransfer.Pages
                         descripcion = "todo";
                     }
                     cls_popup groupos = new cls_popup();
-                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso_empleado(descripcion);
+                    System.Data.DataTable dt = groupos.cargar_usuarios_por_grupo_de_acceso_empleado(codigo,descripcion);
                     this.gv_datos.DataSource = dt;
                     this.gv_datos.DataBind();
                 }
@@ -378,6 +395,7 @@ namespace WebAssetsTransfer.Pages
                 this.crear_mensajes("error", ex.ToString());
             }
         }
+
         protected void gv_datos_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             this.Session["CODIGO"] = this.gv_datos.Rows[System.Convert.ToInt32(this.gv_datos.SelectedIndex)].Cells[1].Text.ToString();
@@ -408,6 +426,12 @@ namespace WebAssetsTransfer.Pages
                 this.Session["COD_PROP_COMPANIA"] = this.gv_datos.Rows[System.Convert.ToInt32(this.gv_datos.SelectedIndex)].Cells[3].Text.ToString();
             }
 
+            if (this.Session["TIPO_BUSQUEDA"].ToString().Equals("empleado_upgde"))
+            {
+                this.Session["NOMBRE_USUARIO"] = this.gv_datos.Rows[System.Convert.ToInt32(this.gv_datos.SelectedIndex)].Cells[3].Text.ToString();
+            }
+
+            this.btn_aceptar_Click(sender, e);
 
         }
         protected void btn_realizar_filtrado_Click(object sender, System.EventArgs e)
@@ -440,7 +464,6 @@ namespace WebAssetsTransfer.Pages
                 string codigo = this.Session["CODIGO"].ToString();
                 string id_control_descripcion = this.Session["ID_CONTROL_DESCRIPCION"].ToString();
                 string id_control_codigo = this.Session["ID_CONTROL_CODIGO"].ToString();
-
 
                 if (this.Session["TIPO_BUSQUEDA"].ToString().Equals("solicitante") || this.Session["TIPO_BUSQUEDA"].ToString().Equals("responsable"))
                 {
@@ -560,12 +583,15 @@ namespace WebAssetsTransfer.Pages
 
                if (this.Session["TIPO_BUSQUEDA"].ToString().Equals("empleado_upgde"))
                {
+                   string nombre_usuario = this.Session["NOMBRE_USUARIO"].ToString();
                    string empleado = string.Concat(new string[]
 					{
 						"parent.cargar_empleado('",					
 						codigo,
 						"','",
 						descripcion,
+                        "','",
+						nombre_usuario,
 						"');"
 					});
                    ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "registerevent", empleado, true);

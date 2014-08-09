@@ -4,6 +4,8 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Transactions;
+using System.Xml.XPath;
+
 namespace BLL
 {
     public class cls_traslado
@@ -29,7 +31,8 @@ namespace BLL
                     ID_PASO_APROBACION_ACTUAL = c.ID_PASO_APROBACION_ACTUAL,
                     ID_TIPO_MOVIMIENTO = c.ID_TIPO_MOVIMIENTO,
                     COD_COMPANIA = c.COD_COMPANIA,
-                    ACTA = c.ACTA
+                    ACTA = c.ACTA,
+                    POSEE_PLACAS = c.POSEE_PLACAS
                 };
             return datos.AsDataTable();
         }
@@ -64,10 +67,66 @@ namespace BLL
                     DES_MARCA = c.MARCA,
                     NOM_MODELO = c.MODELO,
                     SER_ACTIVO = d.SER_ACTIVO,
-                    VAL_LIBROS = c.VALOR_LIBROS
+                    VAL_LIBROS = c.VALOR_LIBROS,
+                    DESECHO = c.DESECHO_ELECTRONICO
                 };
             return activos.AsDataTable();
         }
+
+        public DataTable cargar_activos_grid_sin_placa(string codigo_compania, int id_movimiento)
+        {
+            var activos =
+                from c in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO
+                where c.COD_COMPANIA == codigo_compania && c.ID_MOVIMIENTO == id_movimiento
+                select new
+                {
+                    DES_ACTIVO = c.DESCRIPCION,
+                    DES_MARCA = c.MARCA,
+                    NOM_MODELO = c.MODELO,
+                    SER_ACTIVO = c.SERIE,
+                    VAL_LIBROS = c.VALOR_LIBROS,
+                    DESECHO = c.DESECHO_ELECTRONICO
+                };
+            return activos.AsDataTable();
+        }
+
+        public DataTable cargar_activos_grid(string codigo_compania, int id_movimiento, bool estado)
+        {
+            var activos =
+                from c in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO
+                from d in this.db.AFM_MAEST_ACTIV
+                where c.PLACA == d.PLA_ACTIVO && c.COD_COMPANIA == codigo_compania && c.ID_MOVIMIENTO == id_movimiento && c.DESECHO_ELECTRONICO == true
+                select new
+                {
+                    PLA_ACTIVO = c.PLACA,
+                    REF_NUM_ACT = d.REF_NUM_ACT,
+                    DES_ACTIVO = c.DESCRIPCION,
+                    DES_MARCA = c.MARCA,
+                    NOM_MODELO = c.MODELO,
+                    SER_ACTIVO = d.SER_ACTIVO,
+                    VAL_LIBROS = c.VALOR_LIBROS,
+                    DESECHO = c.DESECHO_ELECTRONICO
+                };
+            return activos.AsDataTable();
+        }
+
+        public DataTable cargar_activos_grid_sin_placa(string codigo_compania, int id_movimiento, bool estado)
+        {
+            var activos =
+                from c in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO
+                where c.COD_COMPANIA == codigo_compania && c.ID_MOVIMIENTO == id_movimiento && c.DESECHO_ELECTRONICO == true
+                select new
+                {
+                    DES_ACTIVO = c.DESCRIPCION,
+                    DES_MARCA = c.MARCA,
+                    NOM_MODELO = c.MODELO,
+                    SER_ACTIVO = c.SERIE,
+                    VAL_LIBROS = c.VALOR_LIBROS,
+                    DESECHO = c.DESECHO_ELECTRONICO
+                };
+            return activos.AsDataTable();
+        }
+
         public DataTable cargar_detalle_destino_movimiento(string codigo_compania, int id_movimiento)
         {
             var activos =
@@ -199,7 +258,24 @@ namespace BLL
 
         public bool comprobarDisponibilidadActivo(string placa_activo, string centro_costo = "")
         {
-            var activos =
+            var movimientos =
+                    from c in this.db.AFM_MAEST_ACTIV
+                    join d in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO on c.NUM_ACTIVO equals d.NUM_ACTIVO
+                    join e in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on d.ID_MOVIMIENTO equals e.ID_MOVIMIENTO
+                    where
+                    c.PLA_ACTIVO == placa_activo && (e.ESTADO != "A" && e.ESTADO != "C")
+                    select new
+                    {
+                        PLA_ACTIVO = c.PLA_ACTIVO
+                    };
+            
+            if (movimientos.AsDataTable().Rows.Count > 0)
+            {
+                return false;
+            }
+            else 
+            {
+                var activos =
                     from c in this.db.AFM_MAEST_ACTIV
                     join d in this.db.AFM_MARCA_ACTIV on c.COD_MARCA equals d.COD_MARCA
                     join e in this.db.AFM_MODEL_ACTIV on c.COD_MARCA equals e.COD_MARCA
@@ -219,23 +295,7 @@ namespace BLL
                         CENTRO_COSTO = c.COD_CEN_CST,
                         COD_CIA_PRO = c.COD_CIA_PRO
                     };
-            if (activos.AsDataTable().Rows.Count > 0)
-            {
-                return false;
-            }
-            else 
-            {
-                var movimientos =
-                    from c in this.db.AFM_MAEST_ACTIV
-                    join d in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO on c.NUM_ACTIVO equals d.NUM_ACTIVO
-                    join e in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on d.ID_MOVIMIENTO equals e.ID_MOVIMIENTO
-                    where
-                    c.PLA_ACTIVO == placa_activo && e.ESTADO != "A"
-                    select new
-                    {
-                        PLA_ACTIVO = c.PLA_ACTIVO
-                    };
-                return movimientos.AsDataTable().Rows.Count == 0;
+                return activos.AsDataTable().Rows.Count > 0;
             }
         }
 
@@ -251,6 +311,20 @@ namespace BLL
                 };
             return empleado.AsDataTable();
         }
+
+        public DataTable cargar_empleado_session(string session_usuario)
+        {
+            var empleado =
+                from c in this.db.AFM_CATAL_EMPLE
+                where c.USUARIO_SESION == session_usuario
+                select new
+                {
+                    COD_EMPLEADO = c.COD_EMPLEADO,
+                    NOMBRE_EMPLEADO = c.NOM_EMPLEADO
+                };
+            return empleado.AsDataTable();
+        }
+
         public DataTable cargar_empleados()
         {
             var empleados =
@@ -274,6 +348,18 @@ namespace BLL
                     COD_CIA_PRO = c.COD_CIA_PRO
                 };
             return centro_costo.AsDataTable();
+        }
+
+        public DataTable cargar_cod_responsable_centro_costo(string cod_centro_costo)
+        {
+            var responsables =
+                from c in this.db.AFM_CENTRO_COSTO
+                where c.COD_CEN_CST == cod_centro_costo
+                select new
+                {
+                    COD_RESPONSABLE = c.COD_EMPLEADO,
+                };
+            return responsables.AsDataTable();
         }
 
         public DataTable cargar_centro_costo(string cod_centro_costo, string strCod_Cia_Pro, string strMovementType)
@@ -398,6 +484,20 @@ namespace BLL
                 };
             return tipo_movimiento.AsDataTable();
         }
+
+        public DataTable cargar_tipo_movimiento(int id_tipo_movimiento)
+        {
+            var tipo_movimiento =
+                from c in this.db.AFT_MOV_TIPOS_MOVIMIENTOS
+                where c.ID_TIPO_MOVIMIENTO == id_tipo_movimiento
+                select new
+                {
+                    CODIGO_TIPO_MOVIMIENTO = c.ID_TIPO_MOVIMIENTO,
+                    DESCRIPCION_TIPO_MOVIMIENTO = c.DESCRIPCION_TIPO_MOVIMIENTO
+                };
+            return tipo_movimiento.AsDataTable();
+        }
+
         public string codigo_localizacion(string codigo_centro_costo)
         {
             var localizacion =
@@ -463,7 +563,7 @@ namespace BLL
                 where c.COD_COMPANIA == codigo_compania && c.ID_MOVIMIENTO == id_movimiento
                 select new
                 {
-                    UBICACION_ACTUAL = c.LOCALIZACION + c.SECCION + c.UBICACION
+                    UBICACION_ACTUAL = "Localizacion: "+c.LOCALIZACION + " Sección: </b>" + c.SECCION + " Ubicación: " + c.UBICACION
                 };
             string result;
             if (ubicacion_actual.Count() > 0)
@@ -476,6 +576,21 @@ namespace BLL
             }
             return result;
         }
+
+        public DataTable cargar_ubicacion_actual(int id_movimiento)
+        {
+            var ubicacion_actual =
+                from c in this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO
+                where c.ID_MOVIMIENTO == id_movimiento
+                select new
+                {
+                    LOCALIZACION = c.LOCALIZACION,
+                    SECCION = c.SECCION,
+                    UBICACION = c.UBICACION
+                };
+                return ubicacion_actual.AsDataTable();
+        }
+
         public decimal valor_libros(string codigo_compania, int id_movimiento)
         {
             int count = (
@@ -520,6 +635,26 @@ namespace BLL
             }
             return result;
         }
+
+        public DataTable cargar_correos_grupo(int id_grupo, string cd_cen_cst) {
+            var grupo =
+                from ce in this.db.AFM_CATAL_EMPLE
+                join gu in this.db.AFT_MOV_GRUPO_USUARIOS on ce.COD_EMPLEADO equals gu.ID_EMPLEADO 
+                join ga in this.db.AFT_MOV_GRUPOS_ACCESOS on gu.ID_GRUPO equals ga.ID_GRUPO
+                join cc in this.db.AFM_CENTRO_COSTO on ga.COD_CIA_PRO equals cc.COD_CIA_PRO
+                where 
+                gu.ID_GRUPO == id_grupo && 
+                cc.COD_CEN_CST == cd_cen_cst &&
+                ga.COD_CIA_PRO == cc.COD_CIA_PRO && 
+                gu.COD_CIA_PRO == cc.COD_CIA_PRO &&
+                gu.ESTADO == true
+                select new
+                {
+                    ce.DIR_ELECTR
+                };
+            return grupo.AsDataTable();
+        }
+
         public int id_tipo_movimiento(int id_movimiento, string codigo_compania)
         {
             var grupo =
@@ -592,6 +727,7 @@ namespace BLL
                     maestro_movimiento.ESTADO = entidad.estado;
                     maestro_movimiento.ID_PASO_APROBACION_ACTUAL = entidad.codigo_paso_aprobacion_actual;
                     maestro_movimiento.DETALLE_DESTINO_MOVIMIENTO = entidad.detalle_destino_movimiento.ToString();
+                    maestro_movimiento.POSEE_PLACAS = true;
                     this.db.AddToAFT_MOV_MAESTRO_MOVIMIENTOS(maestro_movimiento);
                     this.db.SaveChanges();
                     id_movimiento = this.db.AFT_MOV_MAESTRO_MOVIMIENTOS.Max((AFT_MOV_MAESTRO_MOVIMIENTOS c) => (int)c.ID_MOVIMIENTO);
@@ -606,6 +742,7 @@ namespace BLL
                             AFT_MOV_MAESTRO_MOVIMIENTOS maestro_mov = new AFT_MOV_MAESTRO_MOVIMIENTOS();
                             maestro_mov = this.db.AFT_MOV_MAESTRO_MOVIMIENTOS.First((AFT_MOV_MAESTRO_MOVIMIENTOS m) => m.ID_MOVIMIENTO == id_movimiento);
                             detalle_movimiento.AFT_MOV_MAESTRO_MOVIMIENTOS = maestro_mov;
+                            detalle_movimiento.ID_DETALLE = (this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO.Max((AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO c) => (int?)c.ID_DETALLE + (int?)1) ?? 1);
                             detalle_movimiento.COD_COMPANIA = entidad.codigo_compania;
                             detalle_movimiento.NUM_ACTIVO = activo.Rows[0]["NUM_ACTIVO"].ToString();
                             detalle_movimiento.PLACA = activo.Rows[0]["PLA_ACTIVO"].ToString();
@@ -632,9 +769,95 @@ namespace BLL
                             detalle_movimiento.COD_CEN_CST = activo.Rows[0]["COD_CEN_CST"].ToString();
                             detalle_movimiento.CENTRO_COSTO = activo.Rows[0]["DES_CEN_CST"].ToString();
                             detalle_movimiento.RESPONSABLE_CC = activo.Rows[0]["COD_EMPLEADO"].ToString();
+                           
+                                detalle_movimiento.DESECHO_ELECTRONICO = Convert.ToBoolean(activosSolicitados.Rows[i]["DESECHO"].ToString());
+                            
                             this.db.AddToAFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO(detalle_movimiento);
                             this.db.SaveChanges();
                         }
+                    }
+                    transaction.Complete();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                id_movimiento2 = id_movimiento;
+            }
+            return id_movimiento2;
+        }
+
+        public int ingresar_traslado_sin_placa(ent_traslado entidad)
+        {
+            int id_movimiento2;
+            using (TransactionScope transaction = new TransactionScope())
+            {
+                int id_movimiento = -1;
+                try
+                {
+                    AFT_MOV_MAESTRO_MOVIMIENTOS maestro_movimiento = new AFT_MOV_MAESTRO_MOVIMIENTOS();
+                    id_movimiento = (this.db.AFT_MOV_MAESTRO_MOVIMIENTOS.Max((AFT_MOV_MAESTRO_MOVIMIENTOS c) => (int?)c.ID_MOVIMIENTO + (int?)1) ?? 1);
+                    maestro_movimiento.ID_MOVIMIENTO = id_movimiento;
+                    maestro_movimiento.COD_COMPANIA = entidad.codigo_compania;
+                    maestro_movimiento.CENTRO_COSTO = entidad.centro_costo;
+                    maestro_movimiento.ID_EMPLEADO = entidad.codigo_empleado;
+                    maestro_movimiento.FECHA_MOVIMIENTO = entidad.fecha_movimiento;
+                    maestro_movimiento.DESCRIPCION_CENTRO_COSTOS = entidad.descripcion_centro_costo;
+                    maestro_movimiento.EMPLEADO_RESPONSABLE_CC = entidad.empleado_responsable_cc;
+                    maestro_movimiento.ID_TIPO_MOVIMIENTO = entidad.codigo_tipo_movimiento;
+                    maestro_movimiento.ESTADO = entidad.estado;
+                    maestro_movimiento.ID_PASO_APROBACION_ACTUAL = entidad.codigo_paso_aprobacion_actual;
+                    maestro_movimiento.DETALLE_DESTINO_MOVIMIENTO = entidad.detalle_destino_movimiento.ToString();
+                    maestro_movimiento.POSEE_PLACAS = false;
+                    this.db.AddToAFT_MOV_MAESTRO_MOVIMIENTOS(maestro_movimiento);
+                    this.db.SaveChanges();
+                    id_movimiento = this.db.AFT_MOV_MAESTRO_MOVIMIENTOS.Max((AFT_MOV_MAESTRO_MOVIMIENTOS c) => (int)c.ID_MOVIMIENTO);
+                    string cod_responsable_cc = "";
+                    DataTable centro_costo = new cls_traslado().cargar_cod_responsable_centro_costo(maestro_movimiento.CENTRO_COSTO);
+                    if (centro_costo.Rows.Count > 0)
+                    {
+                        cod_responsable_cc = centro_costo.Rows[0]["COD_RESPONSABLE"].ToString();
+                    }
+                    DataTable activosSolicitados = entidad.activo_solicitado;
+                    for (int i = 0; i < activosSolicitados.Rows.Count - 1; i++)
+                    {
+                        AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO detalle_movimiento = new AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO();
+                        /*AFT_MOV_MAESTRO_MOVIMIENTOS maestro_mov = new AFT_MOV_MAESTRO_MOVIMIENTOS();
+                        maestro_mov = this.db.AFT_MOV_MAESTRO_MOVIMIENTOS.First((AFT_MOV_MAESTRO_MOVIMIENTOS m) => m.ID_MOVIMIENTO == id_movimiento);*/
+                        detalle_movimiento.ID_DETALLE = (this.db.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO.Max((AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO c) => (int?)c.ID_DETALLE + (int?)1) ?? 1);
+                        detalle_movimiento.ID_MOVIMIENTO = maestro_movimiento.ID_MOVIMIENTO;//maestro_mov.ID_MOVIMIENTO;
+                        detalle_movimiento.AFT_MOV_MAESTRO_MOVIMIENTOS = maestro_movimiento;//maestro_mov;
+                            detalle_movimiento.COD_COMPANIA = entidad.codigo_compania;
+                            detalle_movimiento.DESCRIPCION = activosSolicitados.Rows[i]["DES_ACTIVO"].ToString();
+                            detalle_movimiento.SERIE = activosSolicitados.Rows[i]["SER_ACTIVO"].ToString();
+                            detalle_movimiento.NUM_ACTIVO = "No posee";
+                            detalle_movimiento.PLACA = "";
+                            if (!string.IsNullOrEmpty(activosSolicitados.Rows[i]["VAL_LIBROS"].ToString()))
+                            {
+                                detalle_movimiento.VALOR_LIBROS = new decimal?(Convert.ToDecimal(activosSolicitados.Rows[i]["VAL_LIBROS"]));
+                            }
+                            else
+                            {
+                                detalle_movimiento.VALOR_LIBROS = new decimal?(0m);
+                            }
+                            detalle_movimiento.COD_MARCA = "";
+                            detalle_movimiento.MARCA = activosSolicitados.Rows[i]["DES_MARCA"].ToString();
+                            detalle_movimiento.COD_MODELO = "";
+                            detalle_movimiento.MODELO = activosSolicitados.Rows[i]["NOM_MODELO"].ToString();
+                            detalle_movimiento.COD_LOC_ACT = "";
+                            detalle_movimiento.LOCALIZACION = "N/D";
+                            detalle_movimiento.COD_SEC_LOC = "";
+                            detalle_movimiento.SECCION = "N/D";
+                            detalle_movimiento.COD_UBI_ACT = "";
+                            detalle_movimiento.UBICACION = "N/D";
+                            detalle_movimiento.COD_CEN_CST = maestro_movimiento.CENTRO_COSTO;//maestro_mov.CENTRO_COSTO;
+                            detalle_movimiento.CENTRO_COSTO = maestro_movimiento.DESCRIPCION_CENTRO_COSTOS;//maestro_mov.DESCRIPCION_CENTRO_COSTOS;
+                            detalle_movimiento.RESPONSABLE_CC = cod_responsable_cc;
+
+                            detalle_movimiento.DESECHO_ELECTRONICO = Convert.ToBoolean(activosSolicitados.Rows[i]["DESECHO"].ToString());
+
+                            this.db.AddToAFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO(detalle_movimiento);
+                            this.db.SaveChanges();
                     }
                     transaction.Complete();
                 }
@@ -653,6 +876,19 @@ namespace BLL
                 from cc in this.db.AFM_CENTRO_COSTO
                 join ce in this.db.AFM_CATAL_EMPLE on cc.COD_EMPLEADO equals ce.COD_EMPLEADO
                 join mv in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS on cc.COD_CEN_CST equals mv.CENTRO_COSTO
+                where ce.USUARIO_SESION == cod_empleado && cc.COD_CEN_CST == cod_centro_costo
+                select new
+                {
+                    COD_EMPLEADO = cc.COD_EMPLEADO
+                };
+            return responsable.AsDataTable();
+        }
+
+        public DataTable obtener_responsable_destino(string cod_empleado, string cod_centro_costo)
+        {
+            var responsable =
+                from cc in this.db.AFM_CENTRO_COSTO
+                join ce in this.db.AFM_CATAL_EMPLE on cc.COD_EMPLEADO equals ce.COD_EMPLEADO
                 where ce.USUARIO_SESION == cod_empleado && cc.COD_CEN_CST == cod_centro_costo
                 select new
                 {
@@ -775,6 +1011,26 @@ namespace BLL
                 select c;
             return usuarios.Count<AFT_MOV_GRUPO_USUARIOS>() > 0;
         }
+
+        public bool grupo_usuario(string usuario)
+        {
+            IQueryable<AFT_MOV_GRUPO_USUARIOS> usuarios =
+                from c in this.db.AFT_MOV_GRUPO_USUARIOS
+                where c.USUARIO == usuario && c.ESTADO == (bool?)true
+                select c;
+            return usuarios.Count<AFT_MOV_GRUPO_USUARIOS>() > 0;
+        }
+        public bool usuario_centro_costo(string usuario)
+        {
+            IQueryable<AFM_CENTRO_COSTO> usuarios =
+                from c in this.db.AFM_CENTRO_COSTO
+                join d in this.db.AFM_CATAL_EMPLE 
+                on c.COD_EMPLEADO equals d.COD_EMPLEADO
+                where d.USUARIO_SESION == usuario
+                select c;
+            return usuarios.Count<AFM_CENTRO_COSTO>() > 0;
+        }
+
         public DataTable cargar_informacion_movimiento(int id_movimiento, string id_compania)
         {
             var informacion =
@@ -800,31 +1056,46 @@ namespace BLL
                     int aprobacion_actual = mov_maestro_movimientos.ID_PASO_APROBACION_ACTUAL + 1;
                     if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 1 && aprobacion_actual == 3)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E"; //"A";
                     }
                     if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 2 && aprobacion_actual == 2)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E"; //"A";
                     }
                     if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 3 && aprobacion_actual == 2)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E"; //"A";
                     }
                     if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 4 && aprobacion_actual == 2)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E";//"A";
                     }
                     if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 5 && aprobacion_actual == 3)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E";//"A";
+                    }
+                    if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 5 && aprobacion_actual == 1)
+                    {
+                        string cadena = mov_maestro_movimientos.DETALLE_DESTINO_MOVIMIENTO;
+                        string xmlcadena = "<Datos>" + cadena + "</Datos>";
+                        System.Xml.Linq.XElement xmldoc = System.Xml.Linq.XElement.Parse(xmlcadena);
+
+                        System.Xml.Linq.XElement xml_movimiento_activo = (
+                                                                from item in xmldoc.XPathSelectElements("./MovimientoActivo")
+                                                                select item).FirstOrDefault<System.Xml.Linq.XElement>();
+                        string txt_codigo_centro_costo_destino = System.Convert.ToString(xml_movimiento_activo.Element("CentroCostoDestino").Value);
+                        if (mov_maestro_movimientos.CENTRO_COSTO.Trim() == txt_codigo_centro_costo_destino.Trim()) 
+                        {
+                            aprobacion_actual += 1;
+                        }
                     }
                     if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 6 && aprobacion_actual == 2)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E";//"A";
                     }
-                    if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 7 && aprobacion_actual == 4)
+                    if (mov_maestro_movimientos.ID_TIPO_MOVIMIENTO == 7 && aprobacion_actual == 3)
                     {
-                        mov_maestro_movimientos.ESTADO = "A";
+                        mov_maestro_movimientos.ESTADO = "E";//"A";
                     }
                     mov_maestro_movimientos.ID_PASO_APROBACION_ACTUAL = aprobacion_actual;
                     this.db.SaveChanges();
@@ -922,6 +1193,22 @@ namespace BLL
                 }
             }
             return result;
+        }
+
+        public DataTable cargar_bitacora_observaciones(int id_movimento)
+        {
+
+
+            var emple =
+               from c in this.db.AFT_MOV_BITACORA
+               where c.ID_MOVIMIENTO == id_movimento
+               select new
+               {
+                   Aprobador = c.USUARIO,
+                   Observación = c.DESCRIPCION
+               };
+
+            return emple.AsDataTable();
         }
     }
 }

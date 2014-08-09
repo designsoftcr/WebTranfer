@@ -36,6 +36,11 @@ function filtro(filtro, id_control_codigo, id_control_descripcion, id_responsabl
 function cargar_usuarios_por_grupo_de_acceso(cod_compania, code_grupo, grupo, code_empleado, empleado, id_usuario, estado, codpropcompania) {
     $.fancybox.close();
 
+    $("[id*=tb_cod_cia_pro_old]").val(codpropcompania);
+    $("[id*=tb_code_grupo_old]").val(code_grupo);
+    $("[id*=tb_codigo_empleado_old]").val(code_empleado);
+
+    $("[id*=tb_code_grupo]").val(code_grupo);
     $("[id*=tb_compania]").val(cod_compania);
     $("[id*=tb_code_grupo]").val(code_grupo);
     $("[id*=tb_grupo]").val(grupo);
@@ -62,8 +67,8 @@ function cargar_usuarios_por_grupo_de_acceso(cod_compania, code_grupo, grupo, co
 
 function EnableControls() {
     if (CheckPopulateControls() == "True" && $("[id*=status_control]").val() != "Create") {
-        $("[id*=tb_compania]").prop('readOnly', false);
-        $("[id*=tb_id_usuario]").prop('readOnly', false);
+        $("[id*=tb_compania]").prop('readOnly', true);
+        $("[id*=tb_id_usuario]").prop('readOnly', true);
 
         $("[id*=btn_select_empleado]").removeAttr('disabled');
         $("[id*=btn_select_grupo]").removeAttr('disabled');
@@ -134,15 +139,16 @@ $(':radio').click(function () {
 function CreateNew() {
     $("[id*=tb_grupo]").val("");
     $("[id*=tb_code_grupo]").val("");
-    $("[id*=tb_compania]").val("");
+    $("[id*=tb_compania]").val("2380");
     $("[id*=tb_id_usuario]").val("");
     $("[id*=tb_empeado_code]").val("");
     $("[id*=tb_empleado]").val("");
    // $("[id*=empleado_code_old]").val("");
     $("[id*=tb_propcompania]").val("");
 
-    $("[id*=tb_compania]").prop('readOnly', false);
-    $("[id*=tb_id_usuario]").prop('readOnly', false);
+    $("[id*=tb_compania]").prop('readOnly', true);
+    $("[id*=tb_empeado_code]").prop('readOnly', false);
+    $("[id*=tb_code_grupo]").prop('readOnly', false);
     $("[id*=btn_select_empleado]").removeAttr('disabled');
     $("[id*=btn_select_grupo]").removeAttr('disabled');
 
@@ -161,8 +167,9 @@ function cargar_grupo(id_grupo, grupo, propcompania) {
     $("[id*=tb_propcompania]").val(propcompania);
 }
 
-function cargar_empleado(id_empleado, empleado) {
+function cargar_empleado(id_empleado, empleado, usuario) {
     $.fancybox.close();
     $("[id*=tb_empeado_code]").val(id_empleado);
     $("[id*=tb_empleado]").val(empleado);
+    $("[id*=tb_id_usuario]").val(usuario);
 }

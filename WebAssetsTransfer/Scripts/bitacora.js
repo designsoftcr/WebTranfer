@@ -13,10 +13,17 @@ $(document).ready(function () {
         return false;
     });
     $('[id*="txt_cod_solicitante"]').blur(function () {
-        $("[id*='btn_cargar_responsable']").click();
-        //alert("Se salió del contro de solicitante");
+        $("[id*='btn_cargar_solicitante']").click();
         return false;
     });
+});
+
+$(document).keypress(function (e) {
+    var keyCode = (window.event) ? e.which : e.keyCode;
+    if (keyCode && keyCode == 13) {
+        e.preventDefault();
+        return false;
+    }
 });
 
 function DisableControls() {
@@ -64,7 +71,6 @@ function centro_costo_key_press(event) {
 
 function solicitante_key_press(event) {
     if (event.keyCode == 13) {
-        //alert("Presionó ENTER");
         $("[id*='btn_cargar_solicitante']").click();
         return false; // 
     }
@@ -160,4 +166,16 @@ function ImprimirReportePrint() {
     docprint.document.close();
     docprint.print();
     docprint.close();
+}
+
+function bitacora_popup(valor) {
+    //Funcion para abrir el iframe en el pop up de fancybox para mostar y buscar la bitacora
+    $.fancybox.open({
+        href: 'wbfrm_bitacora_detalle.aspx?id=' + valor,
+        type: 'iframe',
+        //margin: [15, 20, 15, 20], // Increase left/right
+        //padding: 5,
+        //Add BY GPE 3/7/2013 point.3 doc. After my visit
+        width: "100%"//1000
+    });
 }

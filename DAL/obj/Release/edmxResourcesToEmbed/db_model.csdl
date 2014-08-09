@@ -4670,30 +4670,30 @@
   </EntityType>
   <EntityType Name="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO">
     <Key>
-      <PropertyRef Name="COD_COMPANIA" />
-      <PropertyRef Name="ID_MOVIMIENTO" />
-      <PropertyRef Name="NUM_ACTIVO" />
+      <PropertyRef Name="ID_DETALLE" />
     </Key>
+    <Property Name="ID_DETALLE" Type="Int32" Nullable="false" />
     <Property Name="COD_COMPANIA" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
     <Property Name="ID_MOVIMIENTO" Type="Int32" Nullable="false" />
-    <Property Name="NUM_ACTIVO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="true" />
+    <Property Name="NUM_ACTIVO" Type="String" Nullable="true" MaxLength="15" Unicode="false" FixedLength="true" />
     <Property Name="PLACA" Type="String" MaxLength="30" Unicode="true" FixedLength="true" />
     <Property Name="DESCRIPCION" Type="String" MaxLength="150" Unicode="true" FixedLength="true" />
     <Property Name="SERIE" Type="String" MaxLength="30" Unicode="true" FixedLength="true" />
     <Property Name="VALOR_LIBROS" Type="Decimal" Precision="20" Scale="10" />
     <Property Name="COD_MARCA" Type="String" MaxLength="5" Unicode="true" FixedLength="true" />
-    <Property Name="MARCA" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
+    <Property Name="MARCA" Type="String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="true" />
     <Property Name="COD_MODELO" Type="String" MaxLength="5" Unicode="true" FixedLength="true" />
-    <Property Name="MODELO" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
+    <Property Name="MODELO" Type="String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="true" />
     <Property Name="COD_LOC_ACT" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-    <Property Name="LOCALIZACION" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
+    <Property Name="LOCALIZACION" Type="String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="true" />
     <Property Name="COD_SEC_LOC" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-    <Property Name="SECCION" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
+    <Property Name="SECCION" Type="String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="true" />
     <Property Name="COD_UBI_ACT" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-    <Property Name="UBICACION" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
+    <Property Name="UBICACION" Type="String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="true" />
     <Property Name="COD_CEN_CST" Type="String" MaxLength="15" Unicode="true" FixedLength="true" />
-    <Property Name="CENTRO_COSTO" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+    <Property Name="CENTRO_COSTO" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="true" />
     <Property Name="RESPONSABLE_CC" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="DESECHO_ELECTRONICO" Type="Boolean" />
     <NavigationProperty Name="AFT_MOV_MAESTRO_MOVIMIENTOS" Relationship="BostonModel.FK_AssetsWEB_MOV_DETALLE_ACTIVOS_MOVIMIENTO_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS" FromRole="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" ToRole="AFT_MOV_MAESTRO_MOVIMIENTOS" />
   </EntityType>
   <EntityType Name="AFT_MOV_GRUPO_USUARIOS">
@@ -4729,6 +4729,7 @@
     <Property Name="ID_PASO_APROBACION_ACTUAL" Type="Int32" Nullable="false" />
     <Property Name="DETALLE_DESTINO_MOVIMIENTO" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="ACTA" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <Property Name="POSEE_PLACAS" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="AFM_CATAL_EMPLE" Relationship="BostonModel.FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AFM_CATAL_EMPLE" FromRole="AFT_MOV_MAESTRO_MOVIMIENTOS" ToRole="AFM_CATAL_EMPLE" />
     <NavigationProperty Name="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" Relationship="BostonModel.FK_AssetsWEB_MOV_DETALLE_ACTIVOS_MOVIMIENTO_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS" FromRole="AFT_MOV_MAESTRO_MOVIMIENTOS" ToRole="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO" />
     <NavigationProperty Name="AFT_MOV_TIPOS_MOVIMIENTOS" Relationship="BostonModel.FK_AssetsWEB_MOV_MAESTRO_MOVIMIENTOS_AssetsWEB_MOV_TIPOS_MOVIMIENTOS" FromRole="AFT_MOV_MAESTRO_MOVIMIENTOS" ToRole="AFT_MOV_TIPOS_MOVIMIENTOS" />

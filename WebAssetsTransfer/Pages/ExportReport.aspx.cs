@@ -14,10 +14,11 @@ namespace WebAssetsTransfer
         {
             ReportViewer1.LocalReport.ReportPath = "Pages\\WAT.rdlc";
                 //Page.ResolveClientUrl("~/Pages/WAT.rdlc"); //"Pages\\WAT.rdlc";
-           if (!Page.IsPostBack)
-           {
+           /*if (!Page.IsPostBack)
+           {*/
+            if (base.Request.QueryString["id"] != null)
                id = Convert.ToInt32(base.Request.QueryString["id"]);
-           }
+           //}
         }
 
         protected void ObjectDataSource1_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)

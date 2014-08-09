@@ -3,6 +3,7 @@ using CapaLog;
 using Entidades;
 using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.UI;
@@ -21,7 +22,7 @@ namespace Modulo_Boston.Pages
         #region ""VARIABLE DECLARATION"
 
         protected HtmlGenericControl div_mensaje;
-        protected ImageButton img_btn_nuevo;
+        protected Button img_btn_nuevo;
         protected ScriptManager ScriptManager1;
         protected Label lb_centro_costo;
         protected Button btn_cargar_centro_costo;
@@ -110,8 +111,8 @@ namespace Modulo_Boston.Pages
         protected HtmlGenericControl containt_grid;
         protected GridView gv_activos;
 
-        protected ImageButton btn_grupos_de_acceso;
-        protected ImageButton btn_usuarios_por_grupo_de_acceso;
+        protected Button btn_grupos_de_acceso;
+        protected Button btn_usuarios_por_grupo_de_acceso;
 
         //GPE 12/07/2013 WAT_Document new stuff # 14
         protected HtmlGenericControl div_observaciones_obligatory;
@@ -122,6 +123,9 @@ namespace Modulo_Boston.Pages
         {
             if (!base.IsPostBack)
             {
+                this.cargar_ddl_centro_costo();
+                this.btn_aplicar_solicitud_sin_placa.Visible = false;
+                this.Session["SolicitudEnviada"] = null;
                 if (this.Session["USUARIO"] == null)
                 {
                     base.Response.Redirect("../wbfrm_login.aspx");
@@ -136,12 +140,16 @@ namespace Modulo_Boston.Pages
                     //hizo el paso o no
                     if (this.estado_link(System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]), System.Convert.ToString(this.Session["USUARIO"])))
                     {
-                        this.gv_activos.Enabled = false;
+                        //this.gv_activos.Enabled = false;
+                        this.cargar_controles(base.Request.QueryString["codigo_compania"].ToString(), System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]));
+
                         this.estado_controles(this.Page, false);
                         this.estado_botones(false, true);
-                        this.cargar_controles(base.Request.QueryString["codigo_compania"].ToString(), System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]));
+                        
                         /*Se añadió la carga del solicitante aquí*/
                         cargarSolicitante();
+                        habilitarObservaciones(System.Convert.ToInt32(base.Request.QueryString["id_movimiento"]));
+
                     }
                     else
                     {
@@ -152,6 +160,7 @@ namespace Modulo_Boston.Pages
                         this.crear_mensajes("info", "Vinculo ya utilizado, revise el Historico");
                         this.cargarSolicitante();
                     }
+                    estadoGrid();
                 }
                 else
                 {
@@ -163,17 +172,28 @@ namespace Modulo_Boston.Pages
 
                     /*Se añadió aqui la carga*/
                     cargarSolicitante();
+                    estadoGrid();
 
                 }
-                if (new cls_traslado().grupo_usuario(2, this.Session["CODIGO_COMPANIA"].ToString(), this.Session["USUARIO"].ToString()))
+                this.btnSolicitudePendientes.Visible = false;
+                if (
+                    new cls_traslado().grupo_usuario(2, this.Session["CODIGO_COMPANIA"].ToString(), this.Session["USUARIO"].ToString())
+                    || new cls_usuarios_por_grupo_de_acceso().select_usuario_por_grupo_de_acceso(6, this.Session["USUARIO"].ToString()).Rows.Count > 0) //this.Session["USUARIO"].ToString()))
                 {
                     this.btn_abrir_movimiento_maestro.Visible = true;
                 }
-
+                if(new cls_traslado().grupo_usuario(this.Session["USUARIO"].ToString())){
+                    this.btnSolicitudePendientes.Visible = true;
+                }
+                if (new cls_traslado().usuario_centro_costo(this.Session["USUARIO"].ToString()))
+                {
+                    this.btnSolicitudePendientes.Visible = true;
+                }
                 if (new cls_traslado().is_admin(this.Session["USUARIO"].ToString()))
                 {
                     this.btn_grupos_de_acceso.Visible = true;
                     this.btn_usuarios_por_grupo_de_acceso.Visible = true;
+                    this.btnSolicitudePendientes.Visible = true;
                 }
             }
             if (!string.IsNullOrEmpty(this.txt_cod_centro_costo.Text))
@@ -212,20 +232,30 @@ namespace Modulo_Boston.Pages
                     /*Aqui iba el codigo de carga del usuario*/
                 }
 
-                TextBox tb = GetPostBackControlId(base.Page);
-                if (tb != null)
-                {
-                    if (!string.IsNullOrEmpty(tb.Text))
-                        try
-                        {
-                            consultar_activo(Convert.ToInt32(tb.AccessKey));
-                        }
-                        catch (Exception ex)
-                        {
-                            this.crear_mensajes("error", ex.ToString());
-                        }
-                }
+                
             }
+            TextBox tb = GetPostBackControlId(base.Page);
+            if (tb != null)
+            {
+                if (!string.IsNullOrEmpty(tb.Text))
+                    try
+                    {
+                        //if (this.gv_activos.Rows.Count > 0)
+                        //{
+                        //string placa = ((TextBox)this.gv_activos.Rows[Convert.ToInt32(tb.AccessKey)].FindControl("txt_entrada_placa")).Text;
+                        // if (placa.Trim() != tb.Text.Trim())
+                        consultar_activo(Convert.ToInt32(tb.AccessKey));
+                        /*}
+                        else {
+                            consultar_activo(Convert.ToInt32(tb.AccessKey));
+                        }*/
+                    }
+                    catch (Exception ex)
+                    {
+                        this.crear_mensajes("error", ex.ToString());
+                    }
+            }
+
         }
 
         private void cargarSolicitante() 
@@ -273,34 +303,55 @@ namespace Modulo_Boston.Pages
             bool resultado = false;
             int id_grupo = 0;
             string centro_costo = "nulo";
+            string centro_costo_destino = "";
             int tipo_movimiento = 0;
+            int paso_aprobacion_actual = 0;
 
             cls_movimiento_maestro movimientos = new cls_movimiento_maestro();
             DataTable dtMovimientos = movimientos.cargar_movimientos_maestro(id_movimiento);
 
             if (dtMovimientos.Rows.Count > 0) {
                 tipo_movimiento = (int)dtMovimientos.Rows[0][2];
-                int paso_aprobacion_actual = (int)dtMovimientos.Rows[0][1];
+                paso_aprobacion_actual = (int)dtMovimientos.Rows[0][1];
                 centro_costo = (string)dtMovimientos.Rows[0][3];
                 id_grupo = obtenerIdGrupo(tipo_movimiento, paso_aprobacion_actual);
+
+                if(tipo_movimiento == 5 || tipo_movimiento == 7){
+                    string cadena = (string)dtMovimientos.Rows[0][4];
+                string xmlcadena = "<Datos>" + cadena + "</Datos>";
+                System.Xml.Linq.XElement xmldoc = System.Xml.Linq.XElement.Parse(xmlcadena);
+
+                System.Xml.Linq.XElement xml_movimiento_activo = (
+                                                        from item in xmldoc.XPathSelectElements("./MovimientoActivo")
+                                                        select item).FirstOrDefault<System.Xml.Linq.XElement>();
+                centro_costo_destino = System.Convert.ToString(xml_movimiento_activo.Element("CentroCostoDestino").Value);
+            }
             }
 
             if (id_grupo == 0) 
             {
-                //Falta una verificacion de si el usuario en el caso de ser calibración tiene los permisos para ejecutar el paso de movimiento
+                //Verifica que si es movimiento de calibracion solo el usuario de calibración puede aprobar
                 if (tipo_movimiento == 3) 
                 {
                     cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
-                    DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
-                    if (dt.Rows.Count > 0)
-                    {
+                    DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, centro_costo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                    //DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
                         return dt.Rows.Count > 0;
-                    }
                 }
 
 
-                //Verifica si es el dueño del centro de costo
                 cls_traslado centroCosto = new cls_traslado();
+                //Verificar si es el dueño de centro de costos de destino en caso de movimiento entre plantas sea interno o externo
+                if (tipo_movimiento == 5 || tipo_movimiento == 7)
+                {
+                    if (paso_aprobacion_actual == 1)
+                    {
+                        DataTable dtCentroCostoDestino = centroCosto.obtener_responsable_destino(this.Session["USUARIO"].ToString(), centro_costo_destino);
+                        return dtCentroCostoDestino.Rows.Count > 0;
+                    }
+                }
+
+                //Verifica si es el dueño del centro de costo
                 DataTable dtCentroCosto = centroCosto.obtener_responsable(this.Session["USUARIO"].ToString(),centro_costo);
                 return dtCentroCosto.Rows.Count > 0;
 
@@ -308,8 +359,16 @@ namespace Modulo_Boston.Pages
             else if (id_grupo > 0)
             {
                 cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
-                DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
-                return dt.Rows.Count > 0;
+                DataTable dt = null;
+                //if (tipo_movimiento == 7)
+                //{
+                    dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, centro_costo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                    return dt.Rows.Count > 0;
+                //}
+
+                //cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                //dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                //return dt.Rows.Count > 0;
             }
 
             return resultado;
@@ -443,7 +502,10 @@ namespace Modulo_Boston.Pages
                                     System.Xml.Linq.XElement xml_donacion = (
                                         from item in xmldoc.XPathSelectElements("./Donacion")
                                         select item).FirstOrDefault<System.Xml.Linq.XElement>();
-                                    this.txt_observaciones_donacion.Text = System.Convert.ToString(xml_donacion.Element("Observaciones").Value);
+                                    //this.txt_observaciones_donacion.Text = System.Convert.ToString(xml_donacion.Element("Observaciones").Value);
+                                    DataTable dt1 = datos.cargar_bitacora_observaciones(id_movimiento);
+                                    this.GridObservacionesDonacion.DataSource = dt1;
+                                    this.GridObservacionesDonacion.DataBind();
                                     break;
                                 }
                             case 2:
@@ -451,7 +513,10 @@ namespace Modulo_Boston.Pages
                                     System.Xml.Linq.XElement xml_destruccion = (
                                         from item in xmldoc.XPathSelectElements("./Destruccion")
                                         select item).FirstOrDefault<System.Xml.Linq.XElement>();
-                                    this.txt_observaciones_destruccion.Text = System.Convert.ToString(xml_destruccion.Element("Observaciones").Value);
+                                    //this.txt_observaciones_destruccion.Text = System.Convert.ToString(xml_destruccion.Element("Observaciones").Value);
+                                    DataTable dt1 = datos.cargar_bitacora_observaciones(id_movimiento);
+                                    this.GridObservacionesDestruccion.DataSource = dt1;
+                                    this.GridObservacionesDestruccion.DataBind();
                                     break;
                                 }
                             case 3:
@@ -465,7 +530,10 @@ namespace Modulo_Boston.Pages
                                     this.txt_fecha_aprox_reingreso.Text = System.Convert.ToString(xml_calibracion.Element("FechaAproximadaDeReingreso").Value);
                                     this.txt_nombre_contacto.Text = System.Convert.ToString(xml_calibracion.Element("NombreContacto").Value);
                                     this.txt_direccion_proveedor.Text = System.Convert.ToString(xml_calibracion.Element("DireccionProveedor").Value);
-                                    this.txt_observaciones_calibracion.Text = System.Convert.ToString(xml_calibracion.Element("Observaciones").Value);
+                                    //this.txt_observaciones_calibracion.Text = System.Convert.ToString(xml_calibracion.Element("Observaciones").Value);
+                                    DataTable dt1 = datos.cargar_bitacora_observaciones(id_movimiento);
+                                    this.GridObservacionesCalibracion.DataSource = dt1;
+                                    this.GridObservacionesCalibracion.DataBind();
                                     break;
                                 }
                             case 4:
@@ -492,9 +560,9 @@ namespace Modulo_Boston.Pages
                                     this.txt_cargo_responsable_costo_destino.Text = System.Convert.ToString(xml_movimiento_activo.Element("Responsable").Value);
                                     this.txt_cod_responsable_destino.Text = System.Convert.ToString(xml_movimiento_activo.Element("CodigoResponsableDestino").Value);
                                     this.txt_nombre_responsable_destino.Text = System.Convert.ToString(xml_movimiento_activo.Element("NombreCodigoResponsableDestino").Value);
-                                    this.txt_localizacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo.Element("Localizacion").Value);
-                                    this.txt_seccion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo.Element("Ubicacion").Value);
-                                    this.txt_ubicacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo.Element("Seccion").Value);
+                                    this.txt_localizacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo.Element("LocalizacionDescripcion").Value);
+                                    this.txt_seccion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo.Element("UbicacionDescripcion").Value);
+                                    this.txt_ubicacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo.Element("SeccionDescripcion").Value);
                                     break;
                                 }
                             case 6:
@@ -503,7 +571,10 @@ namespace Modulo_Boston.Pages
                                         from item in xmldoc.XPathSelectElements("./Denuncia")
                                         select item).FirstOrDefault<System.Xml.Linq.XElement>();
                                     this.txt_num_proceso.Text = System.Convert.ToString(xml_denuncia.Element("NumeroProceso").Value);
-                                    this.txt_observaciones_denuncia.Text = System.Convert.ToString(xml_denuncia.Element("Observaciones").Value);
+                                    //this.txt_observaciones_denuncia.Text = System.Convert.ToString(xml_denuncia.Element("Observaciones").Value);
+                                    DataTable dt1 = datos.cargar_bitacora_observaciones(id_movimiento);
+                                    this.GridObservacionesDenuncia.DataSource = dt1;
+                                    this.GridObservacionesDenuncia.DataBind();
                                     break;
                                 }
                             case 7:
@@ -516,14 +587,26 @@ namespace Modulo_Boston.Pages
                                     this.txt_cargo_responsable_costo_destino.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("Responsable").Value);
                                     this.txt_cod_responsable_destino.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("CodigoResponsableDestino").Value);
                                     this.txt_nombre_responsable_destino.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("NombreCodigoResponsableDestino").Value);
-                                    this.txt_localizacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("Localizacion").Value);
-                                    this.txt_seccion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("Ubicacion").Value);
-                                    this.txt_ubicacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("Seccion").Value);
+                                    this.txt_localizacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("LocalizacionDescripcion").Value);
+                                    this.txt_seccion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("UbicacionDescripcion").Value);
+                                    this.txt_ubicacion_solicitud.Text = System.Convert.ToString(xml_movimiento_activo_externo.Element("SeccionDescipcion").Value);
                                     break;
                                 }
                         }
-                        this.cargar_grid(codigo_compania, id_movimiento);
-                        this.ver_seccion(id_tipo_movimiento);
+                        if (Convert.ToBoolean(dt.Rows[0]["POSEE_PLACAS"].ToString()))
+                        {
+                            this.chkSinPlaca.Checked = false;
+                            this.cargar_grid(codigo_compania, id_movimiento);
+                        }
+                        else
+                        {
+                            this.gv_activos.Visible = false;
+                            this.gv_SinPlaca.Visible = true;
+                            this.gv_SinPlaca.Enabled = false;
+                            this.chkSinPlaca.Checked = true;
+                            this.cargar_grid_sin_placa(codigo_compania, id_movimiento);
+                        }
+                        this.ver_seccion(id_tipo_movimiento, "");
                     }
                     if (dt.Rows[0]["ESTADO"].ToString() == "A")
                     {
@@ -556,12 +639,40 @@ namespace Modulo_Boston.Pages
                 System.Data.DataTable dt = activos.cargar_activos_grid(codigo_compania, id_movimiento);
                 this.gv_activos.DataSource = dt;
                 this.gv_activos.DataBind();
+                marcarCheckBoxs(dt);
             }
             catch (System.Exception)
             {
                 throw;
             }
         }
+
+        protected void cargar_grid_sin_placa(string codigo_compania, int id_movimiento)
+        {
+            try
+            {
+                cls_traslado activos = new cls_traslado();
+                System.Data.DataTable dt = activos.cargar_activos_grid_sin_placa(codigo_compania, id_movimiento);
+                this.gv_SinPlaca.DataSource = dt;
+                this.gv_SinPlaca.DataBind();
+                marcarCheckBoxsSinPlaca(dt);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        private void estadoGrid(){
+            if (Int32.Parse(ddl_tipo_movimiento.SelectedValue) != 2)
+            {
+                gv_activos.Columns[2].Visible = false;
+            }
+            else {
+                gv_activos.Columns[2].Visible = true;
+            }
+        }
+
         protected void estado_botones(bool estado_aplicar, bool estado_acepta_cancelar)
         {
             this.btn_aceptar.Visible = estado_acepta_cancelar;
@@ -591,12 +702,16 @@ namespace Modulo_Boston.Pages
                 {
                     ((ImageButton)c).Enabled = estado;
                 }
+                if (c is CheckBox)
+                {
+                    ((CheckBox)c).Enabled = estado;
+                }
                 this.estado_controles(c, estado);
 
-                if (String.IsNullOrEmpty(txt_observaciones_solicitud.Text))
+                /*if (String.IsNullOrEmpty(txt_observaciones_solicitud.Text))
                     trObservaciones.Style.Add("display", "none");
                 else
-                    trObservaciones.Style.Add("display", "block");
+                    trObservaciones.Style.Add("display", "block");*/
             }
             //this.btn_buscar_centro_costo.Visible = estado;
             //commented by GPE 12.02.2013 new stuff # 10
@@ -620,6 +735,7 @@ namespace Modulo_Boston.Pages
                 this.lb_observaciones_solicitud.Visible = true;
                 this.txt_cod_centro_costo.CssClass = "txt_filtro_input_not_enable";
                 this.txt_cod_solicitante.CssClass = "txt_filtro_input_not_enable";
+                btn_abrir_bitacora.Visible = false;
             }
             else
             {
@@ -635,7 +751,11 @@ namespace Modulo_Boston.Pages
                 this.ddl_ubicacion_destino.Visible = true;
                 this.txt_observaciones_solicitud.Visible = false;
                 this.lb_observaciones_solicitud.Visible = false;
+                btn_abrir_bitacora.Visible = true;
+                btn_abrir_movimiento_maestro.Visible = false;
             }
+            btnSolicitudePendientes.Enabled = true;
+
             this.img_btn_nuevo.Enabled = true;
             //GPE 11/25/2013 Enable Logout Button after a request is approved
             ImageButton imgbtnLogoutMaster = (ImageButton)Master.FindControl("img_btn_salir");
@@ -690,7 +810,16 @@ namespace Modulo_Boston.Pages
                 case 5:
                     this.seccion_area_destino.Visible = true;
                     this.lb_fieldset_area_destino.Text = "Información de Área Destino de los Activos Fíjos Internos";
-                    PopulateCentroCostoDestino();
+                    if (string.IsNullOrEmpty(txt_cod_centro_costo.Text.Trim()))
+                    {
+                        this.deshabilitarControles();
+                    }
+                    else {
+                        this.habilitarControles();
+                        this.desHabilitarDDL();
+                    }
+                        this.LimpiarControles();
+                    //PopulateCentroCostoDestino();
                     break;
                 case 6:
                     this.seccion_denuncia.Visible = true;
@@ -698,7 +827,55 @@ namespace Modulo_Boston.Pages
                 case 7:
                     this.seccion_area_destino.Visible = true;
                     this.lb_fieldset_area_destino.Text = "Información de Área Destino de los Activos Fíjos Externos";
-                    LimpiarControles();
+                    if (string.IsNullOrEmpty(txt_cod_centro_costo.Text.Trim()))
+                    {
+                        this.deshabilitarControles();
+                    }
+                    else
+                    {
+                        this.habilitarControles();
+                        this.desHabilitarDDL();
+                    }
+                        LimpiarControles();
+                    break;
+            }
+            estadoGrid();
+        }
+        protected void ver_seccion(int id_tipo_movimiento, string validar = "")
+        {
+            switch (id_tipo_movimiento)
+            {
+                case 1:
+                    this.seccion_donacion.Visible = true;
+                    //GPE 12/07/2013 WAT_Document new stuff # 14
+                    this.check_observaciones_obligatory();
+                    break;
+                case 2:
+                    this.seccion_destruccion.Visible = true;
+                    break;
+                case 3:
+                    this.seccion_calibracion_activos.Visible = true;
+                    this.lb_fieldset_calibracion_mantenimiento.Text = "Solicitud de Calibración de Activos Fijos";
+                    break;
+                case 4:
+                    this.seccion_calibracion_activos.Visible = true;
+                    this.lb_fieldset_calibracion_mantenimiento.Text = "Solicitud de Mantenimiento de Activos Fijos";
+                    break;
+                case 5:
+                    this.seccion_area_destino.Visible = true;
+                    this.lb_fieldset_area_destino.Text = "Información de Área Destino de los Activos Fíjos Internos";
+                        this.deshabilitarControles();
+                        this.desHabilitarDDL();
+                    //PopulateCentroCostoDestino();
+                    break;
+                case 6:
+                    this.seccion_denuncia.Visible = true;
+                    break;
+                case 7:
+                    this.seccion_area_destino.Visible = true;
+                    this.lb_fieldset_area_destino.Text = "Información de Área Destino de los Activos Fíjos Externos";
+                        this.deshabilitarControles();
+                        this.desHabilitarDDL();
                     break;
             }
         }
@@ -710,6 +887,7 @@ namespace Modulo_Boston.Pages
             this.ver_seccion(codigo_tipo_movimiento);
             Session["SES_Movimenent_Type"] = this.ddl_tipo_movimiento.SelectedValue;
             EventClickSearchPlata();
+            reiniciar_controles();
         }
         private void EventClickSearchPlata() {
             try
@@ -749,9 +927,11 @@ namespace Modulo_Boston.Pages
                         {
                             this.Session["NOMBRE_CENTRO_COSTO"] = "No encontrado";
                         }
-                        string script = "$(\"[id*='txt_des_centro_costo']\").val('{0}');$(\"[id*='txt_responsable']\").val('{1}')";
+                        this.txt_des_centro_costo.Text = this.Session["NOMBRE_CENTRO_COSTO"].ToString();
+                        this.txt_responsable.Text = this.Session["RESPONSABLE"].ToString();
+                        /*string script = "$(\"[id*='txt_des_centro_costo']\").val('{0}');$(\"[id*='txt_responsable']\").val('{1}')";
                         script = string.Format(script, this.Session["NOMBRE_CENTRO_COSTO"].ToString(), this.Session["RESPONSABLE"].ToString());
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);
+                        ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);*/
                     }
                 }
                 else
@@ -781,9 +961,10 @@ namespace Modulo_Boston.Pages
                     {
                         this.Session["NOMBRE_EMPLEADO"] = "No encontrado";
                     }
-                    string script = "$(\"[id*='txt_nombre_solicitante']\").val('{0}');";
+                    this.txt_nombre_solicitante.Text = this.Session["NOMBRE_EMPLEADO"].ToString();
+                    /*string script = "$(\"[id*='txt_nombre_solicitante']\").val('{0}');";
                     script = string.Format(script, this.Session["NOMBRE_EMPLEADO"].ToString());
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);*/
                 }
                 else
                 {
@@ -805,6 +986,7 @@ namespace Modulo_Boston.Pages
                 {
                     cls_traslado centro_costo = new cls_traslado();
                     string strMovementType = Session["SES_Movimenent_Type"].ToString().Trim();
+                   
                     if (Session["SES_COD_CIA_PRO"] == null) {
                         Session["SES_COD_CIA_PRO"] = string.Empty;
                     }
@@ -828,6 +1010,7 @@ namespace Modulo_Boston.Pages
                         this.Session["RESPONSABLE"] =strResponsable;
                         //GPE 4/8/2014 WAT-04052014 Point 7
                         this.cargar_combo_localizacion(dt.Rows[0]["COD_CIA_PRO"].ToString());
+                        this.habilitarDDL();
                     }
                     else
                     {
@@ -835,19 +1018,28 @@ namespace Modulo_Boston.Pages
                         this.txt_nombre_centro_costo_destino.Text = "No corresponde a la planta!";
                         this.Session["NOMBRE_CENTRO_COSTO_DESTINO"] = "No encontrado";
                         //GPE 4/8/2014 WAT-04052014 Point 7
-                        this.LimpiarControles();
+                        this.desHabilitarDDL();
+                        //this.LimpiarControles();
                         //this.cargar_combo_localizacion();
                     }
-                    string script = "$(\"[id*='txt_nombre_centro_costo_destino']\").val('{0}');$(\"[id*='txt_cargo_responsable_costo_destino']\").val('{1}');";
-                    script = string.Format(script, this.Session["NOMBRE_CENTRO_COSTO_DESTINO"].ToString(), this.Session["RESPONSABLE"].ToString());
+                    this.txt_nombre_centro_costo_destino.Text = this.Session["NOMBRE_CENTRO_COSTO_DESTINO"].ToString();
+                    this.txt_cargo_responsable_costo_destino.Text = this.Session["RESPONSABLE"].ToString();
+                    /*string script = "$(\"[id*='txt_nombre_centro_costo_destino']\").val('{0}');$(\"[id*='txt_cargo_responsable_costo_destino']\").val('{1}');";
+                    script = string.Format(script, this.Session["NOMBRE_CENTRO_COSTO_DESTINO"].ToString(), this.Session["RESPONSABLE"].ToString());*/
+
+                    /*if (Session["NOMBRE_EMPLEADO_RESPONSABLE"] != null && !string.IsNullOrEmpty(this.txt_cod_responsable_destino.Text.Trim()))
+                        this.txt_nombre_responsable_destino.Text = Session["NOMBRE_EMPLEADO_RESPONSABLE"].ToString();*/
                     //DISABLE adding additional information if the centro costo not exist
                     //ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);
                 }
                 else
                 {
+                   /* if (Session["NOMBRE_EMPLEADO_RESPONSABLE"] != null && !string.IsNullOrEmpty(this.txt_cod_responsable_destino.Text.Trim()))
+                        this.txt_nombre_responsable_destino.Text = Session["NOMBRE_EMPLEADO_RESPONSABLE"].ToString();*/
+
                     this.txt_cargo_responsable_costo_destino.Text = string.Empty;
                     this.txt_nombre_centro_costo_destino.Text = string.Empty;
-                    this.crear_mensajes("validation", "El código de Centro de Costo de Destino es requerido");
+                    //this.crear_mensajes("validation", "El código de Centro de Costo de Destino es requerido");
                 }
             }
             catch (System.Exception ex)
@@ -871,14 +1063,15 @@ namespace Modulo_Boston.Pages
                     {
                         this.Session["NOMBRE_EMPLEADO_RESPONSABLE"] = "No encontrado";
                     }
-                    string script = "$(\"[id*='txt_nombre_responsable_destino']\").val('{0}');";
+                    this.txt_nombre_responsable_destino.Text = this.Session["NOMBRE_EMPLEADO_RESPONSABLE"].ToString();
+                    /*string script = "$(\"[id*='txt_nombre_responsable_destino']\").val('{0}');";
                     script = string.Format(script, this.Session["NOMBRE_EMPLEADO_RESPONSABLE"].ToString());
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);*/
                 }
                 else
                 {
                     this.txt_nombre_responsable_destino.Text = string.Empty;
-                    this.crear_mensajes("validation", "El código de Responsable Destino es requerido");
+                    //this.crear_mensajes("validation", "El código de Responsable Destino es requerido");
                 }
             }
             catch (System.Exception ex)
@@ -1052,7 +1245,7 @@ namespace Modulo_Boston.Pages
                 }
             }
         }
-        protected void img_btn_nuevo_Click(object sender, ImageClickEventArgs e)
+        protected void img_btn_nuevo_Click(object sender, System.EventArgs e)
         {
             Session["SES_COD_CIA_PRO"] = string.Empty;
             Session["SES_Movimenent_Type"] = string.Empty;
@@ -1065,37 +1258,66 @@ namespace Modulo_Boston.Pages
         {
             try
             {
-                //GPE 3/31/2014 prevent double press
-                btn_aplicar_solicitud.Enabled = false;
-
-                if (this.validar_datos(System.Convert.ToInt32(this.Session["TIPO_MOVIMIENTO"])))
+                if (this.Session["SolicitudEnviada"] == null)
                 {
-                    ent_traslado entidad = new ent_traslado();
-                    entidad = this.asignar_valores(entidad);
-                    int id_movimiento = new cls_traslado().ingresar_traslado(entidad);
-                    if (id_movimiento > 0)
+                    //GPE 3/31/2014 prevent double press
+                    btn_aplicar_solicitud.Enabled = false;
+
+                    System.Data.DataTable tablaActivos = this.Session["TABLA_ACTIVO"] as System.Data.DataTable;
+                    tablaActivos = guardarCheckBoxs(tablaActivos);
+                    this.Session["TABLA_ACTIVO"] = tablaActivos;
+                    gv_activos.DataSource = tablaActivos;
+                    gv_activos.DataBind();
+                    marcarCheckBoxs(tablaActivos);
+                    if (this.gv_activos.Rows.Count <= 51)
                     {
-                        this.txt_num_solicitud.Text = id_movimiento.ToString();
-                        this.enviar_solicitud_correo(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
-                        if (id_movimiento != 2)
+                        if (this.validar_datos(System.Convert.ToInt32(this.Session["TIPO_MOVIMIENTO"])))
                         {
-                            this.crear_mensajes("success", "La solicitud de traslado se realizo satisfactoriamente");
+                            ent_traslado entidad = new ent_traslado();
+                            entidad = this.asignar_valores(entidad);
+                            int id_movimiento = new cls_traslado().ingresar_traslado(entidad);
+                            if (id_movimiento > 0)
+                            {
+                                this.txt_num_solicitud.Text = id_movimiento.ToString();
+                                this.enviar_solicitud_correo(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
+                                if (id_movimiento != 2)
+                                {
+                                    this.crear_mensajes("success", "La solicitud de traslado se realizo satisfactoriamente");
+                                }
+                                else
+                                    this.crear_mensajes("success", "La solicitud se realizo satisfactoriamente");
+
+                                if (Int32.Parse(this.ddl_tipo_movimiento.SelectedValue) == 5 || Int32.Parse(this.ddl_tipo_movimiento.SelectedValue) == 7)
+                                {
+                                    this.txt_localizacion_solicitud.Text = this.ddl_localizacion_destino.SelectedItem.ToString();
+                                    this.txt_seccion_solicitud.Text = this.ddl_seccion_destino.SelectedItem.ToString();
+                                    this.txt_ubicacion_solicitud.Text = this.ddl_ubicacion_destino.SelectedItem.ToString();
+                                }
+
+                                this.estado_controles(this.Page, false);
+                                this.estado_botones(false, false);
+                                this.Session["SolicitudEnviada"] = true;
+
+                            }
+                            else
+                            {
+                                if (id_movimiento != 2)
+                                    this.crear_mensajes("error", "La solicitud de traslado no pudo realizarse con exito");
+                                else
+                                    this.crear_mensajes("error", "La solicitud no pudo realizarse con exito");
+                            }
                         }
-                        else
-                            this.crear_mensajes("success", "La solicitud se realizo satisfactoriamente");
-                        this.estado_controles(this.Page, false);
-                        this.estado_botones(false, false);
                     }
                     else
                     {
-                        if (id_movimiento != 2)
-                            this.crear_mensajes("error", "La solicitud de traslado no pudo realizarse con exito");
-                        else
-                            this.crear_mensajes("error", "La solicitud+- no pudo realizarse con exito");
+                        this.crear_mensajes("error", "La solicitud puede contener un máximo de 50 activos");
                     }
+                    //GPE 3/31/2014 prevent double press
+                    btn_aplicar_solicitud.Enabled = true;
                 }
-                //GPE 3/31/2014 prevent double press
-                btn_aplicar_solicitud.Enabled = true;
+                else {
+                    this.crear_mensajes("error", "Esta solicitud fue enviada con anterioridad, por favor realice una solicitud nueva");
+                }
             }
             catch (System.Exception ex)
             {
@@ -1139,30 +1361,57 @@ namespace Modulo_Boston.Pages
         {
             try
             {
-                if (this.validar_solicitud())
+                if (validarObservaciones(System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"].ToString())))
                 {
-                    if (new cls_traslado().cancelar_tipo_movimiento(System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"].ToString()), this.Session["CODIGO_COMPANIA"].ToString()))
+                    if (this.validar_solicitud())
                     {
-                        this.insertar_bitacora("cancelado", this.txt_observaciones_solicitud.Text);
-                        string correo_solicitante = new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text);
-                        if (!string.IsNullOrEmpty(correo_solicitante))
+                        if (new cls_traslado().cancelar_tipo_movimiento(System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"].ToString()), this.Session["CODIGO_COMPANIA"].ToString()))
                         {
-                            this.enviar_correo(-1, correo_solicitante);
-                            //GPE 4/6/2014 WAT-04052014 Point 4
-                            // this.crear_mensajes("success", "Se cancelo el tipo de movimiento exitosamente");
+                            System.Data.DataTable dt_informacion = new cls_traslado().cargar_informacion_movimiento(Int32.Parse(this.Session["ID_MOVIMIENTO"].ToString()), this.Session["CODIGO_COMPANIA"].ToString());
+                            int id_tipo_movimiento = System.Convert.ToInt32(dt_informacion.Rows[0]["ID_TIPO_MOVIMIENTO"]);
+                            if (id_tipo_movimiento == 1)
+                            {
+                                this.insertar_bitacora("cancelado", this.txt_observaciones_donacion.Text);
+                            }
+                            if (id_tipo_movimiento == 2)
+                            {
+                                this.insertar_bitacora("cancelado", this.txt_observaciones_destruccion.Text);
+                            }
+                            if (id_tipo_movimiento == 3)
+                            {
+                                this.insertar_bitacora("cancelado", this.txt_observaciones_calibracion.Text);
+                            }
+                            if (id_tipo_movimiento == 6)
+                            {
+                                this.insertar_bitacora("cancelado", this.txt_observaciones_denuncia.Text);
+                            }
+                            if (id_tipo_movimiento == 4 || id_tipo_movimiento == 5 || id_tipo_movimiento == 7)
+                            {
+                                this.insertar_bitacora("cancelado", this.txt_observaciones_solicitud.Text);
+                            }
+                            string correo_solicitante = new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text);
+                            if (!string.IsNullOrEmpty(correo_solicitante))
+                            {
+                                this.enviar_correo(-1, correo_solicitante);
+                                //GPE 4/6/2014 WAT-04052014 Point 4
+                                // this.crear_mensajes("success", "Se cancelo el tipo de movimiento exitosamente");
+                            }
+                            else
+                            {
+                                //GPE 4/6/2014 WAT-04052014 Point 4
+                                //this.crear_mensajes("info", "Se cancelo el tipo de movimiento exitosamente, pero no se le pudo notificar al responsable " + this.txt_responsable.Text + " ya que no se encontro ningún correo registrado");
+                            }
+                            this.estado_botones(false, false);
+                            this.cargar_controles(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"].ToString()));
                         }
                         else
                         {
-                            //GPE 4/6/2014 WAT-04052014 Point 4
-                            //this.crear_mensajes("info", "Se cancelo el tipo de movimiento exitosamente, pero no se le pudo notificar al responsable " + this.txt_responsable.Text + " ya que no se encontro ningún correo registrado");
+                            this.crear_mensajes("error", "La cancelación del tipo de movimiento no pudo realizarse");
                         }
-                        this.estado_botones(false, false);
-                        this.cargar_controles(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"].ToString()));
                     }
-                    else
-                    {
-                        this.crear_mensajes("error", "La cancelación del tipo de movimiento no pudo realizarse");
-                    }
+                }
+                else {
+                    this.crear_mensajes("error", "Debe rellenar las observaciones para poder realizar la cancelación del movimiento");
                 }
             }
             catch (System.Exception ex)
@@ -1174,6 +1423,8 @@ namespace Modulo_Boston.Pages
         {
             int index = System.Convert.ToInt32(e.RowIndex);
             System.Data.DataTable tablaActivos = this.Session["TABLA_ACTIVO"] as System.Data.DataTable;
+
+            tablaActivos = guardarCheckBoxs(tablaActivos);
             //GPE 1/27/2014 NEW LOGIC FOR DELETE
 
             if (index <= tablaActivos.Rows.Count - 1)
@@ -1183,9 +1434,11 @@ namespace Modulo_Boston.Pages
                     tablaActivos.Rows[index].Delete();
                 }
             }
-            else if (index > 0 &&  e.Values[2] == null)
+            
+            if (tablaActivos.Rows.Count == 0)
             {
                 System.Data.DataRow filaNueva = tablaActivos.NewRow();
+                filaNueva["DESECHO"] = false;
                 filaNueva["PLA_ACTIVO"] = null;
                 filaNueva["REF_NUM_ACT"] = null;
                 filaNueva["DES_ACTIVO"] = null;
@@ -1193,64 +1446,40 @@ namespace Modulo_Boston.Pages
                 filaNueva["NOM_MODELO"] = null;
                 filaNueva["SER_ACTIVO"] = null;
                 tablaActivos.Rows.Add(filaNueva);
-            }
-
-            if (tablaActivos.Rows.Count <= 0)
-            {
-                System.Data.DataRow filaNueva = tablaActivos.NewRow();
-                filaNueva["PLA_ACTIVO"] = null;
-                filaNueva["REF_NUM_ACT"] = null;
-                filaNueva["DES_ACTIVO"] = null;
-                filaNueva["DES_MARCA"] = null;
-                filaNueva["NOM_MODELO"] = null;
-                filaNueva["SER_ACTIVO"] = null;
-                tablaActivos.Rows.Add(filaNueva);
-
-                //GPE 12/07/2013 WAT_Document new stuff # 12
-                //centro_costo_status(true);
                 centro_costo_Empty();
+                this.LimpiarControles();
+                this.deshabilitarControles();
             }
-            else
+            if (tablaActivos.Rows.Count == index)
             {
-                if (string.IsNullOrEmpty(tablaActivos.Rows[0][0].ToString()))
-                    //centro_costo_status(true);
-                    centro_costo_Empty();
-                //else
-                //    centro_costo_status(false);
+                System.Data.DataRow filaNueva = tablaActivos.NewRow();
+                filaNueva["DESECHO"] = false;
+                filaNueva["PLA_ACTIVO"] = null;
+                filaNueva["REF_NUM_ACT"] = null;
+                filaNueva["DES_ACTIVO"] = null;
+                filaNueva["DES_MARCA"] = null;
+                filaNueva["NOM_MODELO"] = null;
+                filaNueva["SER_ACTIVO"] = null;
+                tablaActivos.Rows.Add(filaNueva);
             }
+            if (tablaActivos.Rows.Count == 1)
+            {
+                centro_costo_Empty();
+                this.LimpiarControles();
+                this.deshabilitarControles();
+            }
+
 
 
             this.Session["TABLA_ACTIVO"] = tablaActivos;
             this.gv_activos.DataSource = tablaActivos;
             this.gv_activos.DataBind();
+            inhabilitarTextBoxs();
 
-            
-            //tablaActivos.Rows[index].Delete();
-            //this.Session["TABLA_ACTIVO"] = tablaActivos;
-            //if (tablaActivos.Rows.Count <= 0)
-            //{
-            //    System.Data.DataRow filaNueva = tablaActivos.NewRow();
-            //    filaNueva["PLA_ACTIVO"] = null;
-            //    filaNueva["REF_NUM_ACT"] = null;
-            //    filaNueva["DES_ACTIVO"] = null;
-            //    filaNueva["DES_MARCA"] = null;
-            //    filaNueva["NOM_MODELO"] = null;
-            //    filaNueva["SER_ACTIVO"] = null;
-            //    tablaActivos.Rows.Add(filaNueva);
+            marcarCheckBoxs(tablaActivos);
 
-            //    //GPE 12/07/2013 WAT_Document new stuff # 12
-            //    centro_costo_status(true);
-            //}
-            //else
-            //{
-            //    if (string.IsNullOrEmpty(tablaActivos.Rows[0][0].ToString()))
-            //        centro_costo_status(true);
-            //    else
-            //        centro_costo_status(false);
-            //}
-            
-            //this.gv_activos.DataSource = tablaActivos;
-            //this.gv_activos.DataBind();
+            ((TextBox)this.gv_activos.Rows[(gv_activos.Rows.Count - 1)].FindControl("txt_entrada_placa")).Focus();
+
         }
         protected void gv_activo_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -1271,6 +1500,8 @@ namespace Modulo_Boston.Pages
         public System.Data.DataTable ReturnEmptyDataTable()
         {
             System.Data.DataTable dtEmpty = new System.Data.DataTable();
+            System.Data.DataColumn dcDesecho = new System.Data.DataColumn("DESECHO", typeof(bool));
+            dtEmpty.Columns.Add(dcDesecho);
             System.Data.DataColumn dc0 = new System.Data.DataColumn("PLA_ACTIVO", typeof(string));
             dtEmpty.Columns.Add(dc0);
             System.Data.DataColumn dc = new System.Data.DataColumn("REF_NUM_ACT", typeof(string));
@@ -1289,6 +1520,27 @@ namespace Modulo_Boston.Pages
             dtEmpty.Rows.Add(datatRow);
             return dtEmpty;
         }
+
+        public System.Data.DataTable ReturnEmptyDataTableSinplaca()
+        {
+            System.Data.DataTable dtEmpty = new System.Data.DataTable();
+            System.Data.DataColumn dcDesecho = new System.Data.DataColumn("DESECHO", typeof(bool));
+            dtEmpty.Columns.Add(dcDesecho);
+            System.Data.DataColumn dc2 = new System.Data.DataColumn("DES_ACTIVO", typeof(string));
+            dtEmpty.Columns.Add(dc2);
+            System.Data.DataColumn dc3 = new System.Data.DataColumn("DES_MARCA", typeof(string));
+            dtEmpty.Columns.Add(dc3);
+            System.Data.DataColumn dc4 = new System.Data.DataColumn("NOM_MODELO", typeof(string));
+            dtEmpty.Columns.Add(dc4);
+            System.Data.DataColumn dc5 = new System.Data.DataColumn("SER_ACTIVO", typeof(string));
+            dtEmpty.Columns.Add(dc5);
+            System.Data.DataColumn dc6 = new System.Data.DataColumn("VAL_LIBROS", typeof(string));
+            dtEmpty.Columns.Add(dc6);
+            System.Data.DataRow datatRow = dtEmpty.NewRow();
+            dtEmpty.Rows.Add(datatRow);
+            return dtEmpty;
+        }
+
         private bool valida_duplicidad(System.Data.DataTable tablaActivos, System.Data.DataRow fila)
         {
             bool result;
@@ -1303,11 +1555,27 @@ namespace Modulo_Boston.Pages
             result = false;
             return result;
         }
+
+        private bool valida_duplicidad(System.Data.DataTable tablaActivos, string fila)
+        {
+            bool result;
+            for (int i = 0; i < tablaActivos.Rows.Count; i++)
+            {
+                if (tablaActivos.Rows[i]["PLA_ACTIVO"].ToString().Trim() == fila.Trim())
+                {
+                    result = true;
+                    return result;
+                }
+            }
+            result = false;
+            return result;
+        }
+
         private void consultar_activo(int index)
         {
             try
             {
-                Session["SES_COD_CIA_PRO"] = string.Empty;
+                //Session["SES_COD_CIA_PRO"] = string.Empty;
                 //Session["SES_Movimenent_Type"] = string.Empty;
                 if (this.ddl_tipo_movimiento.SelectedValue == "0")
                 {
@@ -1318,53 +1586,37 @@ namespace Modulo_Boston.Pages
                 string centroCosto = this.txt_cod_centro_costo.Text;
                 System.Data.DataTable tablaActivos = this.Session["TABLA_ACTIVO"] as System.Data.DataTable;
                 //GPE 12/07/2013 WAT_Document new stuff # 12
-                if (!string.IsNullOrEmpty(placa) )//&& !string.IsNullOrEmpty(centroCosto))
+                if (!string.IsNullOrEmpty(placa))//&& !string.IsNullOrEmpty(centroCosto))
                 {
                     if (new cls_traslado().comprobarDisponibilidadActivo(placa, centroCosto))
                     {
-                        System.Data.DataTable dt = new cls_traslado().cargar_activos(placa, centroCosto);
-
-                        if (dt.Rows.Count > 0)
+                        if (!this.valida_duplicidad(tablaActivos, placa))
                         {
-                            if (tablaActivos == null)
+                            System.Data.DataTable dt = new cls_traslado().cargar_activos(placa, centroCosto);
+
+                            if (dt.Rows.Count > 0)
                             {
-                                this.Session["TABLA_ACTIVO"] = this.ReturnEmptyDataTable();
-                                tablaActivos = (this.Session["TABLA_ACTIVO"] as System.Data.DataTable);
-                            }
-                            System.Data.DataRow fila = tablaActivos.NewRow();
-                            fila["PLA_ACTIVO"] = dt.Rows[0][0].ToString();
-                            fila["REF_NUM_ACT"] = dt.Rows[0][1].ToString();
-                            fila["DES_ACTIVO"] = dt.Rows[0][2].ToString();
-                            fila["DES_MARCA"] = dt.Rows[0][3].ToString();
-                            fila["NOM_MODELO"] = dt.Rows[0][4].ToString();
-                            fila["SER_ACTIVO"] = dt.Rows[0][5].ToString();
-                            fila["VAL_LIBROS"] = dt.Rows[0][6].ToString();
-                            //new line
-                            for (int i = 0; i < tablaActivos.Rows.Count; i++)
-                            {
-                                if (tablaActivos.Rows[i].IsNull(0) && tablaActivos.Rows[i].IsNull(1) && tablaActivos.Rows[i].IsNull(2) && tablaActivos.Rows[i].IsNull(3))
+                                if (tablaActivos == null || this.gv_activos.Rows.Count == 1)
                                 {
-                                    tablaActivos.Rows[i].Delete();
+                                    this.Session["TABLA_ACTIVO"] = this.ReturnEmptyDataTable();
+                                    tablaActivos = (this.Session["TABLA_ACTIVO"] as System.Data.DataTable);
                                 }
-                            }
-                            if (!this.valida_duplicidad(tablaActivos, fila))
-                            {
+                                System.Data.DataRow fila = tablaActivos.NewRow();
+                                fila["DESECHO"] = false;
+                                fila["PLA_ACTIVO"] = dt.Rows[0][0].ToString();
+                                fila["REF_NUM_ACT"] = dt.Rows[0][1].ToString();
+                                fila["DES_ACTIVO"] = dt.Rows[0][2].ToString();
+                                fila["DES_MARCA"] = dt.Rows[0][3].ToString();
+                                fila["NOM_MODELO"] = dt.Rows[0][4].ToString();
+                                fila["SER_ACTIVO"] = dt.Rows[0][5].ToString();
+                                fila["VAL_LIBROS"] = dt.Rows[0][6].ToString();
+
+                                tablaActivos.Rows[index].Delete();
                                 tablaActivos.Rows.Add(fila);
-                                if (!string.IsNullOrEmpty(placa))
-                                {
-                                    if (!tablaActivos.Rows[index].IsNull(0) && !tablaActivos.Rows[index].IsNull(1) && !tablaActivos.Rows[index].IsNull(2))
-                                    {
-                                        tablaActivos.Rows[index][0] = dt.Rows[0][0].ToString();
-                                        tablaActivos.Rows[index][1] = dt.Rows[0][1].ToString();
-                                        tablaActivos.Rows[index][2] = dt.Rows[0][2].ToString();
-                                        tablaActivos.Rows[index][3] = dt.Rows[0][3].ToString();
-                                        tablaActivos.Rows[index][4] = dt.Rows[0][4].ToString();
-                                        tablaActivos.Rows[index][5] = dt.Rows[0][5].ToString();
-                                        tablaActivos.Rows[index][6] = dt.Rows[0][6].ToString();
-                                    }
-                                }
+
                                 this.Session["TABLA_ACTIVO"] = tablaActivos;
                                 System.Data.DataRow filaNueva = tablaActivos.NewRow();
+                                filaNueva["DESECHO"] = false;
                                 filaNueva["PLA_ACTIVO"] = null;
                                 filaNueva["REF_NUM_ACT"] = null;
                                 filaNueva["DES_ACTIVO"] = null;
@@ -1373,8 +1625,18 @@ namespace Modulo_Boston.Pages
                                 filaNueva["SER_ACTIVO"] = null;
                                 filaNueva["VAL_LIBROS"] = null;
                                 tablaActivos.Rows.Add(filaNueva);
+
+                                tablaActivos = guardarCheckBoxs(tablaActivos);
+
                                 this.gv_activos.DataSource = tablaActivos;
                                 this.gv_activos.DataBind();
+
+                                marcarCheckBoxs(tablaActivos);
+
+
+
+                                inhabilitarTextBoxs();
+
                                 //GPE 12/07/2013 WAT_Document new stuff # 12
                                 if (string.IsNullOrEmpty(centroCosto))
                                 {
@@ -1401,20 +1663,22 @@ namespace Modulo_Boston.Pages
 
                                             this.txt_cod_centro_costo.Text = dt.Rows[0][7].ToString().Trim();
 
-                                            if (this.ddl_tipo_movimiento.SelectedValue == "5" || this.ddl_tipo_movimiento.SelectedValue == "7")
+                                            //if (this.ddl_tipo_movimiento.SelectedValue == "5" || this.ddl_tipo_movimiento.SelectedValue == "7")
+                                            //{
+                                            DataTable dtCOD_CIA_PRO = new cls_traslado().GetCOD_CIA_PROByCost_Center(this.txt_cod_centro_costo.Text.Trim(), Session["CODIGO_COMPANIA"].ToString());
+                                            if (dtCOD_CIA_PRO != null && dtCOD_CIA_PRO.Rows.Count > 0)
                                             {
-                                                DataTable dtCOD_CIA_PRO = new cls_traslado().GetCOD_CIA_PROByCost_Center(this.txt_cod_centro_costo.Text.Trim(), Session["CODIGO_COMPANIA"].ToString());
-                                                if (dtCOD_CIA_PRO != null && dtCOD_CIA_PRO.Rows.Count > 0)
-                                                {
-                                                    Session["SES_COD_CIA_PRO"] = dtCOD_CIA_PRO.Rows[0][0].ToString().Trim();
-                                                    Session["SES_Movimenent_Type"] = this.ddl_tipo_movimiento.SelectedValue;
-                                                }
-                                                else
-                                                {
-                                                    Session["SES_COD_CIA_PRO"] = string.Empty;
-                                                }
-                                                dtCOD_CIA_PRO = null;
+                                                Session["SES_COD_CIA_PRO"] = dtCOD_CIA_PRO.Rows[0][0].ToString().Trim();
+                                                Session["SES_Movimenent_Type"] = this.ddl_tipo_movimiento.SelectedValue;
                                             }
+                                            else
+                                            {
+                                                Session["SES_COD_CIA_PRO"] = string.Empty;
+                                            }
+                                            dtCOD_CIA_PRO = null;
+                                            //}
+
+                                            this.habilitarControles();
                                         }
                                         else
                                         {
@@ -1424,22 +1688,28 @@ namespace Modulo_Boston.Pages
                                 }
                                 //GPE disable centro_costo
                                 //centro_costo_status(false);
+                                /*}
+                                else
+                                {
+                                    this.crear_mensajes("validation", "El activo digitado ya existe en la presente solicitud");
+                                }*/
                             }
                             else
                             {
-                                this.crear_mensajes("validation", "El activo digitado ya existe en la presente solicitud");
+                                //GPE 1/26/2014 Fixing IE Issues print message No corresponde al centro de costo
+                                if (!string.IsNullOrEmpty(tablaActivos.Rows[0][0].ToString()))
+                                    this.crear_mensajes("validation", "No corresponde al centro de costo");
+                                else
+                                    this.crear_mensajes("validation", "No se encontraron datos");
                             }
                         }
                         else
                         {
-                            //GPE 1/26/2014 Fixing IE Issues print message No corresponde al centro de costo
-                            if (!string.IsNullOrEmpty(tablaActivos.Rows[0][0].ToString()))
-                                this.crear_mensajes("validation", "No corresponde al centro de costo");
-                            else
-                                this.crear_mensajes("validation", "No se encontraron datos");
+                            this.crear_mensajes("validation", "El activo digitado ya existe en la presente solicitud");
                         }
                     }
-                    else {
+                    else
+                    {
                         this.crear_mensajes("validation", "El activo no sé puede utilizar porque su estado no lo permite o esta actualmente en un movimiento");
                     }
                 }
@@ -1449,11 +1719,13 @@ namespace Modulo_Boston.Pages
                     //this.crear_mensajes("validation", "El campo de Centro de Costo y el campo de placa no pueden ser nulos");
                     this.crear_mensajes("validation", "El campo de placa no pueden ser nulo");
                 }
+                ((TextBox)this.gv_activos.Rows[(gv_activos.Rows.Count - 1)].FindControl("txt_entrada_placa")).Focus();
             }
             catch (System.Exception ex)
             {
                 Log.appendToLog(Log.LEVEL_WARN, ex.ToString());
                 this.crear_mensajes("error", ex.ToString());
+                ((TextBox)this.gv_activos.Rows[(gv_activos.Rows.Count - 1)].FindControl("txt_entrada_placa")).Focus();
             }
         }
         private ent_traslado asignar_valores(ent_traslado entidad)
@@ -1470,6 +1742,15 @@ namespace Modulo_Boston.Pages
                 entidad.estado = "P";
                 entidad.codigo_paso_aprobacion_actual = 0;
                 entidad.activo_solicitado = (this.Session["TABLA_ACTIVO"] as System.Data.DataTable);
+                entidad.posee_placas = true;
+
+                //Nuevos campos movimiento
+              /*entidad.codigo_localizacion_activo = ddl_localizacion_destino.SelectedValue.ToString();
+                entidad.codigo_ubicacion_activo_dest = ddl_ubicacion_destino.SelectedValue.ToString();
+                entidad.codigo_seccion_activo_dest = ddl_seccion_destino.SelectedValue.ToString();
+                entidad.cod_usuario_responsable_destino = txt_cod_responsable_destino.Text.ToString().Trim();
+                entidad.centro_costo_destino = txt_codigo_centro_costo_destino.Text.ToString().Trim();*/
+
                 int tipo_movimiento = System.Convert.ToInt32(this.Session["TIPO_MOVIMIENTO"]);
                 this.validar_datos(tipo_movimiento);
                 switch (tipo_movimiento)
@@ -1545,8 +1826,11 @@ namespace Modulo_Boston.Pages
 							new System.Xml.Linq.XElement("CodigoResponsableDestino", this.txt_cod_responsable_destino.Text),
 							new System.Xml.Linq.XElement("NombreCodigoResponsableDestino", this.txt_nombre_responsable_destino.Text),
 							new System.Xml.Linq.XElement("Localizacion", this.ddl_localizacion_destino.SelectedValue),
+                            new System.Xml.Linq.XElement("LocalizacionDescripcion", this.ddl_localizacion_destino.SelectedItem.ToString()),
 							new System.Xml.Linq.XElement("Ubicacion", this.ddl_seccion_destino.SelectedValue),
-							new System.Xml.Linq.XElement("Seccion", this.ddl_ubicacion_destino.SelectedValue)
+                            new System.Xml.Linq.XElement("UbicacionDescripcion", this.ddl_seccion_destino.SelectedItem.ToString()),
+							new System.Xml.Linq.XElement("Seccion", this.ddl_ubicacion_destino.SelectedValue),
+                            new System.Xml.Linq.XElement("SeccionDescripcion", this.ddl_ubicacion_destino.SelectedItem.ToString())
 						})
 					});
                             entidad.detalle_destino_movimiento = detalle_movimiento;
@@ -1579,8 +1863,11 @@ namespace Modulo_Boston.Pages
 							new System.Xml.Linq.XElement("CodigoResponsableDestino", this.txt_cod_responsable_destino.Text),
 							new System.Xml.Linq.XElement("NombreCodigoResponsableDestino", this.txt_nombre_responsable_destino.Text),
 							new System.Xml.Linq.XElement("Localizacion", this.ddl_localizacion_destino.SelectedValue),
+                            new System.Xml.Linq.XElement("LocalizacionDescripcion", this.ddl_localizacion_destino.SelectedItem.ToString()),
 							new System.Xml.Linq.XElement("Ubicacion", this.ddl_seccion_destino.SelectedValue),
-							new System.Xml.Linq.XElement("Seccion", this.ddl_ubicacion_destino.SelectedValue)
+                            new System.Xml.Linq.XElement("UbicacionDescripcion", this.ddl_seccion_destino.SelectedItem.ToString()),
+							new System.Xml.Linq.XElement("Seccion", this.ddl_ubicacion_destino.SelectedValue),
+                            new System.Xml.Linq.XElement("SeccionDescipcion", this.ddl_ubicacion_destino.SelectedItem.ToString())
 						})
 					});
                             entidad.detalle_destino_movimiento = detalle_movimiento;
@@ -1593,6 +1880,45 @@ namespace Modulo_Boston.Pages
             }
             return entidad;
         }
+
+        private ent_traslado asignar_valores_sin_placa(ent_traslado entidad)
+        {
+            try
+            {
+                entidad.codigo_compania = this.Session["CODIGO_COMPANIA"].ToString();
+                entidad.centro_costo = this.ddl_centro_costo.SelectedValue;
+                entidad.fecha_movimiento = System.DateTime.Now;
+                entidad.codigo_empleado = this.txt_cod_solicitante.Text;
+                entidad.descripcion_centro_costo = this.txt_des_centro_costo.Text;
+                entidad.empleado_responsable_cc = this.txt_nombre_solicitante.Text;
+                entidad.codigo_tipo_movimiento = System.Convert.ToInt32(this.ddl_tipo_movimiento.SelectedValue);
+                entidad.estado = "P";
+                entidad.codigo_paso_aprobacion_actual = 0;
+                entidad.activo_solicitado = (this.Session["TABLA_ACTIVO_SIN_PLACA"] as System.Data.DataTable);
+                entidad.posee_placas = false;
+
+                int tipo_movimiento = System.Convert.ToInt32(this.Session["TIPO_MOVIMIENTO"]);
+                this.validar_datos(tipo_movimiento);
+                switch (tipo_movimiento)
+                {
+                    case 2:
+                        {
+                            System.Xml.Linq.XDocument detalle_movimiento = new System.Xml.Linq.XDocument(new System.Xml.Linq.XDeclaration("1.0", "utf-8", "yes"), new object[]
+					{
+						new System.Xml.Linq.XComment("Detalle del movimiento destino - Destruccion"),
+						new System.Xml.Linq.XElement("Destruccion", new System.Xml.Linq.XElement("Observaciones", this.txt_observaciones_destruccion.Text))
+					});
+                            entidad.detalle_destino_movimiento = detalle_movimiento;
+                            break;
+                        }
+                }
+            }
+            catch (System.Exception)
+            {
+            }
+            return entidad;
+        }
+
         private int acceso_localizacion()
         {
             string codigo_localizacion = new cls_traslado().codigo_localizacion(this.txt_cod_centro_costo.Text);
@@ -1674,6 +2000,52 @@ namespace Modulo_Boston.Pages
             result = false;
             return result;
         }
+
+        protected bool validar_datos_sin_placa(int seccion)
+        {
+            if (seccion == 0)
+            {
+                this.crear_mensajes("validation", "Seleccione el Tipo de Movimiento de Activo");
+                this.ddl_tipo_movimiento.Focus();
+                return false;
+            }
+            else
+            {
+                if (this.ddl_centro_costo.SelectedValue == "0")
+                {
+                    this.crear_mensajes("validation", "El Centro de Costo es requerido");
+                    this.txt_cod_centro_costo.Focus();
+                    return false;
+                }
+                if (string.IsNullOrEmpty(new cls_traslado().correo_responsable(this.ddl_centro_costo.SelectedValue.Trim())))
+                {
+                    this.crear_mensajes("validation", "El responsable asociado al Centro de Costo no posee Dirección Electronica");
+                    this.txt_cod_centro_costo.Focus();
+                    return false;
+                }
+                if (!this.validar_solicitante(this.txt_cod_solicitante.Text.Trim()))
+                {
+                    this.crear_mensajes("validation", "Revisar información de Solicitante");
+                    this.txt_cod_solicitante.Focus();
+                    return false;
+                } 
+                if (string.IsNullOrEmpty(new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text)))
+                {
+                    this.txt_cod_solicitante.Focus();
+                    this.crear_mensajes("validation", "El Solicitante no tiene registrado un correo Electrónico");
+                    return false;
+                }
+                if (string.IsNullOrEmpty(this.txt_nombre_solicitante.Text.Trim()))
+                {
+                    this.crear_mensajes("validation", "Revisar información de Solicitante");
+                    this.txt_nombre_solicitante.Focus();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         protected bool validar_datos(int seccion)
         {
             bool result;
@@ -1695,7 +2067,7 @@ namespace Modulo_Boston.Pages
                 {
                     if (this.txt_cod_centro_costo.Text.Trim() == "0")
                     {
-                        this.crear_mensajes("validation", "Ese valor de como Código de Centro de Costo no es Permitido");
+                        this.crear_mensajes("validation", "El valor de Código de Centro de Costo no es Permitido");
                         result = false;
                     }
                     else
@@ -1780,13 +2152,13 @@ namespace Modulo_Boston.Pages
                                                         }
                                                         if (seccion == 2)
                                                         {
-                                                            if (string.IsNullOrEmpty(this.txt_observaciones_destruccion.Text))
+                                                            /*if (string.IsNullOrEmpty(this.txt_observaciones_destruccion.Text))
                                                             {
                                                                 this.crear_mensajes("validation", "Escriba las observaciones.");
                                                                 this.txt_observaciones_destruccion.Focus();
                                                                 result = false;
                                                                 return result;
-                                                            }
+                                                            }*/
                                                         }
                                                         if (seccion == 3)
                                                         {
@@ -1918,13 +2290,13 @@ namespace Modulo_Boston.Pages
                                                                 result = false;
                                                                 return result;
                                                             }
-                                                            if (string.IsNullOrEmpty(this.txt_observaciones_calibracion.Text))
+                                                            /*if (string.IsNullOrEmpty(this.txt_observaciones_calibracion.Text))
                                                             {
                                                                 this.crear_mensajes("validation", "Escriba las observaciones.");
                                                                 this.txt_observaciones_calibracion.Focus();
                                                                 result = false;
                                                                 return result;
-                                                            }
+                                                            }*/
                                                             string codigo_localizacion = new cls_traslado().codigo_localizacion(this.txt_cod_centro_costo.Text);
                                                             if (string.IsNullOrEmpty(codigo_localizacion) || codigo_localizacion == "0")
                                                             {
@@ -2001,13 +2373,13 @@ namespace Modulo_Boston.Pages
                                                                 result = false;
                                                                 return result;
                                                             }
-                                                            if (string.IsNullOrEmpty(this.txt_observaciones_denuncia.Text))
+                                                            /*if (string.IsNullOrEmpty(this.txt_observaciones_denuncia.Text))
                                                             {
                                                                 this.crear_mensajes("validation", "Escriba las Observaciones, necesarias.");
                                                                 this.txt_observaciones_denuncia.Focus();
                                                                 result = false;
                                                                 return result;
-                                                            }
+                                                            }*/
                                                         }
                                                         result = true;
                                                     }
@@ -2036,11 +2408,15 @@ namespace Modulo_Boston.Pages
         }
         private ent_traslado asignar_valores_bitacora(string paso_aprobacion_actual, string descripcion)
         {
+            DataTable dt = new cls_traslado().cargar_empleado_session(this.Session["USUARIO"].ToString());
             return new ent_traslado
             {
                 id_movimiento = System.Convert.ToInt32(this.txt_num_solicitud.Text),
                 codigo_compania = this.Session["CODIGO_COMPANIA"].ToString(),
-                usuario = this.Session["USUARIO"].ToString(),
+
+                usuario = dt.Rows[0]["NOMBRE_EMPLEADO"].ToString().Trim(),//this.Session["USUARIO"].ToString(),
+
+
                 fecha = System.DateTime.Now,
                 descripcion = descripcion,
                 paso_aprobacion_actual = paso_aprobacion_actual,
@@ -2101,20 +2477,85 @@ namespace Modulo_Boston.Pages
                 {
                     contenido = contenido.Replace("[URL_DESCRIPCION]", "La solicitud fue cancelada");
                     contenido = contenido.Replace("[URL]", "#");
-                    string items_table_historico = "<table style=\"width: 800px;border: 1px solid #000;border-collapse: collapse;\"><tr>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Fecha</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Paso Aprobación</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Usuario</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripcion Tipo de Movimiento</span></td>\r\n                    </tr>";
+                    string items_table_historico = "<table style=\"width: 15.1cm;border: 1px solid #000;border-collapse: collapse;\">"+
+                        "<tr style=\"background-color:#1F497D;color:White;font-size:9pt;\">\r\n  "
+                        + "<td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Fecha</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Paso Aprobación</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Usuario</span></td>\r\n                    <span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Observación</span></td>\r\n                    </tr>";
                     cls_bitacora historico = new cls_bitacora();
                     System.Data.DataTable dt_historico = historico.cargar_bitacora(System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
                     for (int x = 0; x < dt_historico.Rows.Count; x++)
                     {
-                        items_table_historico = items_table_historico + "<tr><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION"].ToString();
-                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["FECHA"].ToString();
+                        string rowstyle = "";
+                        if (x % 2 == 0)
+                        {
+                            rowstyle = "text-align:left;font-size:8pt;";
+                        }
+                        else
+                        {
+                            rowstyle = "background-color:#EDEDED;text-align:left;font-size:8pt;";
+                        }
+                        items_table_historico = items_table_historico + "<tr style=\"" + rowstyle + "\"><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["FECHA"].ToString();
                         items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["PASO_APROVACION_ACTUAL"].ToString();
                         items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["USUARIO"].ToString();
-                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION_TIPO_MOVIMIENTO"].ToString();
+                        items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION"].ToString();
                         items_table_historico += "</td></tr>";
                     }
                     items_table_historico += "</table>";
                     contenido = contenido.Replace("[HISTORICO]", items_table_historico);
+
+                    string items_table = "<table style=\"width: 15.1cm;border: 1px solid #000;border-collapse: collapse;\"><tr style=\"background-color:#1F497D;color:White;font-size:9pt;\">\r\n";
+                    if (id_tipo_movimiento == 2)
+                    {
+                        items_table = items_table + "<td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">¿Electrónico?</span></td>\r\n";
+                    }
+                    items_table = items_table + "<td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Placa</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Activo SAP</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción del Activo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Marca</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Modelo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Serie</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Valor Libros</span></td>\r\n                    </tr>";
+
+                    cls_traslado activos = new cls_traslado();
+                    System.Data.DataTable dt_activos = activos.cargar_activos_grid(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
+                    for (int x = 0; x < dt_activos.Rows.Count; x++)
+                    {
+                        string rowstyle = "";
+                        if (x % 2 == 0)
+                        {
+                            rowstyle = "text-align:left;font-size:8pt;";
+                        }
+                        else
+                        {
+                            rowstyle = "background-color:#EDEDED;text-align:left;font-size:8pt;";
+                        }
+                        items_table = items_table + "<tr style=\"" + rowstyle + "\">";
+
+                        if (id_tipo_movimiento == 2)
+                        {
+                            if (Convert.ToBoolean(dt_activos.Rows[x]["DESECHO"].ToString()))
+                            {
+                                items_table = items_table + "<td style=\"border: 1px solid #000; text-align:center;\">X</td>";
+                            }
+                            else {
+                                items_table = items_table + "<td style=\"border: 1px solid #000;\"></td>";
+                            }
+                        }
+
+                        items_table = items_table + "<td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["PLA_ACTIVO"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["REF_NUM_ACT"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["DES_ACTIVO"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["DES_MARCA"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["NOM_MODELO"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["SER_ACTIVO"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["VAL_LIBROS"].ToString();
+                        items_table += "</td></tr>";
+                    }
+                    //Add BY GPE 3/12/2014 point.13 doc. After my visit
+                    int numColsSpan = 6;
+                    if (id_tipo_movimiento == 2)
+                    {
+                        numColsSpan = 7;
+                    }
+                    items_table = items_table + "<tr style\"text-align:left;font-size:8pt;\"><td colspan=\""+numColsSpan+"\" style=\"border: 1px solid #000;\">Total Valor en Libros :";
+                    items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + new cls_traslado().valor_libros(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.txt_num_solicitud.Text)).ToString("C2");
+                    items_table += "</td></tr>";
+                    items_table += "</table>";
+
+                    contenido = contenido.Replace("[LISTA_ACTIVOS]", items_table);
                 }
                 else
                 {
@@ -2144,8 +2585,14 @@ namespace Modulo_Boston.Pages
                 contenido = contenido.Replace("[DEPARTAMENTO_ACTUAL]", this.txt_des_centro_costo.Text);
                 contenido = contenido.Replace("[CENTRO_COSTO_ACTUAL]", this.txt_cod_centro_costo.Text);
                 contenido = contenido.Replace("[VALOR_LIBROS]", new cls_traslado().valor_libros(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.txt_num_solicitud.Text)).ToString("C2"));
-                contenido = contenido.Replace("[PLANTA_1]", new cls_traslado().nombre_localizacion(this.txt_cod_centro_costo.Text));
-                contenido = contenido.Replace("[UBICACION_ACTUAL]", new cls_traslado().cargar_ubicacion_actual(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.txt_num_solicitud.Text)));
+                //contenido = contenido.Replace("[PLANTA_1]", new cls_traslado().nombre_localizacion(this.txt_cod_centro_costo.Text));
+                //contenido = contenido.Replace("[UBICACION_ACTUAL]", new cls_traslado().cargar_ubicacion_actual(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.txt_num_solicitud.Text)));
+                DataTable dtUbicacion =  new cls_traslado().cargar_ubicacion_actual(System.Convert.ToInt32(this.txt_num_solicitud.Text));
+                if (dtUbicacion.Rows.Count > 0) {
+                    contenido = contenido.Replace("[LOCALIZACION]", dtUbicacion.Rows[0]["LOCALIZACION"].ToString());
+                    contenido = contenido.Replace("[UBICACION]", dtUbicacion.Rows[0]["UBICACION"].ToString());
+                    contenido = contenido.Replace("[SECCION]", dtUbicacion.Rows[0]["SECCION"].ToString());
+                }
                 //GPE 12/07/2013 WAT_Document new stuff # 15 c
                 System.Data.DataTable dtcentro = new cls_traslado().cargar_centro_costo(this.txt_cod_centro_costo.Text.Trim());
                 if (dtcentro.Rows.Count > 0)
@@ -2157,25 +2604,36 @@ namespace Modulo_Boston.Pages
                 int id_tipo_movimiento = new cls_traslado().id_tipo_movimiento(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
                 if (id_tipo_movimiento == 5 || id_tipo_movimiento == 7)
                 {
-                    contenido = contenido.Replace("[PLANTA_2]", this.txt_localizacion_solicitud.Text);
                     contenido = contenido.Replace("[CENTRO_COSTO_RECEPTOR]", this.txt_codigo_centro_costo_destino.Text);
-                    contenido = contenido.Replace("[DEPARTAMENTO_RECEPTOR]", string.Concat(new string[]
-					{
-						this.txt_localizacion_solicitud.Text,
-						" ",
-						this.txt_seccion_solicitud.Text,
-						" ",
-						this.txt_ubicacion_solicitud.Text
-					}));
+                    contenido = contenido.Replace("[LOCALIZACION_DESTINO]", this.txt_localizacion_solicitud.Text);
+                    contenido = contenido.Replace("[UBICACION_DESTINO]", this.txt_ubicacion_solicitud.Text);
+                    contenido = contenido.Replace("[SECCION_DESTINO]", this.txt_seccion_solicitud.Text);
                 }
                 else
                 {
-                    contenido = contenido.Replace("[PLANTA_2]", "");
-                    contenido = contenido.Replace("Departamento Receptor", "");
-                    contenido = contenido.Replace("[DEPARTAMENTO_RECEPTOR]", "");
-                    contenido = contenido.Replace("Centro de Costo Receptor", "");
-                    contenido = contenido.Replace("[CENTRO_COSTO_RECEPTOR]", "");
+                    contenido = contenido.Replace("<table style=\"max-width:19cm;color:#000000;\"><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td colspan=\"9\"><b>Departamento Receptor </b></td></tr><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td><b>Localización: </b></td><td>[LOCALIZACION_DESTINO]</td><td>&nbsp;</td><td><b>Ubicación: </b></td><td>[UBICACION_DESTINO]</td><td>&nbsp;</td><td><b>Sección: </b></td><td>[SECCION_DESTINO]</td></tr></table>", "");
+                    contenido = contenido.Replace("<table style=\"max-width:19cm;color:#000000;\"><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td><b>Centro de Costo: </b></td><td>[CENTRO_COSTO_RECEPTOR]</td></tr></table>", "");
                 }
+
+
+
+                if (id_tipo_movimiento == 3 || id_tipo_movimiento == 4)
+                {
+                    contenido = contenido.Replace("[PROVEEDOR]", this.txt_proveedor.Text);
+                    contenido = contenido.Replace("[CED_JUR]", this.txt_cedula_juridica.Text);
+                    contenido = contenido.Replace("[CONTACTO]", this.txt_nombre_contacto.Text);
+                    contenido = contenido.Replace("[TEL_PROVEE]", this.txt_telefono_proveedor.Text);
+                    contenido = contenido.Replace("[FEC_REINGRESO]", this.txt_fecha_aprox_reingreso.Text);
+                    contenido = contenido.Replace("[DIR_PROVEEDOR]", this.txt_direccion_proveedor.Text);
+                }
+                else
+                {
+                    contenido = contenido.Replace("<table style=\"max-width:19cm;color:#000000;\"><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td><b>Proveedor: </b></td><td>[PROVEEDOR]</td></tr></table>", "");
+                    contenido = contenido.Replace("<table style=\"max-width:19cm;color:#000000;\"><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td><b>Cédula Jurídica: </b></td><td>[CED_JUR]</td><td><b>Contacto: </b></td><td>[CONTACTO]</td></tr></table>", "");
+                    contenido = contenido.Replace("<table style=\"max-width:19cm;color:#000000;\"><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td><b>Teléfono: </b></td><td>[TEL_PROVEE]</td><td><b>Fecha de Reingreso: </b></td><td>[FEC_REINGRESO]</td></tr></table>", "");
+                    contenido = contenido.Replace("<table style=\"max-width:19cm;color:#000000;\"><tr style=\"text-align:left;font-size:9pt;font-family:Arial Unicode MS;\"><td><b>Dirección: </b></td><td>[DIR_PROVEEDOR]</td></tr></table>", "");
+                }
+
                 if (id_movimiento == -1)
                 {
                     contenido = contenido.Replace("[URL_DESCRIPCION]", "La solicitud fue cancelada");
@@ -2188,40 +2646,90 @@ namespace Modulo_Boston.Pages
                     string navigate_url = string.Format("{0}/wbfrm_login.aspx/?codigo_compania={1}&id_movimiento={2}", HttpTools.HttpUrlPath, this.Session["CODIGO_COMPANIA"].ToString(), id_movimiento.ToString());
                     contenido = contenido.Replace("[URL]", navigate_url);
                 }
-                string items_table = "<table style=\"width: 800px;border: 1px solid #000;border-collapse: collapse;\"><tr>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Placa</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Activo SAP</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción del Activo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Marca</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Modelo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Serie</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Valor Libros</span></td>\r\n                    </tr>";
+                string items_table = "<table style=\"width: 17cm;border: 1px solid #000;border-collapse: collapse;\"><tr style=\"background-color:#1F497D;color:White;font-size:9pt;\">\r\n";
+                if (id_tipo_movimiento == 2)
+                {
+                    items_table = items_table + "<td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">¿Electrónico?</span></td>\r\n";
+                }
+                items_table = items_table   + "<td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Placa</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Activo SAP</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción del Activo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Marca</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Modelo</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Serie</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Valor Libros</span></td>\r\n                    </tr>";
                 cls_traslado activos = new cls_traslado();
-                System.Data.DataTable dt_activos = activos.cargar_activos_grid(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
+                System.Data.DataTable dt_activos = null;
+                DataTable movimiento = new cls_traslado().cargar_datos_generales(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
+                if (Convert.ToBoolean(movimiento.Rows[0]["POSEE_PLACAS"].ToString()))
+                {
+                    dt_activos = activos.cargar_activos_grid(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
+                }
+                else {
+                    dt_activos = activos.cargar_activos_grid_sin_placa(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
+                }
                 for (int x = 0; x < dt_activos.Rows.Count; x++)
                 {
-                    items_table = items_table + "<tr><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["PLA_ACTIVO"].ToString();
-                    items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["REF_NUM_ACT"].ToString();
-                    items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["DES_ACTIVO"].ToString();
+                    string rowstyle = "";
+                    if( x % 2 == 0){
+                    rowstyle = "text-align:left;font-size:8pt;";
+                    }else{
+                        rowstyle = "background-color:#EDEDED;text-align:left;font-size:8pt;";
+                    }
+                    items_table = items_table + "<tr style=\""+rowstyle+"\">";
+
+                    if (id_tipo_movimiento == 2) 
+                    {
+                        if (Convert.ToBoolean(dt_activos.Rows[x]["DESECHO"].ToString()))
+                        {
+                            items_table = items_table + "<td style=\"border: 1px solid #000; text-align:center;\" >X</td>";
+                        }
+                        else
+                        {
+                            items_table = items_table + "<td style=\"border: 1px solid #000;\"></td>";
+                        }
+                    }
+                    if (Convert.ToBoolean(movimiento.Rows[0]["POSEE_PLACAS"].ToString()))
+                    {
+                        items_table = items_table + "<td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["PLA_ACTIVO"].ToString();
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["REF_NUM_ACT"].ToString() + "</td>";
+                    }
+                    else {
+                        items_table = items_table + "<td style=\"border: 1px solid #000;\">";
+                        items_table = items_table + "</td><td style=\"border: 1px solid #000;\"></td>";
+                    }
+                    items_table = items_table + "<td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["DES_ACTIVO"].ToString();
                     items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["DES_MARCA"].ToString();
                     items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["NOM_MODELO"].ToString();
                     items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["SER_ACTIVO"].ToString();
-                    items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + dt_activos.Rows[x]["VAL_LIBROS"].ToString();
+                    items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + double.Parse(dt_activos.Rows[x]["VAL_LIBROS"].ToString()).ToString("C2", CultureInfo.CreateSpecificCulture("en-US"));
                     items_table += "</td></tr>";
                 }
                 //Add BY GPE 3/12/2014 point.13 doc. After my visit
-                items_table = items_table + "<tr><td style=\"border: 1px solid #000;\"> &nbsp";
-                items_table = items_table + "</td><td style=\"border: 1px solid #000;\"> &nbsp";
-                items_table = items_table + "</td><td style=\"border: 1px solid #000;\"> &nbsp";
-                items_table = items_table + "</td><td style=\"border: 1px solid #000;\"> &nbsp";
-                items_table = items_table + "</td><td colspan=\"2\" style=\"border: 1px solid #000;\">Total Valor en Libros :";
-                items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + new cls_traslado().valor_libros(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.txt_num_solicitud.Text)).ToString("C2");
+                int numColsSpan = 6;
+                if (id_tipo_movimiento == 2)
+                {
+                    numColsSpan = 7;
+                }
+                items_table = items_table + "<tr style\"text-align:left;font-size:8pt;\"><td colspan=\""+numColsSpan+"\" style=\"border: 1px solid #000;\">Total Valor en Libros :";
+                items_table = items_table + "</td><td style=\"border: 1px solid #000;\">" + new cls_traslado().valor_libros(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.txt_num_solicitud.Text)).ToString("C2", CultureInfo.CreateSpecificCulture("en-US"));
                 items_table += "</td></tr>";
      
                 items_table += "</table>";
-                string items_table_historico = "<table style=\"width: 800px;border: 1px solid #000;border-collapse: collapse;\"><tr>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripción</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Fecha</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Paso Aprobación</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Usuario</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#000000;font-size:0.9em;text-align:left;font-weight:bold;\">Descripcion Tipo de Movimiento</span></td>\r\n                    </tr>";
+                string items_table_historico = "<br/><table style=\"width: 17cm;border: 1px solid #000;border-collapse: collapse;\">"
+                    + "<tr style=\"background-color:#1F497D;color:White;font-size:9pt;\">\r\n <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Fecha</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Paso Aprobación</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Usuario</span></td>\r\n                    <td style=\"border: 1px solid #000;\"><span style=\"padding:0px 10px;color:#ffffff;font-size:0.9em;text-align:left;font-weight:bold;\">Observación</span></td>\r\n                    </tr>";
                 cls_bitacora historico = new cls_bitacora();
                 System.Data.DataTable dt_historico = historico.cargar_bitacora(System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]));
                 for (int x = 0; x < dt_historico.Rows.Count; x++)
                 {
-                    items_table_historico = items_table_historico + "<tr><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION"].ToString();
-                    items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["FECHA"].ToString();
+                    string rowstyle = "";
+                    if (x % 2 == 0)
+                    {
+                        rowstyle = "text-align:left;font-size:8pt;";
+                    }
+                    else
+                    {
+                        rowstyle = "background-color:#EDEDED;text-align:left;font-size:8pt;";
+                    }
+                    items_table_historico = items_table_historico + "<tr style=\"" + rowstyle + "\"><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["FECHA"].ToString();
                     items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["PASO_APROVACION_ACTUAL"].ToString();
                     items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["USUARIO"].ToString();
-                    items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION_TIPO_MOVIMIENTO"].ToString();
+                    items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION"].ToString();
+                    //items_table_historico = items_table_historico + "</td><td style=\"border: 1px solid #000;\">" + dt_historico.Rows[x]["DESCRIPCION_TIPO_MOVIMIENTO"].ToString();
                     items_table_historico += "</td></tr>";
                 }
                 items_table_historico += "</table>";
@@ -2286,133 +2794,345 @@ namespace Modulo_Boston.Pages
                 System.Data.DataTable dt = new cls_traslado().cargar_tipo_movimiento();
                 if (id_tipo_movimiento == 1)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_cod_centro_costo.Text));
                             paso_aprobacion = "Solicitud de Donaciòn";
+                    this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_donacion.Text);
                             break;
                         case 1:
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(1, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }else{
                             this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(1, this.txt_cod_centro_costo.Text));
+                            }
                             paso_aprobacion = "Centro de Costo";
+                    this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_donacion.Text);
                             break;
                         case 2:
-                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Recursos Humanos";
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Recursos Humanos";
+                    this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_donacion.Text);
                             break;
-                        case 3:
-                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        /*case 3:
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                            }
                             paso_aprobacion = "Fixed Asset";
-                            break;
+                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 2)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Solicitud de Destrucciòn";
+                            paso_aprobacion = "Solicitud de Destrucción";
+                    this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_destruccion.Text);
                             break;
                         case 1:
-                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Centro de Costo";
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Centro de Costo";
+                    this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_destruccion.Text);
                             break;
-                        case 2:
-                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Fixed Assets";
-                            break;
+                        /*case 2:
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                            }
+                            cls_traslado activos = new cls_traslado();
+                                System.Data.DataTable dt_activos = activos.cargar_activos_grid(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]),true);
+
+                                if (dt_activos.Rows.Count > 0)
+                                {
+                                    dtCorreos = new cls_traslado().cargar_correos_grupo(7, this.txt_cod_centro_costo.Text);
+                                    if (dtCorreos.Rows.Count > 0)
+                                    {
+                                        for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                        {
+                                            this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                        }
+                                    }
+                                    else
+                                    {
+                                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(7, this.txt_cod_centro_costo.Text));
+                                    }
+                                }
+                                paso_aprobacion = "Fixed Assets";
+                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 3)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             //CHANGE BY GPE 3/16/2014 point.11 doc. After my visit
                             //this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(this.acceso_localizacion(), this.txt_cod_centro_costo.Text));
-                              this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(6, this.txt_cod_centro_costo.Text));
-                              paso_aprobacion = "Solicitud de Calibraciòn";
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(6, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(6, this.txt_cod_centro_costo.Text));
+                            }
+                            paso_aprobacion = "Solicitud de Calibraciòn";
+                    this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_calibracion.Text);
                             break;
                         case 1:
-                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Responsable de Planta";
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Responsable de Calibración";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_calibracion.Text);
                             break;
-                        case 2:
-                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        /*case 2:
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                            }
                             paso_aprobacion = "Fixed Asset";
-                            break;
+                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 4)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_cod_centro_costo.Text));
                             paso_aprobacion = "Solicitud de Mantenimiento";
+                            this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
                         case 1:
-                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Centro de Costo";
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Centro de Costo";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
-                        case 2:
-                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Fixed Assets";
+                        /*case 2:
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Fixed Assets";
                             this.cambiar_estado(id_movimiento, "04", false);
-                            break;
+                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 5)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Solicitud de Movimiento de Activos";
+                            paso_aprobacion = "Solicitud de Movimiento de Interno";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
                         case 1:
+                            if (this.txt_cod_centro_costo.Text.Trim() != this.txt_codigo_centro_costo_destino.Text.Trim())
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_codigo_centro_costo_destino.Text));
+                            }
+                            else {
+                                dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                                if (dtCorreos.Rows.Count > 0)
+                                {
+                                    for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                    {
+                                        this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                    }
+                                }
+                                else
+                                {
+                                    this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                                }
+                            }
+                            paso_aprobacion = "Responsable Centro de Costo Origen";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
+                            break;
+                        case 2:
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Responsable Centro de Costo Destino";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
+                            break;
+                        case 3:
+                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_codigo_centro_costo_destino.Text));
+                            //paso_aprobacion = "Fixed Asset";
+                            break;
+                        /*case 1:
                             this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
                             paso_aprobacion = "Responsable Centro de Costo Origen";
                             break;
                         case 2:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_codigo_centro_costo_destino.Text));
                             paso_aprobacion = "Fixed Asset";
-                            break;
+                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 6)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Solicitud de Denuncia Robo ò Perdida";
+                            paso_aprobacion = "Solicitud de Denuncia Robo ó Perdida";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_denuncia.Text);
                             break;
                         case 1:
-                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Centro de Costo";
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                                paso_aprobacion = "Centro de Costo";
+                                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_denuncia.Text);
                             break;
                     }
                 }
                 if (id_tipo_movimiento == 7)
                 {
+                    DataTable dtCorreos = null;
                     switch (paso_aprobacion_actual)
                     {
                         case 0:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_cod_centro_costo.Text));
                             //GPE 12/07/2013 WAT_Document new stuff # 13 Send email on ID Solicitante
-                            this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante .Text));
-                            paso_aprobacion = "Solicitud de Movimiento de Activos";
+                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante .Text));
+                            paso_aprobacion = "Solicitud de Movimiento de Externo";
+                            this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
                         case 1:
                             this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_codigo_centro_costo_destino.Text));
                             //GPE 12/07/2013 WAT_Document new stuff # 13 Send email on ID Solicitante
-                            this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
+                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                             paso_aprobacion = "Responsable Centro de Costo Origen";
+                            this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
                         case 2:
-                            if (this.txt_localizacion_solicitud.Text.Trim() == "M420")
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
+                            }
+                            /*if (this.txt_localizacion_solicitud.Text.Trim() == "M420")
                             {
                                 this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(5, this.txt_cod_centro_costo.Text));
                             }
@@ -2422,14 +3142,41 @@ namespace Modulo_Boston.Pages
                                 {
                                     this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(4, this.txt_cod_centro_costo.Text));
                                 }
-                            }
+                            }*/
                             //GPE 12/07/2013 WAT_Document new stuff # 13 Send email on ID Solicitante
-                            this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
+                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                             paso_aprobacion = "Responsable Centro de Costo Destino";
+                            this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
                         case 3:
-                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            if (this.txt_localizacion_solicitud.Text.Trim() == "M420")
+                            /*dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                            }
+
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_codigo_centro_costo_destino.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
+                            }*/
+                            //this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
+                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
+                            /*if (this.txt_localizacion_solicitud.Text.Trim() == "M420")
                             {
                                 this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(4, this.txt_cod_centro_costo.Text));
                             }
@@ -2439,57 +3186,136 @@ namespace Modulo_Boston.Pages
                                 {
                                     this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(5, this.txt_cod_centro_costo.Text));
                                 }
-                            }
+                            }*/
                             //GPE 12/07/2013 WAT_Document new stuff # 13 Send email on ID Solicitante
-                            this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
+                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                             paso_aprobacion = "Fixed Asset Origen";
                             break;
                     }
                 }
-                this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
             }
-            if (dt_informacion.Rows[0]["ESTADO"].ToString().Equals("A"))
+            if (dt_informacion.Rows[0]["ESTADO"].ToString().Equals("E"))//"A"))
             {
                 System.Data.DataTable dt = new cls_traslado().cargar_tipo_movimiento();
                 if (id_tipo_movimiento == 1)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
                     if (num == 3)
                     {
                         paso_aprobacion = "Fixed Asset";
-                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
-                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_donacion.Text);
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                     }
                 }
                 if (id_tipo_movimiento == 2)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
                     if (num == 2)
                     {
                         paso_aprobacion = "Fixed Asset";
-                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
-                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_destruccion.Text);
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
+                        cls_traslado activos = new cls_traslado();
+                        DataTable movimientos = activos.cargar_datos_generales(this.Session["CODIGO_COMPANIA"].ToString(), id_movimiento);
+
+                        System.Data.DataTable dt_activos = null;
+                        if (Convert.ToBoolean(movimientos.Rows[0]["POSEE_PLACAS"].ToString()))
+                        {
+                            dt_activos = activos.cargar_activos_grid(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]), true);
+                        }
+                        else {
+
+                            dt_activos = activos.cargar_activos_grid_sin_placa(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]),true);
+                        }
+                        if (dt_activos.Rows.Count > 0)
+                        {
+                            dtCorreos = new cls_traslado().cargar_correos_grupo(7, this.txt_cod_centro_costo.Text);
+                            if (dtCorreos.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                                {
+                                    this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                                }
+                            }
+                            else
+                            {
+                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(7, this.txt_cod_centro_costo.Text));
+                            }
+                        }
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                     }
                 }
                 if (id_tipo_movimiento == 3)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
                     if (num == 2)
                     {
                         paso_aprobacion = "Fixed Assets";
-                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
-                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_calibracion.Text);
+
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                     }
                 }
                 if (id_tipo_movimiento == 4)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
                     if (num == 2)
                     {
                         paso_aprobacion = "Fixed Assets";
                         this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                         this.cambiar_estado(id_movimiento, "04", false);
-                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                     }
                 }
                 if (id_tipo_movimiento == 5)
@@ -2497,9 +3323,13 @@ namespace Modulo_Boston.Pages
                     int num = paso_aprobacion_actual;
                     if (num == 3)
                     {
-                        paso_aprobacion = "Responsable Centro de Costo Destino";
+                        paso_aprobacion = "Fixed Assets";
                         this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                         this.cambio_datos_traslados_activos_aceptados(id_tipo_movimiento);
+
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
+
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
                     }
                 }
                 if (id_tipo_movimiento == 6)
@@ -2507,17 +3337,48 @@ namespace Modulo_Boston.Pages
                     int num = paso_aprobacion_actual;
                     if (num == 2)
                     {
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                         paso_aprobacion = "Fixed Asset";
-                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
+                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_denuncia.Text);
                         this.cambiar_estado(id_movimiento, "06", true);
                     }
                 }
                 if (id_tipo_movimiento == 7)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
-                    if (num == 4)
+                    if (num == 3)
                     {
-                        paso_aprobacion = "Fixed Asset Destino";
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_codigo_centro_costo_destino.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
+                        }
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
+                        //this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
+                        //this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
+                        //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
+                        paso_aprobacion = "Fixed Asset";
                         this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                         this.cambio_datos_traslados_activos_aceptados(id_tipo_movimiento);
                     }
@@ -2525,7 +3386,7 @@ namespace Modulo_Boston.Pages
             }
         }
 
-        protected void btn_grupos_de_acceso_Click(object sender, EventArgs e)
+        protected void btn_grupos_de_acceso_Click(object sender, System.EventArgs e)
         {
            if(new cls_traslado().is_admin(this.Session["USUARIO"].ToString()))
             {
@@ -2536,7 +3397,7 @@ namespace Modulo_Boston.Pages
             }
         }
 
-        protected void btn_usuarios_por_grupo_de_acceso_Click(object sender, EventArgs e)
+        protected void btn_usuarios_por_grupo_de_acceso_Click(object sender, System.EventArgs e)
         {
             if (new cls_traslado().is_admin(this.Session["USUARIO"].ToString()))
             {
@@ -2665,7 +3526,7 @@ namespace Modulo_Boston.Pages
                         this.Session["NOMBRE_CENTRO_COSTO_DESTINO"] = dt.Rows[0]["CENTRO_COSTO"].ToString();
                         this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable(this.txt_codigo_centro_costo_destino.Text.Trim());
                         //GPE 4/8/2014 WAT-04052014 Point 7
-                        this.cargar_combo_localizacion(dt.Rows[0]["COD_CIA_PRO"].ToString());
+                        this.cargar_combo_localizacion(dt.Rows[0]["SES_COD_CIA_PRO"].ToString());
                     }
                     else
                     {
@@ -2673,9 +3534,11 @@ namespace Modulo_Boston.Pages
                         //GPE 4/8/2014 WAT-04052014 Point 7
                         this.cargar_combo_localizacion();
                     }
-                    string script = "$(\"[id*='txt_nombre_centro_costo_destino']\").val('{0}');$(\"[id*='txt_cargo_responsable_costo_destino']\").val('{1}');";
+                    this.txt_nombre_centro_costo_destino.Text = this.Session["NOMBRE_CENTRO_COSTO_DESTINO"].ToString();
+                    this.txt_cargo_responsable_costo_destino.Text = this.Session["RESPONSABLE"].ToString();
+                    /*string script = "$(\"[id*='txt_nombre_centro_costo_destino']\").val('{0}');$(\"[id*='txt_cargo_responsable_costo_destino']\").val('{1}');";
                     script = string.Format(script, this.Session["NOMBRE_CENTRO_COSTO_DESTINO"].ToString(), this.Session["RESPONSABLE"].ToString());
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);*/
                 }               
             }
             catch (System.Exception ex)
@@ -2689,11 +3552,525 @@ namespace Modulo_Boston.Pages
             this.ddl_localizacion_destino.Items.Clear();
             this.ddl_seccion_destino.Items.Clear();
             this.ddl_planta_destino.Items.Clear();
+            this.ddl_ubicacion_destino.Items.Clear();
             ListItem first = new ListItem("Seleccione la Localización", "0");
             this.ddl_localizacion_destino.Items.Add(first);
-            //this.txt_codigo_centro_costo_destino.Text = "";
-            //this.txt_nombre_centro_costo_destino.Text = "";
+            this.txt_codigo_centro_costo_destino.Text = "";
+            this.txt_nombre_centro_costo_destino.Text = "";
+            this.txt_cargo_responsable_costo_destino.Text = "";
         }
-        
+
+        private void deshabilitarControles() 
+        {
+            this.txt_codigo_centro_costo_destino.Enabled = false;
+            this.txt_cod_responsable_destino.Enabled = false;
+            this.ddl_localizacion_destino.Enabled = false;
+            this.ddl_planta_destino.Enabled = false;
+            this.ddl_seccion_destino.Enabled = false;
+            this.txt_cargo_responsable_costo_destino.Enabled = false;
+            this.ddl_ubicacion_destino.Enabled = false;
+            this.btn_buscar_centro_costo_destino.Visible = false;
+            this.btn_buscar_resposable_destino.Visible = false;
+        }
+
+        private void habilitarControles()
+        {
+            this.txt_codigo_centro_costo_destino.Enabled = true;
+            this.txt_cod_responsable_destino.Enabled = true;
+            //this.ddl_localizacion_destino.Enabled = true;
+            //this.ddl_planta_destino.Enabled = true;
+            //this.ddl_seccion_destino.Enabled = true;
+            this.txt_cargo_responsable_costo_destino.Enabled = true;
+            this.btn_buscar_centro_costo_destino.Visible = true;
+            this.btn_buscar_resposable_destino.Visible = true;
+        }
+
+        private void habilitarDDL() {
+            this.ddl_localizacion_destino.Enabled = true;
+            this.ddl_planta_destino.Enabled = true;
+            this.ddl_seccion_destino.Enabled = true;
+            this.ddl_ubicacion_destino.Enabled = true;
+        }
+
+        private void desHabilitarDDL()
+        {
+            this.ddl_localizacion_destino.Enabled = false;
+            this.ddl_planta_destino.Enabled = false;
+            this.ddl_seccion_destino.Enabled = false;
+            this.ddl_ubicacion_destino.Enabled = false;
+        }
+
+        private void habilitarObservaciones(int id_movimiento) 
+        {
+            System.Data.DataTable dt_informacion = new cls_traslado().cargar_informacion_movimiento(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
+            int id_tipo_movimiento = System.Convert.ToInt32(dt_informacion.Rows[0]["ID_TIPO_MOVIMIENTO"]);
+            if (id_tipo_movimiento == 1)
+            {
+                this.txt_observaciones_donacion.Enabled = true;
+            }
+            if (id_tipo_movimiento == 2)
+            {
+                this.txt_observaciones_destruccion.Enabled = true;
+            }
+            if (id_tipo_movimiento == 3)
+            {
+                this.txt_observaciones_calibracion.Enabled = true;
+            }
+            if (id_tipo_movimiento == 6)
+            {
+                this.txt_observaciones_denuncia.Enabled = true;
+            }
+        }
+
+        private bool validarObservaciones(int id_movimiento) 
+        {
+            System.Data.DataTable dt_informacion = new cls_traslado().cargar_informacion_movimiento(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
+            int id_tipo_movimiento = System.Convert.ToInt32(dt_informacion.Rows[0]["ID_TIPO_MOVIMIENTO"]);
+            if (id_tipo_movimiento == 1 && string.IsNullOrEmpty(this.txt_observaciones_donacion.Text.Trim()))
+            {
+                 return false;
+            }
+            if (id_tipo_movimiento == 2 && string.IsNullOrEmpty(this.txt_observaciones_destruccion.Text.Trim()))
+            {
+                return false;
+            }
+            if (id_tipo_movimiento == 3 && string.IsNullOrEmpty(this.txt_observaciones_calibracion.Text.Trim()))
+            {
+                return false;
+            }
+            if (id_tipo_movimiento == 6 && string.IsNullOrEmpty(this.txt_observaciones_denuncia.Text.Trim()))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void inhabilitarTextBoxs() 
+        {
+            for (int i = 0; i < this.gv_activos.Rows.Count - 1;i++ )
+            {
+                ((TextBox)this.gv_activos.Rows[i].FindControl("txt_entrada_placa")).Enabled = false;
+            }
+        }
+
+        private void inhabilitarTextBoxsSinPlaca()
+        {
+            for (int i = 0; i < this.gv_SinPlaca.Rows.Count - 1; i++)
+            {
+                this.gv_SinPlaca.Rows[i].Cells[1].Enabled = false;
+                ((TextBox)this.gv_SinPlaca.Rows[i].FindControl("txt_descripcion_activo")).Enabled = false;
+                ((TextBox)this.gv_SinPlaca.Rows[i].FindControl("txt_marca")).Enabled = false;
+                ((TextBox)this.gv_SinPlaca.Rows[i].FindControl("txt_modelo")).Enabled = false;
+                ((TextBox)this.gv_SinPlaca.Rows[i].FindControl("txt_serie")).Enabled = false;
+                ((TextBox)this.gv_SinPlaca.Rows[i].FindControl("txt_valor_libros")).Enabled = false;
+            }
+        }
+
+        private DataTable guardarCheckBoxs(DataTable tabla)
+        {
+            for (int i = 0; i < this.gv_activos.Rows.Count; i++)
+            {
+                CheckBox chkRow = (this.gv_activos.Rows[i].Cells[2].FindControl("chbDesecho") as CheckBox);
+                if (chkRow.Checked)
+                {
+                    tabla.Rows[i]["DESECHO"] = true;
+                }
+                else {
+                    tabla.Rows[i]["DESECHO"] = false;
+                }
+            }
+            return tabla;
+        }
+
+        private DataTable guardarCheckBoxsSinPlaca(DataTable tabla)
+        {
+            for (int i = 0; i < this.gv_SinPlaca.Rows.Count; i++)
+            {
+                CheckBox chkRow = (this.gv_SinPlaca.Rows[i].Cells[2].FindControl("chbDesecho") as CheckBox);
+                if (chkRow.Checked)
+                {
+                    tabla.Rows[i]["DESECHO"] = true;
+                }
+                else
+                {
+                    tabla.Rows[i]["DESECHO"] = false;
+                }
+            }
+            return tabla;
+        }
+
+        private void marcarCheckBoxs(DataTable tabla)
+        {
+            for (int i = 0; i < this.gv_activos.Rows.Count; i++)
+            {
+                //CheckBox chkRow = ;
+                if (Convert.ToBoolean(tabla.Rows[i]["DESECHO"]) == true)
+                {
+                    (this.gv_activos.Rows[i].Cells[2].FindControl("chbDesecho") as CheckBox).Checked = true;
+                }
+                else
+                {
+
+                    (this.gv_activos.Rows[i].Cells[2].FindControl("chbDesecho") as CheckBox).Checked = false;
+                }
+            }
+        }
+
+        private void marcarCheckBoxsSinPlaca(DataTable tabla)
+        {
+            for (int i = 0; i < this.gv_SinPlaca.Rows.Count; i++)
+            {
+                //CheckBox chkRow = ;
+                if (Convert.ToBoolean(tabla.Rows[i]["DESECHO"]) == true)
+                {
+                    (this.gv_SinPlaca.Rows[i].Cells[2].FindControl("chbDesecho") as CheckBox).Checked = true;
+                }
+                else
+                {
+
+                    (this.gv_SinPlaca.Rows[i].Cells[2].FindControl("chbDesecho") as CheckBox).Checked = false;
+                }
+            }
+        }
+
+        protected void chkSinPlaca_CheckedChange(object sender, EventArgs e)
+        {
+            /*Inicializo la tabla de los activos sin placa*/
+            DataTable tablaActivosSinPlaca = this.ReturnEmptyDataTableSinplaca();
+            System.Data.DataRow filaSinPlaca = tablaActivosSinPlaca.NewRow();
+            filaSinPlaca["DESECHO"] = false;
+            filaSinPlaca["DES_ACTIVO"] = null;
+            filaSinPlaca["DES_MARCA"] = null;
+            filaSinPlaca["NOM_MODELO"] = null;
+            filaSinPlaca["SER_ACTIVO"] = null;
+            filaSinPlaca["VAL_LIBROS"] = null;
+
+            tablaActivosSinPlaca.Rows[0].Delete();
+            tablaActivosSinPlaca.Rows.Add(filaSinPlaca);
+            this.gv_SinPlaca.DataSource = tablaActivosSinPlaca;
+            this.gv_SinPlaca.DataBind();
+
+            /*Inicializo la tabla de los activos con placa*/
+            DataTable tablaActivos = this.ReturnEmptyDataTable();
+            System.Data.DataRow fila = tablaActivos.NewRow();
+
+            fila["DESECHO"] = false;
+            fila["PLA_ACTIVO"] = null;
+            fila["REF_NUM_ACT"] = null;
+            fila["DES_ACTIVO"] = null;
+            fila["DES_MARCA"] = null;
+            fila["NOM_MODELO"] = null;
+            fila["SER_ACTIVO"] = null;
+            fila["VAL_LIBROS"] = null;
+
+            tablaActivos.Rows[0].Delete();
+            tablaActivos.Rows.Add(fila);
+            this.gv_activos.DataSource = tablaActivos;
+            this.gv_activos.DataBind();
+
+            if (chkSinPlaca.Checked == true)
+            {
+                this.btn_aplicar_solicitud_sin_placa.Visible = true;
+                this.btn_aplicar_solicitud.Visible = false;
+                this.txt_cod_centro_costo.Visible = false;
+                this.txt_cod_centro_costo.Text = "";
+                this.txt_des_centro_costo.Text = "";
+                this.txt_responsable.Text = "";
+                this.ddl_centro_costo.Visible = true;
+                this.gv_activos.Visible = false;
+                this.gv_SinPlaca.Visible = true;
+            }
+            else
+            {
+                this.btn_aplicar_solicitud_sin_placa.Visible = false;
+                this.btn_aplicar_solicitud.Visible = true;
+                this.txt_cod_centro_costo.Visible = true;
+                this.ddl_centro_costo.Visible = false;
+                this.gv_activos.Visible = true;
+                this.gv_SinPlaca.Visible = false;
+                /*this.gv_activos.Columns[3].Visible = true;
+                this.gv_activos.Columns[4].Visible = true;*/
+            }
+        }
+
+        protected void gv_SinPlaca_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "buscarClick")
+            {
+                int index = System.Convert.ToInt32(e.CommandArgument);
+                this.insertarActivoSinPlaca(index);
+            }
+        }
+
+        protected void gv_SinPlaca_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int index = System.Convert.ToInt32(e.RowIndex);
+            System.Data.DataTable tablaActivos = this.Session["TABLA_ACTIVO_SIN_PLACA"] as System.Data.DataTable;
+
+            tablaActivos = guardarCheckBoxsSinPlaca(tablaActivos);
+
+            if (index < tablaActivos.Rows.Count - 1)
+            {
+                if (!string.IsNullOrEmpty(tablaActivos.Rows[index][0].ToString()))
+                {
+                    tablaActivos.Rows[index].Delete();
+                }
+            }
+
+            if (tablaActivos.Rows.Count == 0)
+            {
+                System.Data.DataRow filaNueva = tablaActivos.NewRow();
+                filaNueva["DESECHO"] = false;
+                filaNueva["DES_ACTIVO"] = null;
+                filaNueva["DES_MARCA"] = null;
+                filaNueva["NOM_MODELO"] = null;
+                filaNueva["SER_ACTIVO"] = null;
+                filaNueva["VAL_LIBROS"] = null;
+                tablaActivos.Rows.Add(filaNueva);
+            }
+
+
+
+            this.Session["TABLA_ACTIVO_SIN_PLACA"] = tablaActivos;
+            this.gv_SinPlaca.DataSource = tablaActivos;
+            this.gv_SinPlaca.DataBind();
+            inhabilitarTextBoxsSinPlaca();
+
+            marcarCheckBoxsSinPlaca(tablaActivos);
+
+            ((TextBox)this.gv_SinPlaca.Rows[(gv_SinPlaca.Rows.Count - 1)].FindControl("txt_descripcion_activo")).Focus();
+        }
+
+        private void insertarActivoSinPlaca(int index) {
+            string descripcion = ((TextBox)this.gv_SinPlaca.Rows[index].FindControl("txt_descripcion_activo")).Text.Trim();
+            string marca = ((TextBox)this.gv_SinPlaca.Rows[index].FindControl("txt_marca")).Text.Trim();
+            string modelo = ((TextBox)this.gv_SinPlaca.Rows[index].FindControl("txt_modelo")).Text.Trim();
+            string serie = ((TextBox)this.gv_SinPlaca.Rows[index].FindControl("txt_serie")).Text.Trim();
+            string valor_libros = ((TextBox)this.gv_SinPlaca.Rows[index].FindControl("txt_valor_libros")).Text.Trim();
+                if (!string.IsNullOrEmpty(descripcion.Trim()) && !string.IsNullOrEmpty(marca.Trim()) &&
+                     !string.IsNullOrEmpty(modelo.Trim()) && !string.IsNullOrEmpty(serie.Trim()) &&
+                      !string.IsNullOrEmpty(valor_libros.Trim()))
+                {
+
+                    System.Data.DataTable tablaActivos = this.Session["TABLA_ACTIVO_SIN_PLACA"] as System.Data.DataTable;
+
+                    if (tablaActivos == null || this.gv_SinPlaca.Rows.Count == 1)
+                    {
+                        this.Session["TABLA_ACTIVO_SIN_PLACA"] = this.ReturnEmptyDataTableSinplaca();
+                        tablaActivos = (this.Session["TABLA_ACTIVO_SIN_PLACA"] as System.Data.DataTable);
+                    }
+
+                    System.Data.DataRow fila = tablaActivos.NewRow();
+                    fila["DESECHO"] = false;
+                    fila["DES_ACTIVO"] = descripcion;
+                    fila["DES_MARCA"] = marca;
+                    fila["NOM_MODELO"] = modelo;
+                    fila["SER_ACTIVO"] = serie;
+                    fila["VAL_LIBROS"] = valor_libros;
+
+
+                    tablaActivos.Rows[index].Delete();
+                    tablaActivos.Rows.Add(fila);
+
+                    this.Session["TABLA_ACTIVO_SIN_PLACA"] = tablaActivos;
+
+                    System.Data.DataRow filaNueva = tablaActivos.NewRow();
+                    filaNueva["DESECHO"] = false;
+                    filaNueva["DES_ACTIVO"] = null;
+                    filaNueva["DES_MARCA"] = null;
+                    filaNueva["NOM_MODELO"] = null;
+                    filaNueva["SER_ACTIVO"] = null;
+                    filaNueva["VAL_LIBROS"] = null;
+                    tablaActivos.Rows.Add(filaNueva);
+
+                    tablaActivos = guardarCheckBoxsSinPlaca(tablaActivos);
+
+                    this.gv_SinPlaca.DataSource = tablaActivos;
+                    this.gv_SinPlaca.DataBind();
+
+                    marcarCheckBoxsSinPlaca(tablaActivos);
+
+                    inhabilitarTextBoxsSinPlaca();
+                }
+        }
+
+        protected void ddl_centro_costo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.ddl_centro_costo.SelectedValue.Trim() != "0")
+                {
+                    if (this.validar_centro_costo(this.ddl_centro_costo.SelectedValue.Trim()))
+                    {
+                        cls_traslado centro_costo = new cls_traslado();
+                        System.Data.DataTable dt = centro_costo.cargar_centro_costo(this.ddl_centro_costo.SelectedValue.Trim());
+                        if (dt.Rows.Count > 0)
+                        {
+                            this.Session["NOMBRE_CENTRO_COSTO"] = dt.Rows[0]["CENTRO_COSTO"].ToString();
+                            
+                            if (ddl_tipo_movimiento.SelectedValue == "3")
+                                this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable_calibracion(this.ddl_centro_costo.SelectedValue.Trim());
+                            else
+                                this.Session["RESPONSABLE"] = new cls_traslado().nombre_responsable(this.ddl_centro_costo.SelectedValue.Trim());
+                        }
+                        else
+                        {
+                            this.Session["NOMBRE_CENTRO_COSTO"] = "No encontrado";
+                        }
+                        this.txt_cod_centro_costo.Text = ddl_centro_costo.SelectedValue;
+                        this.txt_des_centro_costo.Text = this.Session["NOMBRE_CENTRO_COSTO"].ToString();
+                        this.txt_responsable.Text = this.Session["RESPONSABLE"].ToString();
+                    }
+                }
+                else
+                {
+                    this.txt_cod_centro_costo.Text = "";
+                    this.txt_des_centro_costo.Text = string.Empty;
+                    this.txt_responsable.Text = string.Empty;
+                    //this.crear_mensajes("validation", "El código de centro de costo es requerido");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.crear_mensajes("error", ex.ToString());
+            }
+        }
+
+        protected void cargar_ddl_centro_costo()
+        {
+            try
+            {
+                this.ddl_centro_costo.Visible = false;
+                cls_traslado tipo_movimiento = new cls_traslado();
+                System.Data.DataTable dt = tipo_movimiento.cargar_centros_costo();
+                this.ddl_centro_costo.DataSource = dt;
+                this.ddl_centro_costo.DataTextField = "COD_CENTRO_COSTO";
+                this.ddl_centro_costo.DataValueField = "COD_CENTRO_COSTO";
+                this.ddl_centro_costo.DataBind();
+            }
+            catch (System.Exception ex)
+            {
+                this.crear_mensajes("error", ex.ToString());
+            }
+        }
+
+        protected void btn_aplicar_solicitud_sin_placa_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.Session["SolicitudEnviada"] == null)
+                {
+                    //GPE 3/31/2014 prevent double press
+                    btn_aplicar_solicitud_sin_placa.Enabled = false;
+
+                    if (this.gv_SinPlaca.Rows.Count <= 51)
+                    {
+                        if (this.gv_SinPlaca.Rows.Count > 1)
+                        {
+
+                            System.Data.DataTable tablaActivos = this.Session["TABLA_ACTIVO_SIN_PLACA"] as System.Data.DataTable;
+                            tablaActivos = guardarCheckBoxsSinPlaca(tablaActivos);
+                            this.Session["TABLA_ACTIVO_SIN_PLACA"] = tablaActivos;
+                            gv_SinPlaca.DataSource = tablaActivos;
+                            gv_SinPlaca.DataBind();
+                            marcarCheckBoxsSinPlaca(tablaActivos);
+                            inhabilitarTextBoxsSinPlaca();
+
+                            if (this.validar_datos_sin_placa(System.Convert.ToInt32(this.Session["TIPO_MOVIMIENTO"])))
+                            {
+                                ent_traslado entidad = new ent_traslado();
+                                entidad = this.asignar_valores_sin_placa(entidad);
+                                int id_movimiento = new cls_traslado().ingresar_traslado_sin_placa(entidad);
+                                if (id_movimiento > 0)
+                                {
+                                    this.txt_num_solicitud.Text = id_movimiento.ToString();
+                                    this.enviar_solicitud_correo(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
+                                    if (id_movimiento != 2)
+                                    {
+                                        this.crear_mensajes("success", "La solicitud de traslado se realizo satisfactoriamente");
+                                    }
+                                    else
+                                        this.crear_mensajes("success", "La solicitud se realizo satisfactoriamente");
+
+                                    if (Int32.Parse(this.ddl_tipo_movimiento.SelectedValue) == 5 || Int32.Parse(this.ddl_tipo_movimiento.SelectedValue) == 7)
+                                    {
+                                        this.txt_localizacion_solicitud.Text = this.ddl_localizacion_destino.SelectedItem.ToString();
+                                        this.txt_seccion_solicitud.Text = this.ddl_seccion_destino.SelectedItem.ToString();
+                                        this.txt_ubicacion_solicitud.Text = this.ddl_ubicacion_destino.SelectedItem.ToString();
+                                    }
+
+                                    this.estado_controles(this.Page, false);
+                                    this.estado_botones(false, false);
+                                    this.Session["SolicitudEnviada"] = true;
+
+                                    this.btn_aplicar_solicitud_sin_placa.Visible = false;
+                                    this.ddl_centro_costo.Enabled = false;
+                                    this.gv_SinPlaca.Enabled = false;
+
+                                }
+                                else
+                                {
+                                    if (id_movimiento != 2)
+                                        this.crear_mensajes("error", "La solicitud de traslado no pudo realizarse con exito");
+                                    else
+                                        this.crear_mensajes("error", "La solicitud no pudo realizarse con exito");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            this.crear_mensajes("error", "La solicitud debe contener por lo menos 1 activo");
+                        }
+                    }
+                    else
+                    {
+                        this.crear_mensajes("error", "La solicitud puede contener un máximo de 50 activos");
+                    }
+                    //GPE 3/31/2014 prevent double press
+                    btn_aplicar_solicitud_sin_placa.Enabled = true;
+                }
+                else
+                {
+                    this.crear_mensajes("error", "Esta solicitud fue enviada con anterioridad, por favor realice una solicitud nueva");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                //GPE 3/31/2014 prevent double press
+                btn_aplicar_solicitud.Enabled = true;
+                this.crear_mensajes("error", ex.ToString());
+            }
+        }
+
+        private void reiniciar_controles() {
+            this.chkSinPlaca.Checked = false;
+            this.gv_activos.Visible = true;
+            this.gv_SinPlaca.Visible = false;
+            btn_aplicar_solicitud.Visible = true;
+            btn_aplicar_solicitud_sin_placa.Visible = false;
+            this.txt_cod_centro_costo.Text = "";
+            this.txt_responsable.Text = "";
+            this.txt_des_centro_costo.Text = "";
+            DataTable tablaActivos = this.ReturnEmptyDataTable();
+            System.Data.DataRow fila = tablaActivos.NewRow();
+
+            fila["DESECHO"] = false;
+            fila["PLA_ACTIVO"] = null;
+            fila["REF_NUM_ACT"] = null;
+            fila["DES_ACTIVO"] = null;
+            fila["DES_MARCA"] = null;
+            fila["NOM_MODELO"] = null;
+            fila["SER_ACTIVO"] = null;
+            fila["VAL_LIBROS"] = null;
+
+
+            this.Session["TABLA_ACTIVO"] = this.ReturnEmptyDataTable();
+
+            tablaActivos.Rows[0].Delete();
+            tablaActivos.Rows.Add(fila);
+            this.gv_activos.DataSource = tablaActivos;
+            this.gv_activos.DataBind();
+        }
+
     }
 }

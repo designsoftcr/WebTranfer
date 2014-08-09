@@ -19,7 +19,7 @@
     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true">
     </asp:ScriptManager>
     <div id="container">
-        <div id="boton_container" style="float:right;">v.1.0.05142014
+        <div id="boton_container" style="float:right;">Salir
             <asp:ImageButton ID="img_btn_salir" runat="server" 
                 ImageUrl="~/Images/logout.png" PostBackUrl="~/wbfrm_login.aspx" 
                 ToolTip="Salir del Sistema" />
@@ -40,7 +40,7 @@
                 <div id="message_content">                    
                     <p class="message"><span class="asterisco">* </span><asp:Label ID="lb_aviso" runat="server" Text="<%$ Resources:pages_names_es, lb_aviso%>"></asp:Label><span class="asterisco">* </span></p>                                                    
                 </div>     
-             <div class="logo_fontsistemas">Font Sistemas</div>  
+             <!--<div class="logo_fontsistemas">Font Sistemas</div>-->
                 <div id="main_content">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">        
                     </asp:ContentPlaceHolder>

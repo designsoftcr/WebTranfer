@@ -21,3 +21,13 @@ C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\bin\Release\Entidades.dll
 C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\bin\Release\Entidades.pdb
 C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Release\Entidades.dll
 C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Release\Entidades.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
+C:\Users\salazarr\Desktop\WebTranfer\Entidades\bin\Release\Entidades.dll
+C:\Users\salazarr\Desktop\WebTranfer\Entidades\bin\Release\Entidades.pdb
+C:\Users\salazarr\Desktop\WebTranfer\Entidades\obj\Release\Entidades.dll
+C:\Users\salazarr\Desktop\WebTranfer\Entidades\obj\Release\Entidades.pdb
+C:\Users\salazarr\Desktop\WebTranfer\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Desktop\WebTranfer\Entidades\bin\Release\Entidades.dll
+C:\Users\Jonathan\Desktop\WebTranfer\Entidades\bin\Release\Entidades.pdb
+C:\Users\Jonathan\Desktop\WebTranfer\Entidades\obj\Release\Entidades.dll
+C:\Users\Jonathan\Desktop\WebTranfer\Entidades\obj\Release\Entidades.pdb

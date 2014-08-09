@@ -50,57 +50,57 @@
             <asp:Label ID="lb_titulo_filtro" runat="server" Text=""></asp:Label>
         </legend>
 
-        <table >
+        <table>
             <tr>
-                <td class="td_encabezado_filtro">
+                <td>
                     <asp:Label ID="lb_filtrado_codigo" runat="server" Text="Código"></asp:Label>
                 </td>
                 <td colspan="2">
-                    <asp:TextBox ID="txt_filtro_codigo" runat="server" 
-                        CssClass="txt_ancho"></asp:TextBox>
+                    <asp:TextBox ID="txt_filtro_codigo" runat="server" CssClass="txt_detalle"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="td_encabezado_filtro_col3">
-                    <asp:Label ID="lb_filtrado_descripcion" runat="server" Text="Descripción"></asp:Label>
+                <td>
+                    <asp:Label ID="lb_filtrado_descripcion" runat="server" Text="Descripción" ></asp:Label>
                 </td>
                 <td colspan="2">
-                    <asp:TextBox ID="txt_filtro_descripcion" runat="server" CssClass="txt_ancho"></asp:TextBox>
+                    <asp:TextBox ID="txt_filtro_descripcion" runat="server" CssClass="txt_detalle"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <table>
-                    <tr>
+                <td></td>
                     <td>
+                        <asp:Button ID="btn_realizar_filtrado" runat="server" CssClass="button_generic" onclick="btn_realizar_filtrado_Click" Text="Buscar"/>
                     </td>
                     <td>
-                        <asp:Button ID="btn_realizar_filtrado" runat="server" CssClass="button_generic" 
-                            onclick="btn_realizar_filtrado_Click" Text="Buscar" />
+                        <asp:Button ID="Aceptar" runat="server" CssClass="button_generic" onclick="btn_aceptar_Click" Text="Editar" style="display:none;" />
+                    </td>
+            </tr>
+         </table>
+            <!--<table>
+                <tr>
+                    <td>
+                        
                     </td>
                     <td>
-                        <asp:Button ID="btn_limpiar" runat="server" CssClass="button_generic" 
-                            onclick="btn_limpiar_Click" Text="Limpiar Filtro" />
+                        <asp:Button ID="btn_limpiar" runat="server" CssClass="button_generic" onclick="btn_limpiar_Click" Text="Limpiar Filtro" />
                     </td>
                     <td>
-                        <asp:Button ID="Aceptar" runat="server" CssClass="button_generic" 
-                            onclick="btn_aceptar_Click" Text="Aceptar" />
                     </td>
                     <td>
                         <input id="btn_cancelar" type="button" value="Cancelar" 
                             onclick="javascript:parent.jQuery.fancybox.close();" 
                             class="button_generic"/>
                     </td>
-                    </tr>
-                </table>
-            </tr>
-        </table>
+                </tr>
+            </table>-->
         <br /><br /><br />
     </fieldset>
         <asp:GridView ID="gv_datos" runat="server" CellPadding="3"  
         GridLines="Vertical" AllowPaging="True" AutoGenerateColumns="False"  
         BorderStyle="None"                
         OnPageIndexChanging="gv_datos_PageIndexChanging"  
-        OnSelectedIndexChanged="gv_datos_SelectedIndexChanged"                
+        OnSelectedIndexChanged="gv_datos_SelectedIndexChanged" 
         Width="100%">
         <PagerStyle CssClass="PagerStyleGrid" HorizontalAlign="Center" />
         <FooterStyle CssClass="FooterStyleGrid" />

@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using WebAssetsTransfer.Functions;
 using WebAssetsTransfer.Helper;
+using System.Xml.XPath;
 
 namespace WebAssetsTransfer.Pages
 {
@@ -129,7 +130,9 @@ namespace WebAssetsTransfer.Pages
             bool resultado = false;
             int id_grupo = 0;
             string centro_costo = "nulo";
+            string centro_costo_destino = "";
             int tipo_movimiento = 0;
+            int paso_aprobacion_actual = 0;
 
             cls_movimiento_maestro movimientos = new cls_movimiento_maestro();
             DataTable dtMovimientos = movimientos.cargar_movimientos_maestro(id_movimiento);
@@ -137,27 +140,47 @@ namespace WebAssetsTransfer.Pages
             if (dtMovimientos.Rows.Count > 0)
             {
                 tipo_movimiento = (int)dtMovimientos.Rows[0][2];
-                int paso_aprobacion_actual = (int)dtMovimientos.Rows[0][1];
+                paso_aprobacion_actual = (int)dtMovimientos.Rows[0][1];
                 centro_costo = (string)dtMovimientos.Rows[0][3];
                 id_grupo = obtenerIdGrupo(tipo_movimiento, paso_aprobacion_actual);
+
+                if (tipo_movimiento == 5 || tipo_movimiento == 7)
+                {
+                    string cadena = (string)dtMovimientos.Rows[0][4];
+                    string xmlcadena = "<Datos>" + cadena + "</Datos>";
+                    System.Xml.Linq.XElement xmldoc = System.Xml.Linq.XElement.Parse(xmlcadena);
+
+                    System.Xml.Linq.XElement xml_movimiento_activo = (
+                                                            from item in xmldoc.XPathSelectElements("./MovimientoActivo")
+                                                            select item).FirstOrDefault<System.Xml.Linq.XElement>();
+                    centro_costo_destino = System.Convert.ToString(xml_movimiento_activo.Element("CentroCostoDestino").Value);
+                }
             }
 
             if (id_grupo == 0)
             {
-                //Falta una verificacion de si el usuario en el caso de ser calibración tiene los permisos para ejecutar el paso de movimiento
+                //Verifica que si es movimiento de calibracion solo el usuario de calibración puede aprobar
                 if (tipo_movimiento == 3)
                 {
                     cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
-                    DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
-                    if (dt.Rows.Count > 0)
-                    {
-                        return dt.Rows.Count > 0;
-                    }
+                    DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, centro_costo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                    //DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                    return dt.Rows.Count > 0;
                 }
 
 
-                //Verifica si es el dueño del centro de costo
                 cls_traslado centroCosto = new cls_traslado();
+                //Verificar si es el dueño de centro de costos de destino en caso de movimiento entre plantas sea interno o externo
+                if (tipo_movimiento == 5 || tipo_movimiento == 7)
+                {
+                    if (paso_aprobacion_actual == 1)
+                    {
+                        DataTable dtCentroCostoDestino = centroCosto.obtener_responsable_destino(this.Session["USUARIO"].ToString(), centro_costo_destino);
+                        return dtCentroCostoDestino.Rows.Count > 0;
+                    }
+                }
+
+                //Verifica si es el dueño del centro de costo
                 DataTable dtCentroCosto = centroCosto.obtener_responsable(this.Session["USUARIO"].ToString(), centro_costo);
                 return dtCentroCosto.Rows.Count > 0;
 
@@ -165,8 +188,16 @@ namespace WebAssetsTransfer.Pages
             else if (id_grupo > 0)
             {
                 cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
-                DataTable dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                DataTable dt = null;
+                //if (tipo_movimiento == 7)
+                //{
+                dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, centro_costo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
                 return dt.Rows.Count > 0;
+                //}
+
+                //cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                //dt = usuario_grupo.select_usuario_por_grupo_de_acceso(id_grupo, this.Session["CODIGO_COMPANIA"].ToString(), usuario);
+                //return dt.Rows.Count > 0;
             }
 
             return resultado;

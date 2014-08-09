@@ -22,7 +22,8 @@ namespace BLL
                     ID_MOVIMIENTO = c.ID_MOVIMIENTO,
                     PASO_APROBACION = c.ID_PASO_APROBACION_ACTUAL,
                     TIPO_MOVIMIENTO = c.ID_TIPO_MOVIMIENTO,
-                    CENTRO_COSTO = c.CENTRO_COSTO
+                    CENTRO_COSTO = c.CENTRO_COSTO,
+                    DETALLE_DESTINO_MOVIMIENTO = c.DETALLE_DESTINO_MOVIMIENTO
                 };
             return movimientos.AsDataTable();
         }
@@ -70,7 +71,10 @@ namespace BLL
             var allList =
                 from c in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
                 from d in this.db.AFT_MOV_TIPOS_MOVIMIENTOS
-                where c.ID_TIPO_MOVIMIENTO == d.ID_TIPO_MOVIMIENTO && tipo_movimiento_list.Contains(c.ID_TIPO_MOVIMIENTO) && c.ESTADO == "A"
+                where 
+                c.ID_TIPO_MOVIMIENTO == d.ID_TIPO_MOVIMIENTO && 
+                tipo_movimiento_list.Contains(c.ID_TIPO_MOVIMIENTO) && 
+                (c.ESTADO == "A" || c.ESTADO == "E")
                 select new
                 {
                     AFT_MOV_MAESTRO_MOVIMIENTOS = c,
@@ -110,7 +114,7 @@ namespace BLL
                     CENTRO_COSTO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.CENTRO_COSTO,
                     ID_EMPLEADO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.ID_EMPLEADO,
                     FECHA_MOVIMIENTO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.FECHA_MOVIMIENTO,
-                    DESCRIPCION_CENTRO_COSTOS = r.AFT_MOV_MAESTRO_MOVIMIENTOS.DESCRIPCION_CENTRO_COSTOS,
+                    //DESCRIPCION_CENTRO_COSTOS = r.AFT_MOV_MAESTRO_MOVIMIENTOS.DESCRIPCION_CENTRO_COSTOS,
                     EMPLEADO_RESPONSABLE_CC = r.AFT_MOV_MAESTRO_MOVIMIENTOS.EMPLEADO_RESPONSABLE_CC,
                     ID_TIPO_MOVIMIENTO = r.AFT_MOV_TIPOS_MOVIMIENTOS.DESCRIPCION_TIPO_MOVIMIENTO,
                     ESTADO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.ESTADO,
@@ -120,13 +124,88 @@ namespace BLL
 
             return movimientos.AsDataTable();
         }
+
+
+        public DataTable cargar_movimientos_maestro_filtrar(int id_movimiento, string cod_centro_costo, string cod_solicitante, string fetcha, int tipo_movimiento, string cod_cia_pro)
+        {
+            //GPE 3/31/2014 show all types of movimientos   add: 3,4,5,6,7
+            int[] tipo_movimiento_list = new int[]
+			{
+				1,
+				2,
+                3,
+                4,
+                5,
+                6,
+                7
+			};
+
+              var allList =
+                from c in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
+                join d in this.db.AFT_MOV_TIPOS_MOVIMIENTOS on c.ID_TIPO_MOVIMIENTO equals d.ID_TIPO_MOVIMIENTO
+                join cc in this.db.AFM_CENTRO_COSTO on c.CENTRO_COSTO equals cc.COD_CEN_CST
+                where
+                c.ID_TIPO_MOVIMIENTO == d.ID_TIPO_MOVIMIENTO &&
+                tipo_movimiento_list.Contains(c.ID_TIPO_MOVIMIENTO) &&
+                (c.ESTADO == "A" || c.ESTADO == "E") &&
+                cc.COD_CEN_CST == cod_cia_pro
+                select new
+                {
+                    AFT_MOV_MAESTRO_MOVIMIENTOS = c,
+                    AFT_MOV_TIPOS_MOVIMIENTOS = d
+                };
+
+
+            if (id_movimiento > 0)
+                allList = allList.Where(a => a.AFT_MOV_MAESTRO_MOVIMIENTOS.ID_MOVIMIENTO == id_movimiento);
+
+            if (!string.IsNullOrEmpty(fetcha))
+            {
+                DateTime date = DateTime.ParseExact(fetcha, "dd-MM-yyyy", System.Globalization.CultureInfo.CurrentCulture);
+                //DateTime date = Convert.ToDateTime(fetcha);
+                DateTime date1 = date.AddDays(1);
+                allList = allList.Where(a => a.AFT_MOV_MAESTRO_MOVIMIENTOS.FECHA_MOVIMIENTO > date && a.AFT_MOV_MAESTRO_MOVIMIENTOS.FECHA_MOVIMIENTO < date1);
+            }
+
+            //GPE 3/31/2014 show all types of movimientos
+            //if (tipo_movimiento == 1 || tipo_movimiento == 2 )
+            if (tipo_movimiento != 0 && (tipo_movimiento > 0 && tipo_movimiento < 8))
+                allList = allList.Where(a => a.AFT_MOV_MAESTRO_MOVIMIENTOS.ID_TIPO_MOVIMIENTO == tipo_movimiento);
+
+            if (!string.IsNullOrEmpty(cod_centro_costo) && cod_centro_costo != "NULL")
+                allList = allList.Where(a => a.AFT_MOV_MAESTRO_MOVIMIENTOS.CENTRO_COSTO == cod_centro_costo);
+
+            if (!string.IsNullOrEmpty(cod_solicitante) && cod_solicitante != "NULL")
+                allList = allList.Where(a => a.AFT_MOV_MAESTRO_MOVIMIENTOS.ID_EMPLEADO == cod_solicitante);
+
+
+            var movimientos =
+                from r in allList
+                select new
+                {
+                    ID_MOVIMIENTO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.ID_MOVIMIENTO,
+                    ACTA = r.AFT_MOV_MAESTRO_MOVIMIENTOS.ACTA,
+                    CENTRO_COSTO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.CENTRO_COSTO,
+                    ID_EMPLEADO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.ID_EMPLEADO,
+                    FECHA_MOVIMIENTO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.FECHA_MOVIMIENTO,
+                    //DESCRIPCION_CENTRO_COSTOS = r.AFT_MOV_MAESTRO_MOVIMIENTOS.DESCRIPCION_CENTRO_COSTOS,
+                    EMPLEADO_RESPONSABLE_CC = r.AFT_MOV_MAESTRO_MOVIMIENTOS.EMPLEADO_RESPONSABLE_CC,
+                    ID_TIPO_MOVIMIENTO = r.AFT_MOV_TIPOS_MOVIMIENTOS.DESCRIPCION_TIPO_MOVIMIENTO,
+                    ESTADO = r.AFT_MOV_MAESTRO_MOVIMIENTOS.ESTADO,
+                    ID_TIPO_MOVIMIENTO_NUMBER = r.AFT_MOV_TIPOS_MOVIMIENTOS.ID_TIPO_MOVIMIENTO
+                };
+
+
+            return movimientos.AsDataTable();
+        }
+
         public bool actualizar_movimiento_maestro(ent_traslado entidad,string strCOD_EST_ORI)
 		{
 			bool result = false;
             try
             {
                 ExecuteScript objES = new ExecuteScript();
-                objES.executeQuertyAndReturnNothing("sp_UpdateCOD_EST_ORI", new object[] { entidad.id_movimiento, entidad.codigo_compania.Trim(), strCOD_EST_ORI, entidad.acta.Trim() });
+                objES.executeQuertyAndReturnNothing("sp_UpdateCOD_EST_ORI", new object[] { entidad.id_movimiento, entidad.codigo_compania.Trim()/*, strCOD_EST_ORI*/, entidad.acta.Trim() });
                 result = true;
             }
             catch (Exception e) 

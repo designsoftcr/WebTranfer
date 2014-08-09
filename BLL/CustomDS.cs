@@ -30,7 +30,7 @@ namespace BLL
                             join g in this.db.AFM_CENTRO_COSTO
                             on d.CENTRO_COSTO equals g.COD_CEN_CST
 
-                            where c.CODIGO_BITACORA == id
+                            where d.ID_MOVIMIENTO == id//c.CODIGO_BITACORA == id
                             select new
                             {
                                 BITACORA = c,
@@ -64,7 +64,7 @@ namespace BLL
 
         public List<AFT_MOV_BITACORA> GetReportHistorico(int id)
         {
-            var list = (from c in this.db.AFT_MOV_BITACORA
+            /*var list = (from c in this.db.AFT_MOV_BITACORA
                         join d in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
                         on c.ID_MOVIMIENTO equals d.ID_MOVIMIENTO
 
@@ -81,9 +81,9 @@ namespace BLL
                             MOVIMIENTOS = d,
                             CENTRO_COSTO = g,
                             CATAL_EMPLE = e
-                        }).FirstOrDefault();
-          
-            List<AFT_MOV_BITACORA> historico = new cls_bitacora().cargar_bitacora_historico(list.BITACORA.ID_MOVIMIENTO);
+                        }).FirstOrDefault();*/
+
+            List<AFT_MOV_BITACORA> historico = new cls_bitacora().cargar_bitacora_historico(id);//list.BITACORA.ID_MOVIMIENTO);
 
             return historico;
         }
@@ -100,7 +100,7 @@ namespace BLL
                         join g in this.db.AFM_CENTRO_COSTO
                         on d.CENTRO_COSTO equals g.COD_CEN_CST
 
-                        where c.CODIGO_BITACORA == id
+                        where d.ID_MOVIMIENTO == id//c.CODIGO_BITACORA == id
                         select new
                         {
                             BITACORA = c,
@@ -115,12 +115,12 @@ namespace BLL
                 where c.PLACA == d.PLA_ACTIVO && c.COD_COMPANIA == code_compania && c.ID_MOVIMIENTO == list.BITACORA.ID_MOVIMIENTO
                 select new
                 {
-                    PLA_ACTIVO = c.PLACA,
-                    REF_NUM_ACT = d.REF_NUM_ACT,
-                    DES_ACTIVO = c.DESCRIPCION,
-                    DES_MARCA = c.MARCA,
-                    NOM_MODELO = c.MODELO,
-                    SER_ACTIVO = d.SER_ACTIVO,
+                    PLA_ACTIVO = c.PLACA.Trim(),
+                    REF_NUM_ACT = d.REF_NUM_ACT.Trim(),
+                    DES_ACTIVO = c.DESCRIPCION.Trim(),
+                    DES_MARCA = c.MARCA.Trim(),
+                    NOM_MODELO = c.MODELO.Trim(),
+                    SER_ACTIVO = d.SER_ACTIVO.Trim(),
                     VAL_LIBROS = c.VALOR_LIBROS
                 };
             
@@ -129,12 +129,12 @@ namespace BLL
             foreach(var a in activos)
             {
                 Activo act = new Activo();
-                act.Activo_Placa = a.PLA_ACTIVO;
-                act.Activo_ActivoSAP = a.REF_NUM_ACT;
-                act.Activo_Descripcion_delActivo = a.DES_ACTIVO;
-                act.Activo_Marca = a.DES_MARCA;
-                act.Activo_Modelo = a.NOM_MODELO;
-                act.Activo_Serie = a.SER_ACTIVO;
+                act.Activo_Placa = a.PLA_ACTIVO.Trim();
+                act.Activo_ActivoSAP = a.REF_NUM_ACT.Trim();
+                act.Activo_Descripcion_delActivo = a.DES_ACTIVO.Trim();
+                act.Activo_Marca = a.DES_MARCA.Trim();
+                act.Activo_Modelo = a.NOM_MODELO.Trim();
+                act.Activo_Serie = a.SER_ACTIVO.Trim();
                 act.Activo_ValorLibros = a.VAL_LIBROS;
 
                 activo.Add(act);
@@ -148,8 +148,21 @@ namespace BLL
 
 
 
-        public List<Imprimir> GetReportImprimir(int id_movimiento, string usuario, string code_centro_costo, string code_solicitante, string fetcha, string tipomovimiento)
+        public List<Imprimir> GetReportImprimir(int id_movimiento, string usuario, string code_centro_costo, string code_solicitante, string fetcha, int tipomovimiento)
         {
+            var empleado =
+                from c in this.db.AFM_CATAL_EMPLE
+                where c.USUARIO_SESION == usuario
+                select new
+                {
+                    COD_EMPEADO = c.COD_EMPLEADO
+                };
+            string id_empleado = "";
+            if (empleado.AsDataTable().Rows.Count > 0)
+            {
+                id_empleado = empleado.AsDataTable().Rows[0][0].ToString();
+            }
+
             var allList = from c in this.db.AFT_MOV_BITACORA
                           join d in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
                           on c.ID_MOVIMIENTO equals d.ID_MOVIMIENTO
@@ -160,7 +173,7 @@ namespace BLL
                           };
             if (!new cls_traslado().is_admin(usuario))
             {
-                allList = allList.Where(a => a.BITACORA.USUARIO == usuario);
+                allList = allList.Where(a => a.MOVIMIENTOS.ID_EMPLEADO == id_empleado);//a => a.BITACORA.USUARIO == usuario);
             }
 
             if (id_movimiento > 0)
@@ -174,8 +187,8 @@ namespace BLL
                 allList = allList.Where(a => a.BITACORA.FECHA > date && a.BITACORA.FECHA < date1);
             }
 
-            if (!string.IsNullOrEmpty(tipomovimiento) && tipomovimiento != "NULL")
-                allList = allList.Where(a => a.BITACORA.DESCRIPCION_TIPO_MOVIMIENTO == tipomovimiento);
+            if (tipomovimiento != 0)//!string.IsNullOrEmpty(tipomovimiento) && tipomovimiento != "NULL")
+                allList = allList.Where(a => a.MOVIMIENTOS.ID_TIPO_MOVIMIENTO/*BITACORA.DESCRIPCION_TIPO_MOVIMIENTO*/ == tipomovimiento);
 
             if (!string.IsNullOrEmpty(code_centro_costo) && code_centro_costo != "NULL")
                 allList = allList.Where(a => a.MOVIMIENTOS.CENTRO_COSTO == code_centro_costo);
@@ -226,6 +239,8 @@ namespace BLL
                     return "Aceptado";
                 case "P":
                     return "Pendiente";
+                case "E":
+                    return "Pendiente Acta";
                 case "C":
                     return "Cancelado";
             }
@@ -247,7 +262,7 @@ namespace BLL
             var allList =
                 from c in this.db.AFT_MOV_MAESTRO_MOVIMIENTOS
                 from d in this.db.AFT_MOV_TIPOS_MOVIMIENTOS
-                where c.ID_TIPO_MOVIMIENTO == d.ID_TIPO_MOVIMIENTO && tipo_movimiento_list.Contains(c.ID_TIPO_MOVIMIENTO) && c.ESTADO == "A"
+                where c.ID_TIPO_MOVIMIENTO == d.ID_TIPO_MOVIMIENTO && tipo_movimiento_list.Contains(c.ID_TIPO_MOVIMIENTO) && (c.ESTADO == "A" || c.ESTADO == "E")
                 select new
                 {
                     AFT_MOV_MAESTRO_MOVIMIENTOS = c,
@@ -318,6 +333,9 @@ namespace BLL
                             if (text == "C")
                             {
                                 movmaestro.MovMaestro_ESTADO = "Cancelado";
+                            }
+                            else {
+                                movmaestro.MovMaestro_ESTADO = "Pendiente";
                             }
                         }
                         else

@@ -131,7 +131,7 @@ h3
  #login_controls
 {
 width: 248px;
-border: 1px solid #123454;	
+/*border: 1px solid #123454;	*/
 padding: 30px 25px 10px 25px;
 border-radius: 5px 5px 5px 5px;
 min-height:260px;
@@ -140,15 +140,15 @@ min-height:260px;
 /*--------crea el div transparente con fondo blanco----------*/
 .transparente
 {
-    background-color: #fff; 
+    /*background-color: #fff; */
     position:absolute; 
     z-index:-1; 
     top:0px; 
     left:0px; 
     right:0px; 
-    bottom:0px; 
+    bottom:311px; 
     opacity:0.5;
-    filter:alpha(opacity=50); /* For IE8 and earlier */
+    /* filter:alpha(opacity=50); */ /* For IE8 and earlier */
 }
 
 /*--------es el contenedor del los controles y del div que genera la transparencia----------*/
@@ -164,7 +164,7 @@ min-height:260px;
 /*****Posicion Boton login*****/
 .btn_login
 {
-    margin-top:10px;  
+    margin-top:0px;  
     position:relative;
     bottom:80px;      
 }

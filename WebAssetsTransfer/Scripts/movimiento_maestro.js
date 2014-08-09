@@ -7,17 +7,22 @@ $(function () {
 
 $(document).ready(function () {
     DisableControls();
-    alert("va cargando");
     $('[id*="txt_cod_centro_costo"]').blur(function () {
         $("[id*='btn_cargar_centro_costo']").click();
-        alert("Se salió del contro de centro de costo");
         return false;
     });
     $('[id*="txt_cod_solicitante"]').blur(function () {
         $("[id*='btn_cargar_responsable']").click();
-        alert("Se salió del contro de solicitante");
         return false;
     });
+});
+
+$(document).keypress(function (e) {
+    var keyCode = (window.event) ? e.which : e.keyCode;
+    if (keyCode && keyCode == 13) {
+        e.preventDefault();
+        return false;
+    }
 });
 
 function DisableControls() {
@@ -42,7 +47,7 @@ function filtro(filtro, id_control_codigo, id_control_descripcion, id_responsabl
 
 function centro_costo_key_press(event) {
     if (event.keyCode == 13) {
-        $("[id*='btn_cargar_centro_costo']").click();
+        $("[id*='btn_consulta_filtrada']").click();
         //alert("Presionó ENTER Centro de costo");
         return false; // 
     }
@@ -51,15 +56,15 @@ function centro_costo_key_press(event) {
 function solicitante_key_press(event) {
     if (event.keyCode == 13) {
         //alert("Presionó ENTER");
-        $("[id*='btn_cargar_solicitante']").click();
+        $("[id*='btn_consulta_filtrada']").click();
         return false; // 
     }
 }
 
 function realizar_busqueda(event) {
     if (event.keyCode == 13) {
-        alert("Presionó ENTER");
-        $("[id*='btn_realizar_filtrado']").click();
+        //alert("Presionó ENTER");
+        $("[id*='btn_consulta_filtrada']").click();
         return false; // 
     }
 }

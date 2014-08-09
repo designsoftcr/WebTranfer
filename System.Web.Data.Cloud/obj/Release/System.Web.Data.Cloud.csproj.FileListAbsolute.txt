@@ -26,3 +26,13 @@ C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\Syst
 C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
 C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
 C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+C:\Users\Jonathan\Source\Repos\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+C:\Users\salazarr\Desktop\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+C:\Users\salazarr\Desktop\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+C:\Users\salazarr\Desktop\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+C:\Users\salazarr\Desktop\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb
+C:\Users\salazarr\Desktop\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Desktop\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.dll
+C:\Users\Jonathan\Desktop\WebTranfer\System.Web.Data.Cloud\bin\Release\System.Web.Data.Cloud.pdb
+C:\Users\Jonathan\Desktop\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.dll
+C:\Users\Jonathan\Desktop\WebTranfer\System.Web.Data.Cloud\obj\Release\System.Web.Data.Cloud.pdb

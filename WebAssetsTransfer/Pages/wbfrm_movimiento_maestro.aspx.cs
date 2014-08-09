@@ -42,8 +42,21 @@ namespace WebAssetsTransfer.Pages
         {
             try
             {
+                System.Data.DataTable dt = null;
                 cls_traslado tipo_movimiento = new cls_traslado();
-                System.Data.DataTable dt = tipo_movimiento.cargar_tipo_movimiento();
+                cls_usuarios_por_grupo_de_acceso usuario_grupo = new cls_usuarios_por_grupo_de_acceso();
+                if (new cls_traslado().is_admin(this.Session["USUARIO"].ToString()) || usuario_grupo.select_usuario_por_grupo_de_acceso(2, this.Session["USUARIO"].ToString()).Rows.Count > 0)
+                {
+                    dt = tipo_movimiento.cargar_tipo_movimiento();
+                }
+                else
+                {
+                    DataTable dtUsuarios = usuario_grupo.select_usuario_por_grupo_de_acceso(6, this.Session["USUARIO"].ToString());
+                    if (dtUsuarios.Rows.Count > 0)
+                    {
+                        dt = tipo_movimiento.cargar_tipo_movimiento(3);
+                    }
+                }
                 this.ddl_tipo_movimiento.DataSource = dt;
                 this.ddl_tipo_movimiento.DataTextField = "DESCRIPCION_TIPO_MOVIMIENTO";
                 this.ddl_tipo_movimiento.DataValueField = "CODIGO_TIPO_MOVIMIENTO";
@@ -111,7 +124,8 @@ namespace WebAssetsTransfer.Pages
 
             string cod_centro_costo = this.Session["G_CENTRO_COSTO"].ToString(); 
             string cod_solicitante = this.Session["G_ID_SOLICITANTE"].ToString(); 
-            string fetcha = this.Session["G_FETCHA"].ToString();
+            //string fetcha = this.Session["G_FETCHA"].ToString();
+            string fetcha = "";
             int tipo_movimiento = 0;
             int id_movimiento = 0;
 
@@ -122,8 +136,22 @@ namespace WebAssetsTransfer.Pages
            
             try
             {
+                System.Data.DataTable dt = null;
                 cls_movimiento_maestro movimiento_maestro = new cls_movimiento_maestro();
-                System.Data.DataTable dt = movimiento_maestro.cargar_movimientos_maestro_filtrar(id_movimiento, cod_centro_costo, cod_solicitante, fetcha,tipo_movimiento);
+                if (new cls_traslado().is_admin(this.Session["USUARIO"].ToString()))
+                {
+                    dt = movimiento_maestro.cargar_movimientos_maestro_filtrar(id_movimiento, cod_centro_costo, cod_solicitante, fetcha, tipo_movimiento);
+                }
+                else
+                {
+                    DataTable dtUsuarios = new cls_usuarios_por_grupo_de_acceso().select_usuario_por_grupo_de_acceso(6, this.Session["USUARIO"].ToString());
+                    if(dtUsuarios.Rows.Count == 1){
+                        dt = movimiento_maestro.cargar_movimientos_maestro_filtrar(id_movimiento, cod_centro_costo, cod_solicitante, fetcha, tipo_movimiento, dtUsuarios.Rows[0][2].ToString());
+                        }
+                    if (dtUsuarios.Rows.Count == 2) {
+                        dt = movimiento_maestro.cargar_movimientos_maestro_filtrar(id_movimiento, cod_centro_costo, cod_solicitante, fetcha, tipo_movimiento);
+                    }
+                }
                 if (dt.Rows.Count > 0)
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
@@ -135,9 +163,12 @@ namespace WebAssetsTransfer.Pages
                             {
                                 if (!(text == "P"))
                                 {
-                                    if (text == "C")
+                                    if ((text == "C"))
                                     {
                                         dt.Rows[i]["ESTADO"] = "Cancelado";
+                                    }
+                                    else {
+                                        dt.Rows[i]["ESTADO"] = "Pendiente";
                                     }
                                 }
                                 else
@@ -153,7 +184,7 @@ namespace WebAssetsTransfer.Pages
 
                         if (dt.Rows[i]["ID_TIPO_MOVIMIENTO_NUMBER"].ToString().Trim() == "3" || dt.Rows[i]["ID_TIPO_MOVIMIENTO_NUMBER"].ToString().Trim() == "4")
                         {
-                            dt.Rows[i]["ACTA"] = "Validacion de Movimiento";
+                            dt.Rows[i]["ACTA"] = "";//"Validacion de Movimiento";
                         }
                     }
                     this.gv_movimiento_maestro.DataSource = dt;
@@ -176,7 +207,7 @@ namespace WebAssetsTransfer.Pages
             try
             {
                 this.gv_movimiento_maestro.PageIndex = e.NewPageIndex;
-                this.cargar_grid(this.DDL_ESTADO.SelectedValue);
+                this.cargar_grid(this.ddl_tipo_movimiento.SelectedValue);//this.DDL_ESTADO.SelectedValue);
             }
             catch (System.Exception ex)
             {
@@ -195,7 +226,7 @@ namespace WebAssetsTransfer.Pages
             if (new cls_movimiento_maestro().checkCodMovID_isDonacionOrRetirado(ID_MOV))
             {
                 this.gv_movimiento_maestro.EditIndex = e.NewEditIndex;
-                this.cargar_grid(this.DDL_ESTADO.SelectedValue);
+                this.cargar_grid(this.ddl_tipo_movimiento.SelectedValue);//this.DDL_ESTADO.SelectedValue);
             }
 
 
@@ -203,7 +234,7 @@ namespace WebAssetsTransfer.Pages
         protected void gv_movimiento_maestro_CancelEditing(object sender, GridViewCancelEditEventArgs e)
         {
             this.gv_movimiento_maestro.EditIndex = -1;
-            this.cargar_grid(this.DDL_ESTADO.SelectedValue);
+            this.cargar_grid(this.ddl_tipo_movimiento.SelectedValue);//this.DDL_ESTADO.SelectedValue);
         }
         protected void gv_movimiento_maestro_Updating(object sender, GridViewUpdateEventArgs e)
         {
@@ -235,7 +266,7 @@ namespace WebAssetsTransfer.Pages
                 this.crear_mensajes("error", "No se ha podido actualizar el movimiento maestro");
             }
             this.gv_movimiento_maestro.EditIndex = -1;
-            this.cargar_grid(this.DDL_ESTADO.SelectedValue);
+            this.cargar_grid(this.ddl_tipo_movimiento.SelectedValue);//this.DDL_ESTADO.SelectedValue);
             }
             catch (Exception ex)
             {
@@ -256,10 +287,11 @@ namespace WebAssetsTransfer.Pages
             this.Session["G_TIPO_MOVIENTO"] = this.ddl_tipo_movimiento.SelectedValue;
             this.Session["G_CODIGO_MOVIMIENTO"] = this.txt_codigo_movimiento.Text;
             this.Session["G_CENTRO_COSTO"] = this.txt_cod_centro_costo.Text;
-            this.Session["G_FETCHA"] = this.txt_fecha.Text;
+            //this.Session["G_FETCHA"] = this.txt_fecha.Text;
             this.Session["G_ID_SOLICITANTE"] = this.txt_cod_solicitante.Text;
 
-             this.cargar_grid(this.DDL_ESTADO.SelectedValue);
+             
+            this.cargar_grid(this.ddl_tipo_movimiento.SelectedValue);//DDL_ESTADO.SelectedValue);
         }
         public void crear_mensajes(string class_mensaje, string texto_mensaje)
         {
@@ -276,7 +308,8 @@ namespace WebAssetsTransfer.Pages
             {
                 string cod_centro_costo = this.Session["G_CENTRO_COSTO"].ToString();
                 string cod_solicitante = this.Session["G_ID_SOLICITANTE"].ToString();
-                string fetcha = this.Session["G_FETCHA"].ToString();
+                //string fetcha = this.Session["G_FETCHA"].ToString();
+                string fetcha = "";
                 int tipo_movimiento = 0;
                 int id_movimiento = 0;
 
@@ -324,16 +357,20 @@ namespace WebAssetsTransfer.Pages
                     if (dt != null && dt.Rows.Count > 0)
                     {
                         //this.Session["COD_CENTRO_COSTO_B"] = dt.Rows[0]["COD_CENTRO_COSTO"].ToString();
-                        this.txt_des_centro_costo.Text = dt.Rows[0]["CENTRO_COSTO"].ToString();
+                        //this.txt_des_centro_costo.Text = dt.Rows[0]["CENTRO_COSTO"].ToString();
                     }
                     else
                     {
                         //this.Session["COD_CENTRO_COSTO_B"] = "";
-                        this.txt_des_centro_costo.Text = "No se encontraron resultados";
+                       // this.txt_des_centro_costo.Text = "No se encontraron resultados";
                     }
                     /*string script = "$(\"[id*='txt_des_centro_costo']\").val('{0}');";
                     script = string.Format(script, this.txt_des_centro_costo.Text);
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "filterinfo", script, true);*/
+                }
+                else 
+                {
+                   // this.txt_des_centro_costo.Text = "";
                 }
             }
             catch (System.Exception ex)
@@ -354,11 +391,11 @@ namespace WebAssetsTransfer.Pages
                     if (dt.Rows.Count > 0)
                     {
                         this.txt_cod_solicitante.Text = dt.Rows[0]["COD_EMPLEADO"].ToString();
-                        this.txt_nombre_solicitante.Text = dt.Rows[0]["NOMBRE_EMPLEADO"].ToString();
+                       // this.txt_nombre_solicitante.Text = dt.Rows[0]["NOMBRE_EMPLEADO"].ToString();
                     }
                     else
                     {
-                        this.txt_nombre_solicitante.Text = "No se encontraron resultados";
+                       // this.txt_nombre_solicitante.Text = "No se encontraron resultados";
                     }
                 }
             }

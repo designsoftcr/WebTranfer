@@ -8,7 +8,7 @@ namespace Entidades
         public string codigo_compania
         {
             get;
-            set;
+            set; 
         }
         public string centro_costo
         {
@@ -125,5 +125,38 @@ namespace Entidades
             get;
             set;
         }
+
+        public bool posee_placas
+        {
+            get;
+            set;
+        }
+
+        /*public string codigo_localizacion_activo_dest
+        {
+            get;
+            set;
+        }
+        public string codigo_seccion_activo_dest
+        {
+            get;
+            set;
+        }
+        public string codigo_ubicacion_activo_dest
+        {
+            get;
+            set;
+        }
+        public string cod_usuario_responsable_destino
+        {
+            get;
+            set;
+        }
+        public string centro_costo_destino
+        {
+            get;
+            set;
+        }*/
+
     }
 }

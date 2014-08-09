@@ -2854,6 +2854,7 @@
     <EntitySetMapping Name="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO">
       <EntityTypeMapping TypeName="BostonModel.AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO">
         <MappingFragment StoreEntitySet="AFT_MOV_DETALLE_ACTIVOS_MOVIMIENTO">
+          <ScalarProperty Name="ID_DETALLE" ColumnName="ID_DETALLE" />
           <ScalarProperty Name="COD_COMPANIA" ColumnName="COD_COMPANIA" />
           <ScalarProperty Name="ID_MOVIMIENTO" ColumnName="ID_MOVIMIENTO" />
           <ScalarProperty Name="NUM_ACTIVO" ColumnName="NUM_ACTIVO" />
@@ -2874,6 +2875,7 @@
           <ScalarProperty Name="COD_CEN_CST" ColumnName="COD_CEN_CST" />
           <ScalarProperty Name="CENTRO_COSTO" ColumnName="CENTRO_COSTO" />
           <ScalarProperty Name="RESPONSABLE_CC" ColumnName="RESPONSABLE_CC" />
+          <ScalarProperty Name="DESECHO_ELECTRONICO" ColumnName="DESECHO_ELECTRONICO" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2905,6 +2907,7 @@
           <ScalarProperty Name="ID_PASO_APROBACION_ACTUAL" ColumnName="ID_PASO_APROBACION_ACTUAL" />
           <ScalarProperty Name="DETALLE_DESTINO_MOVIMIENTO" ColumnName="DETALLE_DESTINO_MOVIMIENTO" />
           <ScalarProperty Name="ACTA" ColumnName="ACTA" />
+          <ScalarProperty Name="POSEE_PLACAS" ColumnName="POSEE_PLACAS" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

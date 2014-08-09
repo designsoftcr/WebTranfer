@@ -236,24 +236,24 @@ namespace BLL
         public DataTable cargar_usuarios_por_grupo_de_acceso(string descripcion)
         {
             var grupos_de_acceso =
-                from c in this.db.AFT_MOV_GRUPO_USUARIOS
-                join d in this.db.AFM_CATAL_EMPLE                
-                on c.ID_EMPLEADO equals d.COD_EMPLEADO
-                join e in this.db.AFT_MOV_GRUPOS_ACCESOS
-                on c.ID_GRUPO equals e.ID_GRUPO
-                where descripcion == "todo" || d.NOM_EMPLEADO.Contains(descripcion)
-                select new
-                {
-                    COD_EMPLEADO = d.COD_EMPLEADO,
-                    NOM_EMPLEADO = d.NOM_EMPLEADO,
-                    ID_GRUPO = c.ID_GRUPO,
-                    DESCRIPCION = e.DESCRIPCION,
-                    COD_COMPANIA = c.COD_COMPANIA,
-                    USUARIO = c.USUARIO,
-                    ESTADO = c.ESTADO,
-                    COD_COMPANIA_PROP = e.COD_CIA_PRO
-                };
-            return grupos_de_acceso.AsDataTable();
+                    from d in this.db.AFM_CATAL_EMPLE
+                    join c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    on d.COD_EMPLEADO equals c.ID_EMPLEADO
+                    join e in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    on c.ID_GRUPO equals e.ID_GRUPO
+                    where c.COD_CIA_PRO == e.COD_CIA_PRO && descripcion == "todo" || d.NOM_EMPLEADO.Contains(descripcion)
+                    select new
+                    {
+                        COD_EMPLEADO = d.COD_EMPLEADO,
+                        NOM_EMPLEADO = d.NOM_EMPLEADO,
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = e.DESCRIPCION,
+                        COD_COMPANIA = c.COD_COMPANIA,
+                        USUARIO = c.USUARIO,
+                        ESTADO = c.ESTADO,
+                        COD_COMPANIA_PROP = e.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
         }
 
         public DataTable cargar_usuarios_por_grupo_de_acceso(string codigo, string descripcion)
@@ -261,12 +261,12 @@ namespace BLL
             if (codigo != "" && descripcion != "todo")
             {
                 var grupos_de_acceso =
-                    from c in this.db.AFT_MOV_GRUPO_USUARIOS
-                    join d in this.db.AFM_CATAL_EMPLE
-                    on c.ID_EMPLEADO equals d.COD_EMPLEADO
+                    from d in this.db.AFM_CATAL_EMPLE
+                    join c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    on d.COD_EMPLEADO equals c.ID_EMPLEADO
                     join e in this.db.AFT_MOV_GRUPOS_ACCESOS
                     on c.ID_GRUPO equals e.ID_GRUPO
-                    where c.ID_EMPLEADO.Contains(codigo) &&
+                    where c.COD_CIA_PRO == e.COD_CIA_PRO && c.ID_EMPLEADO.Contains(codigo) &&
                     d.NOM_EMPLEADO.Contains(descripcion)
                     select new
                     {
@@ -284,12 +284,12 @@ namespace BLL
             else if (codigo != "" && descripcion == "todo")
             {
                 var grupos_de_acceso =
-                    from c in this.db.AFT_MOV_GRUPO_USUARIOS
-                    join d in this.db.AFM_CATAL_EMPLE
-                    on c.ID_EMPLEADO equals d.COD_EMPLEADO
+                    from d in this.db.AFM_CATAL_EMPLE
+                    join c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    on d.COD_EMPLEADO equals c.ID_EMPLEADO
                     join e in this.db.AFT_MOV_GRUPOS_ACCESOS
                     on c.ID_GRUPO equals e.ID_GRUPO
-                    where c.ID_EMPLEADO.Contains(codigo)
+                    where c.COD_CIA_PRO == e.COD_CIA_PRO && c.ID_EMPLEADO.Contains(codigo)
                     select new
                     {
                         COD_EMPLEADO = d.COD_EMPLEADO,
@@ -305,12 +305,12 @@ namespace BLL
             }
             else {
                 var grupos_de_acceso =
-                    from c in this.db.AFT_MOV_GRUPO_USUARIOS
-                    join d in this.db.AFM_CATAL_EMPLE
-                    on c.ID_EMPLEADO equals d.COD_EMPLEADO
+                    from d in this.db.AFM_CATAL_EMPLE
+                    join c in this.db.AFT_MOV_GRUPO_USUARIOS
+                    on d.COD_EMPLEADO equals c.ID_EMPLEADO
                     join e in this.db.AFT_MOV_GRUPOS_ACCESOS
                     on c.ID_GRUPO equals e.ID_GRUPO
-                    where descripcion == "todo" || d.NOM_EMPLEADO.Contains(descripcion)
+                    where c.COD_CIA_PRO == e.COD_CIA_PRO && (descripcion == "todo" || d.NOM_EMPLEADO.Contains(descripcion))
                     select new
                     {
                         COD_EMPLEADO = d.COD_EMPLEADO,
@@ -341,6 +341,49 @@ namespace BLL
             return grupos_de_acceso.AsDataTable();
         }
 
+        public DataTable cargar_usuarios_por_grupo_de_acceso_id_grupo(int codigo, string descripcion)
+        {
+            if (codigo > 0 && descripcion != "todo")
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    where c.ID_GRUPO == codigo
+                        && descripcion == "todo" || c.DESCRIPCION.Contains(descripcion)
+                    select new
+                    {
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = c.DESCRIPCION,
+                        COD_COMPANIA = c.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            else if (codigo > 0 && descripcion == "todo")
+            {
+                var grupos_de_acceso =
+                    from c in this.db.AFT_MOV_GRUPOS_ACCESOS
+                    where c.ID_GRUPO == codigo
+                    select new
+                    {
+                        ID_GRUPO = c.ID_GRUPO,
+                        DESCRIPCION = c.DESCRIPCION,
+                        COD_COMPANIA = c.COD_CIA_PRO
+                    };
+                return grupos_de_acceso.AsDataTable();
+            }
+            else {
+                var grupos_de_acceso =
+                        from c in this.db.AFT_MOV_GRUPOS_ACCESOS
+                        where descripcion == "todo" || c.DESCRIPCION.Contains(descripcion)
+                        select new
+                        {
+                            ID_GRUPO = c.ID_GRUPO,
+                            DESCRIPCION = c.DESCRIPCION,
+                            COD_COMPANIA = c.COD_CIA_PRO
+                        };
+                return grupos_de_acceso.AsDataTable();
+            }
+        }
+
         //add by GPE 16.09.2013
         public DataTable cargar_usuarios_por_grupo_de_acceso_empleado(string descripcion)
         {
@@ -350,9 +393,52 @@ namespace BLL
                 select new
                 {
                     COD_EMPLEADO = c.COD_EMPLEADO,
-                    NOM_EMPLEADO = c.NOM_EMPLEADO
+                    NOM_EMPLEADO = c.NOM_EMPLEADO,
+                    NOMBRE_USUARIO = c.USUARIO_SESION
                 };
             return grupos_de_empleado.AsDataTable();
+        }
+
+        public DataTable cargar_usuarios_por_grupo_de_acceso_empleado(string codigo, string descripcion)
+        {
+            if (codigo != "" && descripcion != "todo")
+            {
+                var grupos_de_empleado =
+                    from c in this.db.AFM_CATAL_EMPLE
+                    where c.COD_EMPLEADO == codigo
+                    && descripcion == "todo" || c.NOM_EMPLEADO.Contains(descripcion)
+                    select new
+                    {
+                        COD_EMPLEADO = c.COD_EMPLEADO,
+                        NOM_EMPLEADO = c.NOM_EMPLEADO,
+                        NOMBRE_USUARIO = c.USUARIO_SESION
+                    };
+                return grupos_de_empleado.AsDataTable();
+            }
+            else if (codigo != "" && descripcion == "todo")
+            {
+                var grupos_de_empleado =
+                    from c in this.db.AFM_CATAL_EMPLE
+                    where c.COD_EMPLEADO == codigo
+                    select new
+                    {
+                        COD_EMPLEADO = c.COD_EMPLEADO,
+                        NOM_EMPLEADO = c.NOM_EMPLEADO,
+                        NOMBRE_USUARIO = c.USUARIO_SESION
+                    };
+                return grupos_de_empleado.AsDataTable();
+            }else{
+                var grupos_de_empleado =
+                    from c in this.db.AFM_CATAL_EMPLE
+                    where descripcion == "todo" || c.NOM_EMPLEADO.Contains(descripcion)
+                    select new
+                    {
+                        COD_EMPLEADO = c.COD_EMPLEADO,
+                        NOM_EMPLEADO = c.NOM_EMPLEADO,
+                        NOMBRE_USUARIO = c.USUARIO_SESION
+                    };
+                return grupos_de_empleado.AsDataTable();
+            }
         }
 
         //add by GPE 24.02.2014

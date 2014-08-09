@@ -25,7 +25,41 @@ namespace BLL
 
         }
 
-        public bool update_cusuarios_por_grupo_de_acceso(string Id_Empleado, int Id_Grupo, string Cod_Compania, string Usuario, bool Estado, string Cod_Cia_Pro)
+        public DataTable select_usuario_por_grupo_de_acceso(int Id_Grupo, string cod_centro_costo, string Cod_Compania, string Usuario)
+        {
+            var usuario =
+            from c in this.db.AFT_MOV_GRUPO_USUARIOS
+            join d in this.db.AFM_CENTRO_COSTO on c.COD_CIA_PRO equals d.COD_CIA_PRO
+            where c.USUARIO == Usuario 
+            && c.ID_GRUPO == Id_Grupo 
+            && c.ESTADO == true 
+            && c.COD_COMPANIA == Cod_Compania
+            && d.COD_CEN_CST == cod_centro_costo
+            select new
+            {
+                USUARIO = c.USUARIO,
+                ID_GRUPO = c.ID_GRUPO
+            };
+            return usuario.AsDataTable();
+
+        }
+
+        public DataTable select_usuario_por_grupo_de_acceso(int Id_Grupo, string Usuario)
+        {
+            var usuario =
+            from c in this.db.AFT_MOV_GRUPO_USUARIOS
+            where c.USUARIO == Usuario && c.ID_GRUPO == Id_Grupo && c.ESTADO == true
+            select new
+            {
+                USUARIO = c.USUARIO,
+                ID_GRUPO = c.ID_GRUPO,
+                COD_CIA_PRO = c.COD_CIA_PRO
+            };
+            return usuario.AsDataTable();
+
+        }
+
+        public bool update_cusuarios_por_grupo_de_acceso(string Id_Empleado_actual, string Id_Empleado, string Cod_Cia_Pro_actual,int Id_Grupo_actual,int Id_Grupo_nuevo, string Cod_Compania, string Usuario, bool Estado, string Cod_Cia_Pro)
         {
             bool result = false;
             //using (TransactionScope transaction = new TransactionScope())
@@ -57,10 +91,12 @@ namespace BLL
                     sbupdate.Append("UPDATE    AFT_MOV_GRUPO_USUARIOS SET ");
                     sbupdate.Append(" ESTADO =" + status);
                     sbupdate.Append(" , USUARIO = '" + Usuario + "'");
-                    sbupdate.Append(" WHERE ID_GRUPO =" + Id_Grupo);
-                    sbupdate.Append(" AND ID_EMPLEADO = '" + Id_Empleado + "'");
-                    sbupdate.Append(" AND COD_COMPANIA = '" + Cod_Compania + "'");
-                    sbupdate.Append(" AND COD_CIA_PRO = '" + Cod_Cia_Pro + "'");
+                    sbupdate.Append(" , ID_EMPLEADO = '" + Id_Empleado + "'");
+                    sbupdate.Append(" , COD_CIA_PRO = '" + Cod_Cia_Pro + "'");
+                    sbupdate.Append(" , ID_GRUPO = '" + Id_Grupo_nuevo + "'");
+                    sbupdate.Append(" WHERE ID_GRUPO =" + Id_Grupo_actual);
+                    sbupdate.Append(" AND ID_EMPLEADO = '" + Id_Empleado_actual + "'");
+                    sbupdate.Append(" AND COD_CIA_PRO = '" + Cod_Cia_Pro_actual + "'");
                     int resultquery = db.ExecuteStoreCommand(sbupdate.ToString());
                     result = true;
                 }

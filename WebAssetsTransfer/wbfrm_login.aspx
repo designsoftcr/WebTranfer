@@ -22,14 +22,14 @@
             </div>
             <!-- content -->
             <div id="content">            
-                <div class="login_content">
-                    <div class="transparente"></div>
+                <div class="login_content"  style="margin-top:25px; border:none;">
+                    <div class="transparente" style="border:none;"></div>
                     <div id="login_controls">
-                        <div id="seccion_a" runat="server">
+                        <div id="seccion_a" runat="server" style="border:none;">
                             <div style="margin-top:-20px"><asp:Label ID="lblSessionUserName" runat="server" Text=""></asp:Label></div>
-                            <h3> <asp:Label ID="lbl_etiqueta_usuario" runat="server" Text="<%$ Resources:pages_names_es, lbl_etiqueta_usuario%>"></asp:Label></h3>
+                            <h3> <asp:Label ID="lbl_etiqueta_usuario" style="color:#fff;" runat="server" Text="<%$ Resources:pages_names_es, lbl_etiqueta_usuario%>"></asp:Label></h3>
                             <asp:TextBox ID="txt_usuario" runat="server" MaxLength="80"></asp:TextBox>
-                            <h3><asp:Label ID="lbl_etiqueta_contrasena" runat="server" Text="<%$ Resources:pages_names_es, lbl_etiqueta_contrasena%>"></asp:Label></h3>
+                            <h3><asp:Label ID="lbl_etiqueta_contrasena" style="color:#fff;" runat="server" Text="<%$ Resources:pages_names_es, lbl_etiqueta_contrasena%>"></asp:Label></h3>
                             <asp:TextBox ID="txt_contrasena" runat="server" MaxLength="80" TextMode="Password"></asp:TextBox>
                             <div style="margin-top:-12px;"><!--<input type="checkbox" runat="server" class="check" id="chbRememberMe" /><label for="remember1">&nbsp;Recordar Conexión</label>--></div>
                         </div>           
