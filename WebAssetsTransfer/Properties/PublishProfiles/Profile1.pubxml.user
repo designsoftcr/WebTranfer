@@ -8,26 +8,26 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
     <LastUsedPlatform>Any CPU</LastUsedPlatform>
     <TimeStampOfAssociatedLegacyPublishXmlFile>2014-06-26T12:16:58.0000000-06:00</TimeStampOfAssociatedLegacyPublishXmlFile>
-    <_PublishTargetUrl>C:\Users\Jonathan\Desktop\WebAssetsTransfer</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Jonathan\Desktop\Instaladores\Deploys\WebTransfer29_08_2014</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_GlobalResources/pages_names_es.resx">
       <publishTime>07/16/2014 09:47:14</publishTime>
     </File>
     <File Include="bin/BLL.dll">
-      <publishTime>08/08/2014 09:09:09</publishTime>
+      <publishTime>08/29/2014 15:32:16</publishTime>
     </File>
     <File Include="bin/CapaLog.dll">
-      <publishTime>08/08/2014 09:09:07</publishTime>
+      <publishTime>08/29/2014 15:32:14</publishTime>
     </File>
     <File Include="bin/DAL.dll">
-      <publishTime>08/08/2014 09:09:09</publishTime>
+      <publishTime>08/29/2014 15:32:15</publishTime>
     </File>
     <File Include="bin/de/Microsoft.ReportViewer.WebForms.resources.dll">
       <publishTime>06/24/2012 14:52:52</publishTime>
     </File>
     <File Include="bin/Entidades.dll">
-      <publishTime>08/08/2014 09:09:05</publishTime>
+      <publishTime>08/29/2014 15:32:10</publishTime>
     </File>
     <File Include="bin/es/Microsoft.ReportViewer.WebForms.resources.dll">
       <publishTime>06/24/2012 14:51:00</publishTime>
@@ -57,10 +57,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2012 14:53:08</publishTime>
     </File>
     <File Include="bin/System.Web.Data.Cloud.dll">
-      <publishTime>08/08/2014 09:09:07</publishTime>
+      <publishTime>08/29/2014 15:32:14</publishTime>
     </File>
     <File Include="bin/WebAssetsTransfer.dll">
-      <publishTime>08/08/2014 09:09:10</publishTime>
+      <publishTime>08/29/2014 15:32:18</publishTime>
     </File>
     <File Include="bin/zh-CHS/Microsoft.ReportViewer.WebForms.resources.dll">
       <publishTime>06/24/2012 14:53:48</publishTime>
@@ -4032,7 +4032,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/28/2014 16:22:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/08/2014 09:10:24</publishTime>
+      <publishTime>08/29/2014 15:33:04</publishTime>
     </File>
   </ItemGroup>
 </Project>

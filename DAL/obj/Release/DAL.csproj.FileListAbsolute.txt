@@ -31,5 +31,6 @@ C:\Users\salazarr\Desktop\WebTranfer\DAL\obj\Release\DAL.csprojResolveAssemblyRe
 C:\Users\Jonathan\Desktop\WebTranfer\DAL\bin\Release\DAL.dll.config
 C:\Users\Jonathan\Desktop\WebTranfer\DAL\bin\Release\DAL.dll
 C:\Users\Jonathan\Desktop\WebTranfer\DAL\bin\Release\DAL.pdb
+C:\Users\Jonathan\Desktop\WebTranfer\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
 C:\Users\Jonathan\Desktop\WebTranfer\DAL\obj\Release\DAL.dll
 C:\Users\Jonathan\Desktop\WebTranfer\DAL\obj\Release\DAL.pdb

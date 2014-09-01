@@ -2604,7 +2604,9 @@ namespace Modulo_Boston.Pages
                 int id_tipo_movimiento = new cls_traslado().id_tipo_movimiento(id_movimiento, this.Session["CODIGO_COMPANIA"].ToString());
                 if (id_tipo_movimiento == 5 || id_tipo_movimiento == 7)
                 {
-                    contenido = contenido.Replace("[CENTRO_COSTO_RECEPTOR]", this.txt_codigo_centro_costo_destino.Text);
+                    DataTable dtCentroDestino = new cls_traslado().cargar_centro_costo(this.txt_codigo_centro_costo_destino.Text);
+
+                    contenido = contenido.Replace("[CENTRO_COSTO_RECEPTOR]", this.txt_codigo_centro_costo_destino.Text + ", " + dtCentroDestino.Rows[0]["CENTRO_COSTO"].ToString());
                     contenido = contenido.Replace("[LOCALIZACION_DESTINO]", this.txt_localizacion_solicitud.Text);
                     contenido = contenido.Replace("[UBICACION_DESTINO]", this.txt_ubicacion_solicitud.Text);
                     contenido = contenido.Replace("[SECCION_DESTINO]", this.txt_seccion_solicitud.Text);
@@ -2832,21 +2834,6 @@ namespace Modulo_Boston.Pages
                                 paso_aprobacion = "Recursos Humanos";
                     this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_donacion.Text);
                             break;
-                        /*case 3:
-                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
-                            if (dtCorreos.Rows.Count > 0)
-                            {
-                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                {
-                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                }
-                            }
-                            else
-                            {
-                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            }
-                            paso_aprobacion = "Fixed Asset";
-                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 2)
@@ -2875,39 +2862,6 @@ namespace Modulo_Boston.Pages
                                 paso_aprobacion = "Centro de Costo";
                     this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_destruccion.Text);
                             break;
-                        /*case 2:
-                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
-                            if (dtCorreos.Rows.Count > 0)
-                            {
-                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                {
-                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                }
-                            }
-                            else
-                            {
-                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            }
-                            cls_traslado activos = new cls_traslado();
-                                System.Data.DataTable dt_activos = activos.cargar_activos_grid(this.Session["CODIGO_COMPANIA"].ToString(), System.Convert.ToInt32(this.Session["ID_MOVIMIENTO"]),true);
-
-                                if (dt_activos.Rows.Count > 0)
-                                {
-                                    dtCorreos = new cls_traslado().cargar_correos_grupo(7, this.txt_cod_centro_costo.Text);
-                                    if (dtCorreos.Rows.Count > 0)
-                                    {
-                                        for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                        {
-                                            this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                        }
-                                    }
-                                    else
-                                    {
-                                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(7, this.txt_cod_centro_costo.Text));
-                                    }
-                                }
-                                paso_aprobacion = "Fixed Assets";
-                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 3)
@@ -2949,21 +2903,6 @@ namespace Modulo_Boston.Pages
                                 paso_aprobacion = "Responsable de Calibración";
                                 this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_calibracion.Text);
                             break;
-                        /*case 2:
-                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
-                            if (dtCorreos.Rows.Count > 0)
-                            {
-                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                {
-                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                }
-                            }
-                            else
-                            {
-                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            }
-                            paso_aprobacion = "Fixed Asset";
-                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 4)
@@ -2992,22 +2931,6 @@ namespace Modulo_Boston.Pages
                                 paso_aprobacion = "Centro de Costo";
                                 this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
-                        /*case 2:
-                            dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
-                            if (dtCorreos.Rows.Count > 0)
-                            {
-                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                {
-                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                }
-                            }
-                            else
-                            {
-                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            }
-                                paso_aprobacion = "Fixed Assets";
-                            this.cambiar_estado(id_movimiento, "04", false);
-                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 5)
@@ -3058,18 +2981,6 @@ namespace Modulo_Boston.Pages
                                 paso_aprobacion = "Responsable Centro de Costo Destino";
                                 this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                             break;
-                        case 3:
-                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_codigo_centro_costo_destino.Text));
-                            //paso_aprobacion = "Fixed Asset";
-                            break;
-                        /*case 1:
-                            this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
-                            paso_aprobacion = "Responsable Centro de Costo Origen";
-                            break;
-                        case 2:
-                            this.enviar_correo(id_movimiento, new cls_traslado().correo_responsable(this.txt_codigo_centro_costo_destino.Text));
-                            paso_aprobacion = "Fixed Asset";
-                            break;*/
                     }
                 }
                 if (id_tipo_movimiento == 6)
@@ -3132,64 +3043,9 @@ namespace Modulo_Boston.Pages
                             {
                                 this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_cod_centro_costo.Text));
                             }
-                            /*if (this.txt_localizacion_solicitud.Text.Trim() == "M420")
-                            {
-                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(5, this.txt_cod_centro_costo.Text));
-                            }
-                            else
-                            {
-                                if (this.txt_localizacion_solicitud.Text.Trim() == "M480")
-                                {
-                                    this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(4, this.txt_cod_centro_costo.Text));
-                                }
-                            }*/
-                            //GPE 12/07/2013 WAT_Document new stuff # 13 Send email on ID Solicitante
-                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
+                            
                             paso_aprobacion = "Responsable Centro de Costo Destino";
                             this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
-                            break;
-                        case 3:
-                            /*dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
-                            if (dtCorreos.Rows.Count > 0)
-                            {
-                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                {
-                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                }
-                            }
-                            else
-                            {
-                                this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
-                            }
-
-                            dtCorreos = new cls_traslado().cargar_correos_grupo(2, this.txt_codigo_centro_costo_destino.Text);
-                            if (dtCorreos.Rows.Count > 0)
-                            {
-                                for (int i = 0; i < dtCorreos.Rows.Count; i++)
-                                {
-                                    this.enviar_correo(id_movimiento, dtCorreos.Rows[i][0].ToString());
-                                }
-                            }
-                            else
-                            {
-                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
-                            }*/
-                            //this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
-                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
-                            /*if (this.txt_localizacion_solicitud.Text.Trim() == "M420")
-                            {
-                                this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(4, this.txt_cod_centro_costo.Text));
-                            }
-                            else
-                            {
-                                if (this.txt_localizacion_solicitud.Text.Trim() == "M480")
-                                {
-                                    this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(5, this.txt_cod_centro_costo.Text));
-                                }
-                            }*/
-                            //GPE 12/07/2013 WAT_Document new stuff # 13 Send email on ID Solicitante
-                            //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
-                            paso_aprobacion = "Fixed Asset Origen";
                             break;
                     }
                 }
@@ -3203,7 +3059,7 @@ namespace Modulo_Boston.Pages
                     int num = paso_aprobacion_actual;
                     if (num == 3)
                     {
-                        paso_aprobacion = "Fixed Asset";
+                        paso_aprobacion = "Fixed Assets";
                         this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_donacion.Text);
                         dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
                         if (dtCorreos.Rows.Count > 0)
@@ -3320,12 +3176,26 @@ namespace Modulo_Boston.Pages
                 }
                 if (id_tipo_movimiento == 5)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
                     if (num == 3)
                     {
                         paso_aprobacion = "Fixed Assets";
                         this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
                         this.cambio_datos_traslados_activos_aceptados(id_tipo_movimiento);
+
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
 
                         this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
 
@@ -3334,13 +3204,28 @@ namespace Modulo_Boston.Pages
                 }
                 if (id_tipo_movimiento == 6)
                 {
+                    DataTable dtCorreos = null;
                     int num = paso_aprobacion_actual;
                     if (num == 2)
                     {
-                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                         paso_aprobacion = "Fixed Asset";
                         this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_denuncia.Text);
                         this.cambiar_estado(id_movimiento, "06", true);
+
+                        dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
+                        if (dtCorreos.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtCorreos.Rows.Count; i++)
+                            {
+                                this.enviar_correo_shipping(id_movimiento, dtCorreos.Rows[i][0].ToString());
+                            }
+                        }
+                        else
+                        {
+                            this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(3, this.txt_cod_centro_costo.Text));
+                        }
+
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
                     }
                 }
                 if (id_tipo_movimiento == 7)
@@ -3349,6 +3234,9 @@ namespace Modulo_Boston.Pages
                     int num = paso_aprobacion_actual;
                     if (num == 3)
                     {
+                        paso_aprobacion = "Fixed Asset";
+                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
+                        this.cambio_datos_traslados_activos_aceptados(id_tipo_movimiento);
                         dtCorreos = new cls_traslado().cargar_correos_grupo(3, this.txt_cod_centro_costo.Text);
                         if (dtCorreos.Rows.Count > 0)
                         {
@@ -3374,13 +3262,7 @@ namespace Modulo_Boston.Pages
                             this.enviar_correo_shipping(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
                         }
                         this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
-                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));
-                        //this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
-                        //this.enviar_correo(id_movimiento, new cls_traslado().cargar_cuenta_correo(2, this.txt_codigo_centro_costo_destino.Text));
-                        //this.enviar_correo(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_responsable_destino.Text));
-                        paso_aprobacion = "Fixed Asset";
-                        this.insertar_bitacora(paso_aprobacion, this.txt_observaciones_solicitud.Text);
-                        this.cambio_datos_traslados_activos_aceptados(id_tipo_movimiento);
+                        this.enviar_correo_shipping(id_movimiento, new cls_traslado().correo_solicitante(this.txt_cod_solicitante.Text));;
                     }
                 }
             }
@@ -3749,6 +3631,7 @@ namespace Modulo_Boston.Pages
             tablaActivosSinPlaca.Rows.Add(filaSinPlaca);
             this.gv_SinPlaca.DataSource = tablaActivosSinPlaca;
             this.gv_SinPlaca.DataBind();
+            this.Session["TABLA_ACTIVO_SIN_PLACA"] = tablaActivosSinPlaca;
 
             /*Inicializo la tabla de los activos con placa*/
             DataTable tablaActivos = this.ReturnEmptyDataTable();
@@ -3767,6 +3650,7 @@ namespace Modulo_Boston.Pages
             tablaActivos.Rows.Add(fila);
             this.gv_activos.DataSource = tablaActivos;
             this.gv_activos.DataBind();
+            this.Session["TABLA_ACTIVO"] = tablaActivos;
 
             if (chkSinPlaca.Checked == true)
             {

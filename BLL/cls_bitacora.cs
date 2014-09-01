@@ -388,7 +388,15 @@ namespace BLL
                                     seccion = System.Convert.ToString(xml_movimiento_activo_externo.Element("SeccionDescipcion").Value);
 
                     }
-                    contenido = contenido.Replace("[CENTRO_COSTO_RECEPTOR]", centro_costo_destino);
+                    var centroCostoDestino = from c in this.db.AFM_CENTRO_COSTO
+                                             where c.COD_CEN_CST == centro_costo_destino
+                                            select new
+                                            {
+                                                DESCRIPCION = c.DES_CEN_CST
+                                            };
+
+                    DataTable dtCentroCostoDestino = centroCostoDestino.AsDataTable();
+                    contenido = contenido.Replace("[CENTRO_COSTO_RECEPTOR]", centro_costo_destino + ", " + dtCentroCostoDestino.Rows[0]["DESCRIPCION"].ToString());
                     contenido = contenido.Replace("[LOCALIZACION_DESTINO]", localizacion);
                     contenido = contenido.Replace("[UBICACION_DESTINO]", ubicacion);
                     contenido = contenido.Replace("[SECCION_DESTINO]", seccion);

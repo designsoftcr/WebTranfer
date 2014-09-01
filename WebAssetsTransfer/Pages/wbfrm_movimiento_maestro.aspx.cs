@@ -138,7 +138,7 @@ namespace WebAssetsTransfer.Pages
             {
                 System.Data.DataTable dt = null;
                 cls_movimiento_maestro movimiento_maestro = new cls_movimiento_maestro();
-                if (new cls_traslado().is_admin(this.Session["USUARIO"].ToString()))
+                if (new cls_traslado().is_admin(this.Session["USUARIO"].ToString()) || new cls_usuarios_por_grupo_de_acceso().select_usuario_por_grupo_de_acceso(2, this.Session["USUARIO"].ToString()).Rows.Count > 0)
                 {
                     dt = movimiento_maestro.cargar_movimientos_maestro_filtrar(id_movimiento, cod_centro_costo, cod_solicitante, fetcha, tipo_movimiento);
                 }
@@ -152,7 +152,7 @@ namespace WebAssetsTransfer.Pages
                         dt = movimiento_maestro.cargar_movimientos_maestro_filtrar(id_movimiento, cod_centro_costo, cod_solicitante, fetcha, tipo_movimiento);
                     }
                 }
-                if (dt.Rows.Count > 0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
